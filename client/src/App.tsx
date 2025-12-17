@@ -9,6 +9,8 @@ import Game from "@/pages/Game";
 import Result from "@/pages/Result";
 import WeakPoints from "@/pages/WeakPoints";
 import Settings from "@/pages/Settings";
+import Badges from "@/pages/Badges";
+import FinancialStatements from "@/pages/FinancialStatements";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -19,6 +21,8 @@ function Router() {
       <Route path="/result" component={Result} />
       <Route path="/weakpoints" component={WeakPoints} />
       <Route path="/settings" component={Settings} />
+      <Route path="/badges" component={Badges} />
+      <Route path="/statements" component={FinancialStatements} />
       <Route component={NotFound} />
     </Switch>
   );

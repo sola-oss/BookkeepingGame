@@ -8,7 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { useGame } from "@/context/GameContext";
-import { difficultyLabels, type DifficultyLevel } from "@shared/schema";
+import { difficultyLabels, difficultyDescriptions, type DifficultyLevel } from "@shared/schema";
 
 export default function Settings() {
   const [, navigate] = useLocation();
@@ -77,12 +77,11 @@ export default function Settings() {
                   <SelectContent>
                     <SelectItem value="beginner">{difficultyLabels.beginner}</SelectItem>
                     <SelectItem value="intermediate">{difficultyLabels.intermediate}</SelectItem>
+                    <SelectItem value="advanced">{difficultyLabels.advanced}</SelectItem>
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-muted-foreground">
-                  {settings.difficulty === "beginner"
-                    ? "基本的な勘定科目のみ出題されます"
-                    : "前払費用や未払費用など、より多くの科目が出題されます"}
+                  {difficultyDescriptions[settings.difficulty]}
                 </p>
               </div>
 

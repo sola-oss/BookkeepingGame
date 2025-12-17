@@ -78,9 +78,17 @@ export function FeedbackOverlay({
                 </div>
               )}
 
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {account.explanation_ja}
-              </p>
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {account.explanation_ja}
+                </p>
+                {account.examples_ja && (
+                  <div className="bg-background/50 rounded-md px-3 py-2">
+                    <p className="text-xs text-muted-foreground mb-1">仕訳例:</p>
+                    <p className="text-sm font-mono text-foreground">{account.examples_ja}</p>
+                  </div>
+                )}
+              </div>
 
               <motion.div
                 initial={{ opacity: 0, y: 10 }}

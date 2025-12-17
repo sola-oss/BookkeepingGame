@@ -1,10 +1,11 @@
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Play, BookOpen, Settings, Trophy, Flame, Target } from "lucide-react";
+import { Play, BookOpen, Settings, Trophy, Flame, Target, Award, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGame } from "@/context/GameContext";
 import { getLastAccuracy, getLastScore } from "@/lib/storage";
+import { getEarnedBadges, badgeDefinitions } from "@shared/schema";
 
 export default function Home() {
   const [, navigate] = useLocation();
@@ -13,6 +14,7 @@ export default function Home() {
 
   const lastAccuracy = getLastAccuracy(userData);
   const lastScore = getLastScore(userData);
+  const earnedBadges = getEarnedBadges(userData);
 
   const handleStart = () => {
     dispatch({ type: "START_GAME" });
@@ -101,26 +103,46 @@ export default function Home() {
             スタート
           </Button>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-4 gap-2">
             <Button
               variant="outline"
               size="lg"
-              className="py-6 gap-2"
+              className="py-5 flex-col gap-1"
               onClick={() => navigate("/weakpoints")}
               data-testid="button-weakpoints"
             >
               <BookOpen className="w-5 h-5" />
-              弱点帳
+              <span className="text-xs">弱点帳</span>
             </Button>
             <Button
               variant="outline"
               size="lg"
-              className="py-6 gap-2"
+              className="py-5 flex-col gap-1"
+              onClick={() => navigate("/badges")}
+              data-testid="button-badges"
+            >
+              <Award className="w-5 h-5" />
+              <span className="text-xs">{earnedBadges.length}/{badgeDefinitions.length}</span>
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="py-5 flex-col gap-1"
+              onClick={() => navigate("/statements")}
+              data-testid="button-statements"
+            >
+              <FileText className="w-5 h-5" />
+              <span className="text-xs">財務諸表</span>
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="py-5 flex-col gap-1"
               onClick={() => navigate("/settings")}
               data-testid="button-settings-main"
             >
               <Settings className="w-5 h-5" />
-              設定
+              <span className="text-xs">設定</span>
             </Button>
           </div>
         </motion.section>
