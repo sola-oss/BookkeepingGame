@@ -223,7 +223,7 @@ export default function Home() {
             data-testid="button-statements"
           >
             <FileText className="w-5 h-5" />
-            <span className="text-xs">財務諸表</span>
+            <span className="text-xs">財務諸表サンプル</span>
           </Button>
         </motion.section>
 
