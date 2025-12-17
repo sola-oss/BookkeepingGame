@@ -177,3 +177,171 @@ export const textbookPageSchema = z.object({
 });
 
 export type TextbookPage = z.infer<typeof textbookPageSchema>;
+
+// ==================== 模試モード（日商簿記3級形式） ====================
+
+export const examSectionTypes = ["shiwake", "kanjokiyo", "kessan"] as const;
+export type ExamSectionType = typeof examSectionTypes[number];
+
+export const examSectionLabels: Record<ExamSectionType, string> = {
+  shiwake: "第1問 仕訳",
+  kanjokiyo: "第2問 勘定記入",
+  kessan: "第3問 決算",
+};
+
+// 仕訳問題テンプレート（第1問用）
+export const journalBlueprintSchema = z.object({
+  id: z.string(),
+  sectionType: z.literal("shiwake"),
+  category: z.string(), // 出題区分タグ
+  templateJa: z.string(), // "{company}から商品{amount}円を仕入れ..."
+  parameterRanges: z.object({
+    amount: z.tuple([z.number(), z.number()]).optional(),
+    companyNames: z.array(z.string()).optional(),
+    dates: z.array(z.string()).optional(),
+  }),
+  answerTemplate: z.object({
+    debit: z.object({ accountId: z.string(), amountKey: z.string() }),
+    credit: z.object({ accountId: z.string(), amountKey: z.string() }),
+  }),
+  explainJa: z.string(),
+  topicTag: z.string().optional(),
+});
+
+export type JournalBlueprint = z.infer<typeof journalBlueprintSchema>;
+
+// 勘定記入問題テンプレート（第2問用）
+export const ledgerBlueprintSchema = z.object({
+  id: z.string(),
+  sectionType: z.literal("kanjokiyo"),
+  category: z.string(),
+  accountName: z.string(),
+  instructionJa: z.string(),
+  transactions: z.array(z.object({
+    dateTemplate: z.string(),
+    descriptionTemplate: z.string(),
+    side: z.enum(["debit", "credit"]),
+    amountRange: z.tuple([z.number(), z.number()]),
+  })),
+  explainJa: z.string(),
+  topicTag: z.string().optional(),
+});
+
+export type LedgerBlueprint = z.infer<typeof ledgerBlueprintSchema>;
+
+// 決算問題テンプレート（第3問用）
+export const financialStatementBlueprintSchema = z.object({
+  id: z.string(),
+  sectionType: z.literal("kessan"),
+  category: z.string(),
+  statementType: z.enum(["trial_balance", "income_statement", "balance_sheet"]),
+  instructionJa: z.string(),
+  accountItems: z.array(z.object({
+    accountId: z.string(),
+    amountRange: z.tuple([z.number(), z.number()]),
+    side: z.enum(["debit", "credit"]),
+  })),
+  adjustments: z.array(z.object({
+    type: z.string(),
+    descriptionJa: z.string(),
+    accountId: z.string(),
+    amountRange: z.tuple([z.number(), z.number()]),
+  })).optional(),
+  explainJa: z.string(),
+  topicTag: z.string().optional(),
+});
+
+export type FinancialStatementBlueprint = z.infer<typeof financialStatementBlueprintSchema>;
+
+// 生成された問題
+export const generatedJournalQuestionSchema = z.object({
+  id: z.string(),
+  blueprintId: z.string(),
+  sectionType: z.literal("shiwake"),
+  sectionIndex: z.number(),
+  questionIndex: z.number(),
+  promptJa: z.string(),
+  answer: z.object({
+    debit: z.object({ accountId: z.string(), amount: z.number() }),
+    credit: z.object({ accountId: z.string(), amount: z.number() }),
+  }),
+  explainJa: z.string(),
+  topicTag: z.string().optional(),
+  points: z.number(),
+});
+
+export type GeneratedJournalQuestion = z.infer<typeof generatedJournalQuestionSchema>;
+
+export const generatedLedgerQuestionSchema = z.object({
+  id: z.string(),
+  blueprintId: z.string(),
+  sectionType: z.literal("kanjokiyo"),
+  sectionIndex: z.number(),
+  accountName: z.string(),
+  instructionJa: z.string(),
+  transactions: z.array(z.object({
+    date: z.string(),
+    description: z.string(),
+    side: z.enum(["debit", "credit"]),
+    amount: z.number(),
+  })),
+  explainJa: z.string(),
+  topicTag: z.string().optional(),
+  points: z.number(),
+});
+
+export type GeneratedLedgerQuestion = z.infer<typeof generatedLedgerQuestionSchema>;
+
+export const generatedFinancialStatementQuestionSchema = z.object({
+  id: z.string(),
+  blueprintId: z.string(),
+  sectionType: z.literal("kessan"),
+  sectionIndex: z.number(),
+  statementType: z.enum(["trial_balance", "income_statement", "balance_sheet"]),
+  instructionJa: z.string(),
+  accountItems: z.array(z.object({
+    accountId: z.string(),
+    accountName: z.string(),
+    amount: z.number(),
+    side: z.enum(["debit", "credit"]),
+    isBlank: z.boolean(),
+  })),
+  adjustments: z.array(z.object({
+    descriptionJa: z.string(),
+    accountId: z.string(),
+    amount: z.number(),
+  })).optional(),
+  explainJa: z.string(),
+  topicTag: z.string().optional(),
+  points: z.number(),
+});
+
+export type GeneratedFinancialStatementQuestion = z.infer<typeof generatedFinancialStatementQuestionSchema>;
+
+export type GeneratedQuestion = GeneratedJournalQuestion | GeneratedLedgerQuestion | GeneratedFinancialStatementQuestion;
+
+// 模試セクション
+export const examSectionSchema = z.object({
+  sectionType: z.enum(examSectionTypes),
+  sectionIndex: z.number(),
+  title: z.string(),
+  questions: z.array(z.union([
+    generatedJournalQuestionSchema,
+    generatedLedgerQuestionSchema,
+    generatedFinancialStatementQuestionSchema,
+  ])),
+  totalPoints: z.number(),
+});
+
+export type ExamSection = z.infer<typeof examSectionSchema>;
+
+// 模試全体
+export const mockExamSchema = z.object({
+  id: z.string(),
+  createdAt: z.string(),
+  timeLimitSeconds: z.number(),
+  sections: z.array(examSectionSchema),
+  totalPoints: z.number(),
+});
+
+export type MockExam = z.infer<typeof mockExamSchema>;

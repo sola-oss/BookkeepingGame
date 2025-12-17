@@ -1,12 +1,14 @@
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Play, BookOpen, Settings, Trophy, Flame, Target, Award, FileText, ArrowRightLeft, Layers, PenLine, Library } from "lucide-react";
+import { Play, BookOpen, Settings, Trophy, Flame, Target, Award, FileText, ArrowRightLeft, Layers, PenLine, Library, ExternalLink, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGame } from "@/context/GameContext";
 import { useJournal } from "@/context/JournalContext";
 import { getLastAccuracy, getLastScore } from "@/lib/storage";
 import { getEarnedBadges, badgeDefinitions } from "@shared/schema";
+
+const OFFICIAL_SAMPLE_URL = "https://www.kentei.ne.jp/bookkeeping/class3";
 
 export default function Home() {
   const [, navigate] = useLocation();
@@ -135,16 +137,16 @@ export default function Home() {
 
             <Card
               className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
-              onClick={() => navigate("/exam-start")}
+              onClick={() => navigate("/mock-exam-start")}
               data-testid="button-start-exam"
             >
               <CardContent className="pt-4 pb-3 text-center space-y-2">
                 <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <PenLine className="w-5 h-5 text-primary" />
+                  <GraduationCap className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="font-bold text-foreground text-sm">試験</h3>
+                <h3 className="font-bold text-foreground text-sm">模試</h3>
                 <p className="text-xs text-muted-foreground">
-                  記述式
+                  3級形式
                 </p>
               </CardContent>
             </Card>
@@ -245,7 +247,37 @@ export default function Home() {
           <Card className="bg-muted/50 border-border">
             <CardContent className="py-4">
               <p className="text-sm text-muted-foreground text-center">
-                分類で科目を覚え、仕訳で取引を練習、試験モードで力試し！
+                分類で科目を覚え、仕訳で取引を練習、模試で力試し！
+              </p>
+            </CardContent>
+          </Card>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
+        >
+          <Card className="border-border">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm flex items-center gap-2 text-foreground">
+                <ExternalLink className="w-4 h-4" />
+                公式情報
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Button
+                variant="outline"
+                className="w-full justify-start gap-2"
+                onClick={() => window.open(OFFICIAL_SAMPLE_URL, "_blank")}
+                data-testid="button-official-sample"
+              >
+                <FileText className="w-4 h-4" />
+                <span className="flex-1 text-left">日商簿記3級 公式サンプル問題</span>
+                <ExternalLink className="w-3 h-3 text-muted-foreground" />
+              </Button>
+              <p className="text-xs text-muted-foreground mt-2">
+                日本商工会議所の公式ページで過去問・サンプル問題を確認できます
               </p>
             </CardContent>
           </Card>
