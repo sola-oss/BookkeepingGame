@@ -1,0 +1,144 @@
+import { useLocation } from "wouter";
+import { motion } from "framer-motion";
+import { Play, BookOpen, Settings, Trophy, Flame, Target } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useGame } from "@/context/GameContext";
+import { getLastAccuracy, getLastScore } from "@/lib/storage";
+
+export default function Home() {
+  const [, navigate] = useLocation();
+  const { state, dispatch } = useGame();
+  const { userData } = state;
+
+  const lastAccuracy = getLastAccuracy(userData);
+  const lastScore = getLastScore(userData);
+
+  const handleStart = () => {
+    dispatch({ type: "START_GAME" });
+    navigate("/game");
+  };
+
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
+        <div className="max-w-lg mx-auto px-4 py-4">
+          <div className="flex items-center justify-between gap-4">
+            <h1 className="text-xl font-bold text-foreground">簿記マスター</h1>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate("/settings")}
+              data-testid="button-settings"
+            >
+              <Settings className="w-5 h-5" />
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      <main className="flex-1 max-w-lg mx-auto w-full px-4 py-6 space-y-6">
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="space-y-4"
+        >
+          <Card className="bg-card border-card-border">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg flex items-center gap-2 text-foreground">
+                <Trophy className="w-5 h-5 text-yellow-500" />
+                今日の成績
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-3 gap-4 text-center">
+                <div className="space-y-1">
+                  <div className="flex items-center justify-center gap-1">
+                    <Flame className="w-4 h-4 text-orange-500" />
+                  </div>
+                  <p className="text-2xl font-bold font-mono text-foreground">
+                    {userData.streak}
+                  </p>
+                  <p className="text-xs text-muted-foreground">連続日数</p>
+                </div>
+                <div className="space-y-1">
+                  <div className="flex items-center justify-center gap-1">
+                    <Target className="w-4 h-4 text-blue-500" />
+                  </div>
+                  <p className="text-2xl font-bold font-mono text-foreground">
+                    {lastAccuracy !== null ? `${lastAccuracy}%` : "-"}
+                  </p>
+                  <p className="text-xs text-muted-foreground">前回正答率</p>
+                </div>
+                <div className="space-y-1">
+                  <div className="flex items-center justify-center gap-1">
+                    <Trophy className="w-4 h-4 text-purple-500" />
+                  </div>
+                  <p className="text-2xl font-bold font-mono text-foreground">
+                    {lastScore !== null ? lastScore : "-"}
+                  </p>
+                  <p className="text-xs text-muted-foreground">前回スコア</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+          className="space-y-3"
+        >
+          <Button
+            size="lg"
+            className="w-full text-lg py-6 gap-3"
+            onClick={handleStart}
+            data-testid="button-start-game"
+          >
+            <Play className="w-6 h-6" />
+            スタート
+          </Button>
+
+          <div className="grid grid-cols-2 gap-3">
+            <Button
+              variant="outline"
+              size="lg"
+              className="py-6 gap-2"
+              onClick={() => navigate("/weakpoints")}
+              data-testid="button-weakpoints"
+            >
+              <BookOpen className="w-5 h-5" />
+              弱点帳
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="py-6 gap-2"
+              onClick={() => navigate("/settings")}
+              data-testid="button-settings-main"
+            >
+              <Settings className="w-5 h-5" />
+              設定
+            </Button>
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+        >
+          <Card className="bg-muted/50 border-border">
+            <CardContent className="py-4">
+              <p className="text-sm text-muted-foreground text-center">
+                勘定科目を5要素（資産・負債・純資産・収益・費用）に分類して、簿記の基礎を学びましょう！
+              </p>
+            </CardContent>
+          </Card>
+        </motion.section>
+      </main>
+    </div>
+  );
+}

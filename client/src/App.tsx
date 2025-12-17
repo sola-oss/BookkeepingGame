@@ -3,14 +3,22 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { GameProvider } from "@/context/GameContext";
+import Home from "@/pages/Home";
+import Game from "@/pages/Game";
+import Result from "@/pages/Result";
+import WeakPoints from "@/pages/WeakPoints";
+import Settings from "@/pages/Settings";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
     <Switch>
-      {/* Add pages below */}
-      {/* <Route path="/" component={Home}/> */}
-      {/* Fallback to 404 */}
+      <Route path="/" component={Home} />
+      <Route path="/game" component={Game} />
+      <Route path="/result" component={Result} />
+      <Route path="/weakpoints" component={WeakPoints} />
+      <Route path="/settings" component={Settings} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -20,8 +28,10 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />
-        <Router />
+        <GameProvider>
+          <Toaster />
+          <Router />
+        </GameProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );
