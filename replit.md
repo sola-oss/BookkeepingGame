@@ -120,6 +120,13 @@ localStorageを使用してブラウザに保存:
 
 ## 最近の変更
 
+- 2024-12: モバイル表示最適化
+  - MockExam: 仕訳入力を縦積み（grid-cols-1 sm:grid-cols-2）に変更
+  - MockExam: 勘定記入・決算テーブルを横スクロール対応（overflow-x-auto）
+  - MockExam/ExamMode: ヘッダー・フッターのパディング調整（p-2 sm:p-3）
+  - MockExam/ExamMode: ボタンテキストをモバイルで省略（hidden sm:inline）
+  - ホーム画面: 設定ボタン重複削除、財務諸表→財務諸表サンプルに変更
+
 - 2024-12: Phase 6 模試モード追加（日商簿記3級形式）
   - 3大問構成の模試モード実装（第1問：仕訳、第2問：勘定記入、第3問：決算）
   - テンプレート＋ランダムパラメータによる問題生成（questionBlueprints.ts）
