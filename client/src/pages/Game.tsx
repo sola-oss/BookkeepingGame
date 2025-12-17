@@ -6,10 +6,10 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useGame } from "@/context/GameContext";
 import { DraggableCard } from "@/components/game/DraggableCard";
-import { DroppableCategory } from "@/components/game/DroppableCategory";
+import { DroppableSide } from "@/components/game/DroppableSide";
 import { FeedbackOverlay } from "@/components/game/FeedbackOverlay";
 import { ScoreDisplay } from "@/components/game/ScoreDisplay";
-import { categoryTypes, type CategoryType } from "@shared/schema";
+import { entrySides, type EntrySide } from "@shared/schema";
 
 export default function Game() {
   const [, navigate] = useLocation();
@@ -18,12 +18,9 @@ export default function Game() {
 
   const [activeId, setActiveId] = useState<string | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
-  const [categoryFeedback, setCategoryFeedback] = useState<Record<CategoryType, "correct" | "wrong" | null>>({
-    asset: null,
-    liability: null,
-    equity: null,
-    revenue: null,
-    expense: null,
+  const [sideFeedback, setSideFeedback] = useState<Record<EntrySide, "correct" | "wrong" | null>>({
+    debit: null,
+    credit: null,
   });
 
   const mouseSensor = useSensor(MouseSensor, {
@@ -70,38 +67,35 @@ export default function Game() {
     if (!over) return;
 
     const accountId = active.id as string;
-    const categoryId = over.id as CategoryType;
+    const sideId = over.id as EntrySide;
 
-    if (!categoryTypes.includes(categoryId)) return;
+    if (!entrySides.includes(sideId)) return;
 
     const account = remainingCards.find((c) => c.id === accountId);
     if (!account) return;
-
-    const isCorrect = account.category === categoryId;
-
-    setCategoryFeedback((prev) => ({
-      ...prev,
-      [categoryId]: isCorrect ? "correct" : "wrong",
-    }));
-
-    setTimeout(() => {
-      setCategoryFeedback({
-        asset: null,
-        liability: null,
-        equity: null,
-        revenue: null,
-        expense: null,
-      });
-    }, 300);
 
     dispatch({
       type: "ANSWER",
       payload: {
         account,
-        selectedCategory: categoryId,
+        selectedSide: sideId,
       },
     });
-  }, [remainingCards, dispatch]);
+
+    const isCorrect = lastAnswerFeedback?.isCorrect ?? false;
+    
+    setSideFeedback((prev) => ({
+      ...prev,
+      [sideId]: isCorrect ? "correct" : "wrong",
+    }));
+
+    setTimeout(() => {
+      setSideFeedback({
+        debit: null,
+        credit: null,
+      });
+    }, 300);
+  }, [remainingCards, dispatch, lastAnswerFeedback]);
 
   const handleFeedbackComplete = useCallback(() => {
     dispatch({ type: "DISMISS_FEEDBACK" });
@@ -145,7 +139,7 @@ export default function Game() {
       <main className="flex-1 max-w-lg mx-auto w-full px-4 py-4 flex flex-col gap-4">
         <section className="text-center py-2">
           <p className="text-base font-medium text-foreground">
-            次の科目を5要素に分類せよ
+            次の科目を借方・貸方に分類せよ
           </p>
         </section>
 
@@ -156,55 +150,46 @@ export default function Game() {
           onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
         >
-          <section className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {categoryTypes.slice(0, 3).map((category) => (
-              <DroppableCategory
-                key={category}
-                category={category}
-                isOver={overId === category}
-                feedbackState={categoryFeedback[category]}
+          <section className="grid grid-cols-2 gap-4">
+            {entrySides.map((side) => (
+              <DroppableSide
+                key={side}
+                side={side}
+                isOver={overId === side}
+                feedbackState={sideFeedback[side]}
               />
             ))}
           </section>
 
-          <section className="grid grid-cols-2 gap-3">
-            {categoryTypes.slice(3).map((category) => (
-              <DroppableCategory
-                key={category}
-                category={category}
-                isOver={overId === category}
-                feedbackState={categoryFeedback[category]}
-              />
-            ))}
-          </section>
-
-          <section className="mt-auto pt-4 border-t border-border">
-            <p className="text-sm text-muted-foreground mb-3 text-center">
-              カードをドラッグして分類枠にドロップ
-            </p>
-            <div className="flex flex-wrap gap-2 justify-center">
-              <AnimatePresence mode="popLayout">
-                {remainingCards.map((account) => (
+          <section className="flex-1 flex flex-col items-center justify-center gap-4 py-4">
+            <AnimatePresence mode="wait">
+              {remainingCards.length > 0 && (
+                <motion.div
+                  key={remainingCards[0].id}
+                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, y: -20 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <DraggableCard
-                    key={account.id}
-                    account={account}
-                    isDragging={activeId === account.id}
+                    account={remainingCards[0]}
+                    isDragging={activeId === remainingCards[0].id}
                   />
-                ))}
-              </AnimatePresence>
-            </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </section>
         </DndContext>
-      </main>
 
-      <FeedbackOverlay
-        show={showFeedback}
-        isCorrect={lastAnswerFeedback?.isCorrect ?? false}
-        account={lastAnswerFeedback?.account ?? null}
-        selectedCategory={lastAnswerFeedback?.selectedCategory ?? null}
-        scoreChange={lastAnswerFeedback?.scoreChange ?? 0}
-        onComplete={handleFeedbackComplete}
-      />
+        <AnimatePresence>
+          {showFeedback && lastAnswerFeedback && (
+            <FeedbackOverlay
+              feedback={lastAnswerFeedback}
+              onComplete={handleFeedbackComplete}
+            />
+          )}
+        </AnimatePresence>
+      </main>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode } from "react";
-import type { Account, GameSettings, UserData, GameResult, CategoryType, Account3Kyu, DifficultyLevel } from "@shared/schema";
-import { defaultUserData } from "@shared/schema";
+import type { Account, GameSettings, UserData, GameResult, CategoryType, Account3Kyu, DifficultyLevel, EntrySide } from "@shared/schema";
+import { defaultUserData, categoryToEntrySide } from "@shared/schema";
 import { loadUserData, saveUserData, updateStreak, addGameResult } from "@/lib/storage";
 import { accounts3kyu } from "@/data/accounts3kyu";
 
@@ -54,14 +54,16 @@ type GamePhase = "idle" | "playing" | "result";
 
 interface AnswerRecord {
   accountId: string;
-  selectedCategory: CategoryType;
+  selectedSide: EntrySide;
+  correctSide: EntrySide;
   correctCategory: CategoryType;
   isCorrect: boolean;
 }
 
 interface LastAnswerFeedback {
   account: Account;
-  selectedCategory: CategoryType;
+  selectedSide: EntrySide;
+  correctSide: EntrySide;
   isCorrect: boolean;
   scoreChange: number;
 }
@@ -85,7 +87,7 @@ type GameAction =
   | { type: "LOAD_USER_DATA"; payload: UserData }
   | { type: "UPDATE_SETTINGS"; payload: Partial<GameSettings> }
   | { type: "START_GAME" }
-  | { type: "ANSWER"; payload: { account: Account; selectedCategory: CategoryType } }
+  | { type: "ANSWER"; payload: { account: Account; selectedSide: EntrySide } }
   | { type: "DISMISS_FEEDBACK" }
   | { type: "TICK" }
   | { type: "END_GAME" }
@@ -153,14 +155,16 @@ function gameReducer(state: GameState, action: GameAction): GameState {
     }
 
     case "ANSWER": {
-      const { account, selectedCategory } = action.payload;
-      const isCorrect = account.category === selectedCategory;
+      const { account, selectedSide } = action.payload;
+      const correctSide = categoryToEntrySide(account.category);
+      const isCorrect = selectedSide === correctSide;
       const newCombo = isCorrect ? state.combo + 1 : 0;
       const scoreChange = calculateScore(isCorrect, newCombo);
       
       const answer: AnswerRecord = {
         accountId: account.id,
-        selectedCategory,
+        selectedSide,
+        correctSide,
         correctCategory: account.category,
         isCorrect,
       };
@@ -172,7 +176,8 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       
       const feedback: LastAnswerFeedback = {
         account,
-        selectedCategory,
+        selectedSide,
+        correctSide,
         isCorrect,
         scoreChange,
       };
