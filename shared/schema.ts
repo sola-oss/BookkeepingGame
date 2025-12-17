@@ -3,6 +3,9 @@ import { z } from "zod";
 export const categoryTypes = ["asset", "liability", "equity", "revenue", "expense"] as const;
 export type CategoryType = typeof categoryTypes[number];
 
+export const category5Types = ["asset", "liability", "equity", "revenue", "expense", "other"] as const;
+export type Category5Type = typeof category5Types[number];
+
 export const categoryLabels: Record<CategoryType, string> = {
   asset: "資産",
   liability: "負債",
@@ -21,6 +24,18 @@ export const accountSchema = z.object({
 });
 
 export type Account = z.infer<typeof accountSchema>;
+
+export const account3KyuSchema = z.object({
+  id: z.string(),
+  level: z.literal(3),
+  canonical_name_ja: z.string(),
+  synonyms_ja: z.array(z.string()).optional(),
+  category5: z.enum(category5Types),
+  definition_ja: z.string(),
+  example_entry_ja: z.string().optional(),
+});
+
+export type Account3Kyu = z.infer<typeof account3KyuSchema>;
 
 export const difficultyLevels = ["beginner", "intermediate", "advanced"] as const;
 export type DifficultyLevel = typeof difficultyLevels[number];
