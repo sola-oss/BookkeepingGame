@@ -49,6 +49,12 @@ export interface MockGradingResult {
   earnedPoints: number;
   maxPoints: number;
   feedback: string;
+  details?: {
+    debitAccountCorrect?: boolean;
+    debitAmountCorrect?: boolean;
+    creditAccountCorrect?: boolean;
+    creditAmountCorrect?: boolean;
+  };
 }
 
 export interface MockExamState {
@@ -272,7 +278,13 @@ export function MockExamProvider({ children }: { children: ReactNode }) {
       maxPoints: question.points,
       feedback: isCorrect
         ? "正解です"
-        : `正解: 借方 ${correctDebitAccount?.name_ja} ${question.answer.debit.amount} / 貸方 ${correctCreditAccount?.name_ja} ${question.answer.credit.amount}`,
+        : `正解: 借方 ${correctDebitAccount?.name_ja || ""} ${question.answer.debit.amount} / 貸方 ${correctCreditAccount?.name_ja || ""} ${question.answer.credit.amount}`,
+      details: {
+        debitAccountCorrect,
+        debitAmountCorrect,
+        creditAccountCorrect,
+        creditAmountCorrect,
+      },
     };
   };
 

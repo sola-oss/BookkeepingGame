@@ -192,10 +192,23 @@ export default function MockExamResult() {
                     </div>
                     
                     {result.sectionType === "shiwake" && userAnswer && (
-                      <div className="text-sm space-y-1">
-                        <p className="text-red-600 dark:text-red-400">
-                          あなた: 借方 {(userAnswer as JournalAnswer).debitAccount || "(未入力)"} {(userAnswer as JournalAnswer).debitAmount || ""} / 貸方 {(userAnswer as JournalAnswer).creditAccount || "(未入力)"} {(userAnswer as JournalAnswer).creditAmount || ""}
-                        </p>
+                      <div className="text-sm">
+                        <span>あなた: 借方 </span>
+                        <span className={result.details?.debitAccountCorrect ? "" : "text-red-600 dark:text-red-400"}>
+                          {(userAnswer as JournalAnswer).debitAccount || "(未入力)"}
+                        </span>
+                        <span> </span>
+                        <span className={result.details?.debitAmountCorrect ? "" : "text-red-600 dark:text-red-400"}>
+                          {(userAnswer as JournalAnswer).debitAmount || ""}
+                        </span>
+                        <span> / 貸方 </span>
+                        <span className={result.details?.creditAccountCorrect ? "" : "text-red-600 dark:text-red-400"}>
+                          {(userAnswer as JournalAnswer).creditAccount || "(未入力)"}
+                        </span>
+                        <span> </span>
+                        <span className={result.details?.creditAmountCorrect ? "" : "text-red-600 dark:text-red-400"}>
+                          {(userAnswer as JournalAnswer).creditAmount || ""}
+                        </span>
                       </div>
                     )}
                     
