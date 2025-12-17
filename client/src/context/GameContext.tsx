@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode } from "react";
-import type { Account, GameSettings, UserData, GameResult, CategoryType, Account3Kyu } from "@shared/schema";
+import type { Account, GameSettings, UserData, GameResult, CategoryType, Account3Kyu, DifficultyLevel } from "@shared/schema";
 import { defaultUserData } from "@shared/schema";
 import { loadUserData, saveUserData, updateStreak, addGameResult } from "@/lib/storage";
 import { accounts3kyu } from "@/data/accounts3kyu";
@@ -16,10 +16,38 @@ function convert3KyuToAccount(a: Account3Kyu): Account {
   };
 }
 
-function getAllAccounts3Kyu(): Account[] {
-  return accounts3kyu
-    .filter((a) => a.category5 !== "other")
-    .map(convert3KyuToAccount);
+const beginnerAccountIds = [
+  "cash", "ordinary_deposit", "accounts_receivable", "accounts_payable",
+  "sales", "purchases", "capital", "travel_expense", "communication_expense",
+  "rent_expense", "utilities_expense", "salary_expense"
+];
+
+const intermediateAccountIds = [
+  ...beginnerAccountIds,
+  "petty_cash", "time_deposit", "current_deposit", "notes_receivable", "notes_payable",
+  "merchandise", "supplies", "prepaid_expenses", "accrued_income",
+  "borrowings", "loans_payable", "unearned_revenue", "accrued_expenses",
+  "interest_income", "interest_expense", "miscellaneous_expense", "depreciation_expense"
+];
+
+function getAccountsByDifficulty(difficulty: DifficultyLevel): Account[] {
+  const validAccounts = accounts3kyu.filter((a) => a.category5 !== "other");
+  
+  let filtered: Account3Kyu[];
+  switch (difficulty) {
+    case "beginner":
+      filtered = validAccounts.filter((a) => beginnerAccountIds.includes(a.id));
+      break;
+    case "intermediate":
+      filtered = validAccounts.filter((a) => intermediateAccountIds.includes(a.id));
+      break;
+    case "advanced":
+    default:
+      filtered = validAccounts;
+      break;
+  }
+  
+  return filtered.map(convert3KyuToAccount);
 }
 
 type GamePhase = "idle" | "playing" | "result";
@@ -100,7 +128,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 
     case "START_GAME": {
       const { settings } = state.userData;
-      const allAccounts = getAllAccounts3Kyu();
+      const allAccounts = getAccountsByDifficulty(settings.difficulty);
       const shuffled = shuffleArray(allAccounts);
       const selected = shuffled.slice(0, Math.min(settings.cardCount, shuffled.length));
       
