@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { useLocation } from "wouter";
+import { useState, useMemo, useEffect } from "react";
+import { useLocation, useSearch } from "wouter";
 import { motion } from "framer-motion";
 import { ArrowLeft, Search, BookOpen, ChevronRight, CheckCircle2, XCircle, Lightbulb, AlertTriangle, HelpCircle, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,14 +13,26 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import { textbookPages, searchTextbookPages } from "@/data/textbookPages";
+import { textbookPages, searchTextbookPages, getTextbookPageByTopicTag } from "@/data/textbookPages";
 import type { TextbookPage } from "@shared/schema";
 
 export default function TextbookList() {
   const [, navigate] = useLocation();
+  const searchParams = useSearch();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPage, setSelectedPage] = useState<TextbookPage | null>(null);
   const [showQuizAnswer, setShowQuizAnswer] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+    const topic = params.get("topic");
+    if (topic) {
+      const page = getTextbookPageByTopicTag(topic);
+      if (page) {
+        setSelectedPage(page);
+      }
+    }
+  }, [searchParams]);
 
   const filteredPages = useMemo(() => {
     return searchTextbookPages(searchQuery);

@@ -1,11 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useExamContext } from "@/context/ExamContext";
 import { getAccountById } from "@/data/accounts";
-import { Home, RotateCcw, Check, X, AlertCircle } from "lucide-react";
+import { getTextbookPageByTopicTag } from "@/data/textbookPages";
+import { Home, RotateCcw, Check, X, AlertCircle, BookOpen } from "lucide-react";
 
 export default function ExamResult() {
   const [, navigate] = useLocation();
@@ -48,6 +49,18 @@ export default function ExamResult() {
     .map((q, i) => ({ question: q, result: state.results[i], answer: state.answers[i], index: i }))
     .filter((item) => !item.result.isCorrect);
 
+  const suggestedTopics = useMemo(() => {
+    const topicTags = new Set<string>();
+    wrongQuestions.forEach(({ question }) => {
+      if (question.topic_tag) {
+        topicTags.add(question.topic_tag);
+      }
+    });
+    return Array.from(topicTags)
+      .map(tag => getTextbookPageByTopicTag(tag))
+      .filter(Boolean);
+  }, [wrongQuestions]);
+
   return (
     <div className="min-h-screen bg-background p-4">
       <div className="max-w-2xl mx-auto space-y-4">
@@ -80,6 +93,36 @@ export default function ExamResult() {
             </div>
           </CardContent>
         </Card>
+
+        {suggestedTopics.length > 0 && (
+          <Card className="border-primary/20 bg-primary/5">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-primary" />
+                復習のおすすめ
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-3">
+                間違えた問題に関連する教科書ページです
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {suggestedTopics.map((topic) => (
+                  <Button
+                    key={topic!.id}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => navigate(`/textbook?topic=${topic!.topicTag}`)}
+                    data-testid={`button-review-${topic!.id}`}
+                  >
+                    <BookOpen className="w-4 h-4 mr-1" />
+                    {topic!.title}
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {wrongQuestions.length > 0 && (
           <Card>
@@ -138,6 +181,19 @@ export default function ExamResult() {
                       {question.explain_ja}
                     </div>
                   </div>
+
+                  {question.topic_tag && getTextbookPageByTopicTag(question.topic_tag) && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="mt-2"
+                      onClick={() => navigate(`/textbook?topic=${question.topic_tag}`)}
+                      data-testid={`button-review-question-${index + 1}`}
+                    >
+                      <BookOpen className="w-4 h-4 mr-1" />
+                      この問題を復習
+                    </Button>
+                  )}
                 </div>
               ))}
             </CardContent>

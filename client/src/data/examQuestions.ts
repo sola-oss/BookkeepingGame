@@ -7,6 +7,7 @@ export interface ExamQuestion {
     credit: { account_id: string; amount: number };
   };
   explain_ja: string;
+  topic_tag?: string;
 }
 
 export const examQuestions: ExamQuestion[] = [
@@ -29,6 +30,7 @@ export const examQuestions: ExamQuestion[] = [
       credit: { account_id: "sales", amount: 5000 },
     },
     explain_ja: "現金（資産）が増加するので借方、売上（収益）が発生するので貸方に記入します。",
+    topic_tag: "purchases_sales",
   },
   {
     id: "E003",
@@ -39,6 +41,7 @@ export const examQuestions: ExamQuestion[] = [
       credit: { account_id: "borrowings", amount: 3000 },
     },
     explain_ja: "現金（資産）が増加するので借方、借入金（負債）が増加するので貸方に記入します。",
+    topic_tag: "borrowings",
   },
   {
     id: "E004",
@@ -49,6 +52,7 @@ export const examQuestions: ExamQuestion[] = [
       credit: { account_id: "cash", amount: 1500 },
     },
     explain_ja: "仕入（費用）が発生するので借方、現金（資産）が減少するので貸方に記入します。",
+    topic_tag: "purchases_sales",
   },
   {
     id: "E005",
@@ -69,6 +73,7 @@ export const examQuestions: ExamQuestion[] = [
       credit: { account_id: "sales", amount: 2500 },
     },
     explain_ja: "売掛金（資産）が増加するので借方、売上（収益）が発生するので貸方に記入します。",
+    topic_tag: "receivables_payables",
   },
   {
     id: "E007",
@@ -79,6 +84,7 @@ export const examQuestions: ExamQuestion[] = [
       credit: { account_id: "accounts_payable", amount: 1200 },
     },
     explain_ja: "仕入（費用）が発生するので借方、買掛金（負債）が増加するので貸方に記入します。",
+    topic_tag: "receivables_payables",
   },
   {
     id: "E008",
@@ -89,6 +95,7 @@ export const examQuestions: ExamQuestion[] = [
       credit: { account_id: "accounts_receivable", amount: 4000 },
     },
     explain_ja: "現金（資産）が増加するので借方、売掛金（資産）が減少するので貸方に記入します。",
+    topic_tag: "receivables_payables",
   },
   {
     id: "E009",
@@ -99,6 +106,7 @@ export const examQuestions: ExamQuestion[] = [
       credit: { account_id: "cash", amount: 2000 },
     },
     explain_ja: "買掛金（負債）が減少するので借方、現金（資産）が減少するので貸方に記入します。",
+    topic_tag: "receivables_payables",
   },
   {
     id: "E010",
@@ -109,6 +117,7 @@ export const examQuestions: ExamQuestion[] = [
       credit: { account_id: "cash", amount: 1000 },
     },
     explain_ja: "給料（費用）が発生するので借方、現金（資産）が減少するので貸方に記入します。",
+    topic_tag: "salary_expenses",
   },
   {
     id: "E011",
@@ -119,6 +128,7 @@ export const examQuestions: ExamQuestion[] = [
       credit: { account_id: "cash", amount: 600 },
     },
     explain_ja: "水道光熱費（費用）が発生するので借方、現金（資産）が減少するので貸方に記入します。",
+    topic_tag: "salary_expenses",
   },
   {
     id: "E012",
@@ -149,6 +159,7 @@ export const examQuestions: ExamQuestion[] = [
       credit: { account_id: "cash", amount: 200 },
     },
     explain_ja: "支払利息（費用）が発生するので借方、現金（資産）が減少するので貸方に記入します。",
+    topic_tag: "borrowings",
   },
   {
     id: "E015",
