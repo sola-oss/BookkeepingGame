@@ -1,24 +1,31 @@
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Play, BookOpen, Settings, Trophy, Flame, Target, Award, FileText } from "lucide-react";
+import { Play, BookOpen, Settings, Trophy, Flame, Target, Award, FileText, ArrowRightLeft, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGame } from "@/context/GameContext";
+import { useJournal } from "@/context/JournalContext";
 import { getLastAccuracy, getLastScore } from "@/lib/storage";
 import { getEarnedBadges, badgeDefinitions } from "@shared/schema";
 
 export default function Home() {
   const [, navigate] = useLocation();
   const { state, dispatch } = useGame();
+  const { dispatch: journalDispatch } = useJournal();
   const { userData } = state;
 
   const lastAccuracy = getLastAccuracy(userData);
   const lastScore = getLastScore(userData);
   const earnedBadges = getEarnedBadges(userData);
 
-  const handleStart = () => {
+  const handleStartClassification = () => {
     dispatch({ type: "START_GAME" });
     navigate("/game");
+  };
+
+  const handleStartJournal = () => {
+    journalDispatch({ type: "START_JOURNAL_GAME" });
+    navigate("/journal");
   };
 
   return (
@@ -93,15 +100,39 @@ export default function Home() {
           transition={{ duration: 0.3, delay: 0.1 }}
           className="space-y-3"
         >
-          <Button
-            size="lg"
-            className="w-full text-lg py-6 gap-3"
-            onClick={handleStart}
-            data-testid="button-start-game"
-          >
-            <Play className="w-6 h-6" />
-            スタート
-          </Button>
+          <div className="grid grid-cols-2 gap-3">
+            <Card
+              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
+              onClick={handleStartClassification}
+              data-testid="button-start-classification"
+            >
+              <CardContent className="pt-6 pb-4 text-center space-y-2">
+                <div className="w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <Layers className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-bold text-foreground">分類モード</h3>
+                <p className="text-xs text-muted-foreground">
+                  勘定科目を5要素に分類
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card
+              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
+              onClick={handleStartJournal}
+              data-testid="button-start-journal"
+            >
+              <CardContent className="pt-6 pb-4 text-center space-y-2">
+                <div className="w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <ArrowRightLeft className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-bold text-foreground">仕訳モード</h3>
+                <p className="text-xs text-muted-foreground">
+                  借方・貸方を完成させる
+                </p>
+              </CardContent>
+            </Card>
+          </div>
 
           <div className="grid grid-cols-4 gap-2">
             <Button
@@ -155,7 +186,7 @@ export default function Home() {
           <Card className="bg-muted/50 border-border">
             <CardContent className="py-4">
               <p className="text-sm text-muted-foreground text-center">
-                勘定科目を5要素（資産・負債・純資産・収益・費用）に分類して、簿記の基礎を学びましょう！
+                分類モードで科目を覚えたら、仕訳モードで実際の取引を練習しましょう！
               </p>
             </CardContent>
           </Card>
