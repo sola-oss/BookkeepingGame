@@ -1,13 +1,18 @@
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { ArrowLeft, Search, BookOpen, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Search, BookOpen, AlertTriangle, Tag, FileText, Lightbulb, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { 
-  accounts3kyu, 
   searchAccounts, 
   sortAccountsByKana, 
   sortAccountsByCategory,
@@ -30,15 +35,13 @@ const filterOptions: { value: CategoryFilter; label: string }[] = [
   { value: "other", label: "その他" },
 ];
 
-const SCROLL_KEY = "accountListScrollPosition";
-
 export default function AccountList() {
   const [, navigate] = useLocation();
   const { state } = useGame();
   const [searchQuery, setSearchQuery] = useState("");
   const [sortMode, setSortMode] = useState<SortMode>("kana");
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
-  const scrollRestored = useRef(false);
+  const [selectedAccount, setSelectedAccount] = useState<Account3Kyu | null>(null);
 
   const weakAccounts = state.userData.weakAccounts;
 
@@ -49,22 +52,15 @@ export default function AccountList() {
       : sortAccountsByCategory(filtered);
   }, [searchQuery, sortMode, categoryFilter]);
 
-  useEffect(() => {
-    if (!scrollRestored.current) {
-      const savedPosition = sessionStorage.getItem(SCROLL_KEY);
-      if (savedPosition) {
-        setTimeout(() => {
-          window.scrollTo(0, parseInt(savedPosition, 10));
-        }, 50);
-      }
-      scrollRestored.current = true;
-    }
-  }, []);
-
   const handleAccountClick = (account: Account3Kyu) => {
-    sessionStorage.setItem(SCROLL_KEY, String(window.scrollY));
-    navigate(`/account/${account.id}`);
+    setSelectedAccount(account);
   };
+
+  const handleCloseModal = () => {
+    setSelectedAccount(null);
+  };
+
+  const mistakeCount = selectedAccount ? (weakAccounts[selectedAccount.id] || 0) : 0;
 
   return (
     <div className="min-h-screen bg-background">
@@ -141,7 +137,7 @@ export default function AccountList() {
 
         <div className="space-y-2">
           {filteredAndSortedAccounts.map((account, index) => {
-            const mistakeCount = weakAccounts[account.id] || 0;
+            const itemMistakeCount = weakAccounts[account.id] || 0;
             
             return (
               <motion.div
@@ -169,10 +165,10 @@ export default function AccountList() {
                         </Badge>
                       </div>
                       
-                      {mistakeCount > 0 && (
+                      {itemMistakeCount > 0 && (
                         <div className="flex items-center gap-1 text-destructive shrink-0">
                           <AlertTriangle className="w-4 h-4" />
-                          <span className="text-xs font-medium">{mistakeCount}</span>
+                          <span className="text-xs font-medium">{itemMistakeCount}</span>
                         </div>
                       )}
                     </div>
@@ -189,6 +185,76 @@ export default function AccountList() {
           )}
         </div>
       </main>
+
+      <Dialog open={!!selectedAccount} onOpenChange={(open) => !open && handleCloseModal()}>
+        <DialogContent className="max-w-md max-h-[85vh] overflow-y-auto">
+          {selectedAccount && (
+            <>
+              <DialogHeader>
+                <div className="flex items-start justify-between gap-2">
+                  <DialogTitle className="text-xl">
+                    {selectedAccount.canonical_name_ja}
+                  </DialogTitle>
+                  {mistakeCount > 0 && (
+                    <div className="flex items-center gap-1 text-destructive">
+                      <AlertTriangle className="w-4 h-4" />
+                      <span className="text-xs font-medium">ミス{mistakeCount}回</span>
+                    </div>
+                  )}
+                </div>
+                <Badge 
+                  variant="secondary" 
+                  className={`w-fit ${categoryColors[selectedAccount.category5]}`}
+                >
+                  {categoryLabels[selectedAccount.category5]}
+                </Badge>
+              </DialogHeader>
+
+              <div className="space-y-4 mt-4">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <FileText className="w-4 h-4" />
+                    <span className="text-sm font-medium">説明</span>
+                  </div>
+                  <p className="text-foreground">{selectedAccount.definition_ja}</p>
+                </div>
+
+                {selectedAccount.synonyms_ja && selectedAccount.synonyms_ja.length > 0 && (
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <Tag className="w-4 h-4" />
+                      <span className="text-sm font-medium">別名・表記ゆれ</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {selectedAccount.synonyms_ja.map((synonym, index) => (
+                        <Badge key={index} variant="outline">
+                          {synonym}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {selectedAccount.example_entry_ja && (
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <Lightbulb className="w-4 h-4" />
+                      <span className="text-sm font-medium">仕訳例</span>
+                    </div>
+                    <Card className="bg-muted/50">
+                      <CardContent className="py-3">
+                        <code className="text-sm font-mono text-foreground">
+                          {selectedAccount.example_entry_ja}
+                        </code>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
