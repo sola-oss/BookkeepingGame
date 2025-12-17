@@ -1,16 +1,28 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useExamContext } from "@/context/ExamContext";
 import { getAccountById } from "@/data/accounts";
 import { getTextbookPageByTopicTag } from "@/data/textbookPages";
-import { Home, RotateCcw, Check, X, AlertCircle, BookOpen } from "lucide-react";
+import { Home, RotateCcw, Check, X, AlertCircle, BookOpen, CheckCircle2, XCircle, Lightbulb, AlertTriangle, HelpCircle } from "lucide-react";
+import type { TextbookPage } from "@shared/schema";
 
 export default function ExamResult() {
   const [, navigate] = useLocation();
   const { state, getScore, resetExam } = useExamContext();
+  const [selectedPage, setSelectedPage] = useState<TextbookPage | null>(null);
+  const [showQuizAnswer, setShowQuizAnswer] = useState(false);
 
   useEffect(() => {
     if (state.phase !== "result") {
@@ -58,8 +70,16 @@ export default function ExamResult() {
     });
     return Array.from(topicTags)
       .map(tag => getTextbookPageByTopicTag(tag))
-      .filter(Boolean);
+      .filter(Boolean) as TextbookPage[];
   }, [wrongQuestions]);
+
+  const openTextbookModal = (topicTag: string) => {
+    const page = getTextbookPageByTopicTag(topicTag);
+    if (page) {
+      setSelectedPage(page);
+      setShowQuizAnswer(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background p-4">
@@ -109,14 +129,14 @@ export default function ExamResult() {
               <div className="flex flex-wrap gap-2">
                 {suggestedTopics.map((topic) => (
                   <Button
-                    key={topic!.id}
+                    key={topic.id}
                     variant="outline"
                     size="sm"
-                    onClick={() => navigate(`/textbook?topic=${topic!.topicTag}`)}
-                    data-testid={`button-review-${topic!.id}`}
+                    onClick={() => openTextbookModal(topic.topicTag)}
+                    data-testid={`button-review-${topic.id}`}
                   >
                     <BookOpen className="w-4 h-4 mr-1" />
-                    {topic!.title}
+                    {topic.title}
                   </Button>
                 ))}
               </div>
@@ -187,7 +207,7 @@ export default function ExamResult() {
                       variant="ghost"
                       size="sm"
                       className="mt-2"
-                      onClick={() => navigate(`/textbook?topic=${question.topic_tag}`)}
+                      onClick={() => openTextbookModal(question.topic_tag!)}
                       data-testid={`button-review-question-${index + 1}`}
                     >
                       <BookOpen className="w-4 h-4 mr-1" />
@@ -211,6 +231,127 @@ export default function ExamResult() {
           </Button>
         </div>
       </div>
+
+      <Dialog open={!!selectedPage} onOpenChange={(open) => !open && setSelectedPage(null)}>
+        <DialogContent className="max-w-2xl max-h-[90vh] p-0">
+          {selectedPage && (
+            <>
+              <DialogHeader className="p-6 pb-0">
+                <DialogTitle className="text-xl flex items-center gap-2">
+                  <BookOpen className="w-5 h-5" />
+                  {selectedPage.title}
+                </DialogTitle>
+                <DialogDescription>{selectedPage.subtitle}</DialogDescription>
+              </DialogHeader>
+              <ScrollArea className="max-h-[70vh] px-6 pb-6">
+                <div className="space-y-6 pt-4">
+                  <div className="p-4 bg-primary/10 rounded-md">
+                    <div className="flex items-start gap-2">
+                      <Lightbulb className="w-5 h-5 text-primary mt-0.5" />
+                      <div>
+                        <h3 className="font-semibold mb-1">一言まとめ</h3>
+                        <p className="text-sm">{selectedPage.summary}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  <div>
+                    <h3 className="font-semibold mb-3 flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      よくある取引パターン
+                    </h3>
+                    <div className="space-y-3">
+                      {selectedPage.transactionPatterns.map((pattern, idx) => (
+                        <div key={idx} className="p-3 bg-muted/50 rounded-md space-y-1">
+                          <p className="text-sm font-medium">{pattern.scenario}</p>
+                          <p className="text-sm font-mono text-primary">{pattern.journalEntry}</p>
+                          <p className="text-xs text-muted-foreground">{pattern.explanation}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  <div>
+                    <h3 className="font-semibold mb-3 flex items-center gap-2">
+                      <AlertTriangle className="w-4 h-4 text-orange-500" />
+                      間違えがちなポイント
+                    </h3>
+                    <div className="space-y-2">
+                      {selectedPage.commonMistakes.map((mistake, idx) => (
+                        <div key={idx} className="p-3 bg-destructive/10 rounded-md">
+                          <div className="flex items-start gap-2">
+                            <XCircle className="w-4 h-4 text-destructive mt-0.5" />
+                            <div>
+                              <p className="text-sm font-medium">{mistake.ngExample}</p>
+                              <p className="text-xs text-muted-foreground mt-1">{mistake.reason}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  <div>
+                    <h3 className="font-semibold mb-3 flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-blue-500" />
+                      見分けチェック
+                    </h3>
+                    <div className="space-y-2">
+                      {selectedPage.checklist.map((item, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-sm">
+                          {item.answer === "yes" ? (
+                            <CheckCircle2 className="w-4 h-4 text-green-500" />
+                          ) : (
+                            <XCircle className="w-4 h-4 text-red-500" />
+                          )}
+                          <span>{item.question}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  <div>
+                    <h3 className="font-semibold mb-3 flex items-center gap-2">
+                      <HelpCircle className="w-4 h-4 text-purple-500" />
+                      ミニ問題
+                    </h3>
+                    <div className="p-4 bg-muted/50 rounded-md space-y-3">
+                      <p className="font-medium">{selectedPage.miniQuiz.question}</p>
+                      {showQuizAnswer ? (
+                        <div className="p-3 bg-green-500/10 rounded-md">
+                          <p className="text-sm font-semibold text-green-700 dark:text-green-400">
+                            答え: {selectedPage.miniQuiz.answer}
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {selectedPage.miniQuiz.explanation}
+                          </p>
+                        </div>
+                      ) : (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setShowQuizAnswer(true)}
+                          data-testid="button-show-quiz-answer"
+                        >
+                          答えを見る
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </ScrollArea>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
