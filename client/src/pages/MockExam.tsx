@@ -300,41 +300,41 @@ export default function MockExam() {
         </div>
       </main>
 
-      <footer className="sticky bottom-0 bg-background border-t p-2 sm:p-3">
-        <div className="max-w-2xl mx-auto flex items-center justify-between gap-2">
+      <footer className="sticky bottom-0 z-40 bg-background border-t p-3 pb-4 sm:pb-3">
+        <div className="max-w-2xl mx-auto flex items-center justify-center gap-3">
           <Button
             variant="outline"
-            size="sm"
             onClick={goPrev}
             disabled={state.currentSectionIndex === 0 && state.currentQuestionIndex === 0}
             data-testid="button-prev"
+            className="flex-1 max-w-[100px] h-12"
           >
-            <ChevronLeft className="w-4 h-4" />
-            <span className="hidden sm:inline ml-1">前へ</span>
+            <ChevronLeft className="w-5 h-5" />
+            <span className="ml-1">前へ</span>
           </Button>
 
           <Button
             variant="default"
-            size="sm"
             onClick={openReviewSheet}
             data-testid="button-submit-open"
+            className="flex-1 max-w-[140px] h-12"
           >
-            <Send className="w-4 h-4" />
-            <span className="ml-1">提出</span>
+            <Send className="w-5 h-5" />
+            <span className="ml-2">提出する</span>
           </Button>
 
           <Button
             variant="outline"
-            size="sm"
             onClick={goNext}
             disabled={
               state.currentSectionIndex === state.exam.sections.length - 1 &&
               state.currentQuestionIndex === section.questions.length - 1
             }
             data-testid="button-next"
+            className="flex-1 max-w-[100px] h-12"
           >
-            <span className="hidden sm:inline mr-1">次へ</span>
-            <ChevronRight className="w-4 h-4" />
+            <span className="mr-1">次へ</span>
+            <ChevronRight className="w-5 h-5" />
           </Button>
         </div>
       </footer>
