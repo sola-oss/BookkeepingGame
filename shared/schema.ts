@@ -17,6 +17,7 @@ export const accountSchema = z.object({
   category: z.enum(categoryTypes),
   explanation_ja: z.string(),
   examples_ja: z.string().optional(),
+  synonyms_ja: z.array(z.string()).optional(),
 });
 
 export type Account = z.infer<typeof accountSchema>;

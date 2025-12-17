@@ -7,6 +7,7 @@ export const accounts: Account[] = [
     category: "asset",
     explanation_ja: "手元にある通貨や小切手など、すぐに使えるお金",
     examples_ja: "現金 100 / 売上 100",
+    synonyms_ja: ["げんきん", "手許現金", "手許金", "キャッシュ"],
   },
   {
     id: "accounts_receivable",
@@ -14,6 +15,7 @@ export const accounts: Account[] = [
     category: "asset",
     explanation_ja: "商品を売ったがまだ代金を受け取っていない債権",
     examples_ja: "売掛金 500 / 売上 500",
+    synonyms_ja: ["うりかけきん", "売掛", "売上債権"],
   },
   {
     id: "notes_receivable",
@@ -21,6 +23,7 @@ export const accounts: Account[] = [
     category: "asset",
     explanation_ja: "手形で受け取った将来の支払い約束",
     examples_ja: "受取手形 300 / 売掛金 300",
+    synonyms_ja: ["うけとりてがた", "受手"],
   },
   {
     id: "merchandise",
@@ -28,6 +31,7 @@ export const accounts: Account[] = [
     category: "asset",
     explanation_ja: "販売目的で仕入れた在庫",
     examples_ja: "商品 200 / 買掛金 200",
+    synonyms_ja: ["しょうひん", "在庫商品", "棚卸商品"],
   },
   {
     id: "supplies",
@@ -35,6 +39,7 @@ export const accounts: Account[] = [
     category: "asset",
     explanation_ja: "事務用品など短期間で使い切る物品",
     examples_ja: "消耗品 50 / 現金 50",
+    synonyms_ja: ["しょうもうひん", "事務用消耗品"],
   },
   {
     id: "equipment",
@@ -42,6 +47,7 @@ export const accounts: Account[] = [
     category: "asset",
     explanation_ja: "机や椅子など事業で使用する設備",
     examples_ja: "備品 100 / 現金 100",
+    synonyms_ja: ["びひん", "什器備品", "什器", "オフィス備品"],
   },
   {
     id: "building",
@@ -49,6 +55,7 @@ export const accounts: Account[] = [
     category: "asset",
     explanation_ja: "事業で使用する店舗や事務所の建物",
     examples_ja: "建物 5000 / 現金 5000",
+    synonyms_ja: ["たてもの", "店舗", "事務所建物"],
   },
   {
     id: "land",
@@ -56,6 +63,7 @@ export const accounts: Account[] = [
     category: "asset",
     explanation_ja: "事業で使用する土地",
     examples_ja: "土地 10000 / 現金 10000",
+    synonyms_ja: ["とち"],
   },
   {
     id: "prepaid_expenses",
@@ -63,6 +71,7 @@ export const accounts: Account[] = [
     category: "asset",
     explanation_ja: "まだサービスを受けていないが先に支払った費用",
     examples_ja: "前払費用 120 / 現金 120",
+    synonyms_ja: ["まえばらいひよう", "前払い費用"],
   },
   {
     id: "accrued_income",
@@ -70,6 +79,7 @@ export const accounts: Account[] = [
     category: "asset",
     explanation_ja: "商品売買以外で発生したまだ受け取っていない代金",
     examples_ja: "未収入金 80 / 受取利息 80",
+    synonyms_ja: ["みしゅうにゅうきん", "未収金"],
   },
   {
     id: "accounts_payable",
@@ -77,6 +87,7 @@ export const accounts: Account[] = [
     category: "liability",
     explanation_ja: "商品を仕入れたがまだ代金を払っていない債務",
     examples_ja: "仕入 500 / 買掛金 500",
+    synonyms_ja: ["かいかけきん", "買掛", "仕入債務"],
   },
   {
     id: "notes_payable",
@@ -84,6 +95,7 @@ export const accounts: Account[] = [
     category: "liability",
     explanation_ja: "手形で約束した将来の支払い義務",
     examples_ja: "買掛金 300 / 支払手形 300",
+    synonyms_ja: ["しはらいてがた", "支手"],
   },
   {
     id: "borrowings",
@@ -91,6 +103,7 @@ export const accounts: Account[] = [
     category: "liability",
     explanation_ja: "銀行などから借りたお金で返済義務がある",
     examples_ja: "現金 1000 / 借入金 1000",
+    synonyms_ja: ["かりいれきん", "借入", "銀行借入金"],
   },
   {
     id: "unearned_revenue",
@@ -98,6 +111,7 @@ export const accounts: Account[] = [
     category: "liability",
     explanation_ja: "まだ商品を渡していないが先に受け取った代金",
     examples_ja: "現金 200 / 前受金 200",
+    synonyms_ja: ["まえうけきん", "前受け金"],
   },
   {
     id: "accrued_expenses",
@@ -105,6 +119,7 @@ export const accounts: Account[] = [
     category: "liability",
     explanation_ja: "サービスを受けたがまだ支払っていない費用",
     examples_ja: "支払利息 50 / 未払費用 50",
+    synonyms_ja: ["みばらいひよう", "未払い費用"],
   },
   {
     id: "capital",
@@ -112,6 +127,7 @@ export const accounts: Account[] = [
     category: "equity",
     explanation_ja: "オーナーが出資した元手となるお金",
     examples_ja: "現金 1000 / 資本金 1000",
+    synonyms_ja: ["しほんきん", "元入金", "出資金"],
   },
   {
     id: "retained_earnings",
@@ -119,6 +135,7 @@ export const accounts: Account[] = [
     category: "equity",
     explanation_ja: "過去の利益を積み立てたもの",
     examples_ja: "損益 500 / 繰越利益剰余金 500",
+    synonyms_ja: ["くりこしりえきじょうよきん", "利益剰余金", "留保利益"],
   },
   {
     id: "sales",
@@ -126,6 +143,7 @@ export const accounts: Account[] = [
     category: "revenue",
     explanation_ja: "商品やサービスを販売して得た収入",
     examples_ja: "現金 1000 / 売上 1000",
+    synonyms_ja: ["うりあげ", "売上高", "売上金"],
   },
   {
     id: "interest_income",
@@ -133,6 +151,7 @@ export const accounts: Account[] = [
     category: "revenue",
     explanation_ja: "預金や貸付金から受け取った利息",
     examples_ja: "現金 10 / 受取利息 10",
+    synonyms_ja: ["うけとりりそく", "利息収入"],
   },
   {
     id: "commission_income",
@@ -140,6 +159,7 @@ export const accounts: Account[] = [
     category: "revenue",
     explanation_ja: "仲介などのサービスで受け取った手数料",
     examples_ja: "現金 50 / 受取手数料 50",
+    synonyms_ja: ["うけとりてすうりょう", "手数料収入"],
   },
   {
     id: "purchases",
@@ -147,6 +167,7 @@ export const accounts: Account[] = [
     category: "expense",
     explanation_ja: "販売目的で商品を購入した費用",
     examples_ja: "仕入 500 / 現金 500",
+    synonyms_ja: ["しいれ", "仕入高", "商品仕入"],
   },
   {
     id: "salary",
@@ -154,6 +175,7 @@ export const accounts: Account[] = [
     category: "expense",
     explanation_ja: "従業員に支払う賃金",
     examples_ja: "給料 300 / 現金 300",
+    synonyms_ja: ["きゅうりょう", "給与", "賃金", "人件費"],
   },
   {
     id: "rent",
@@ -161,6 +183,7 @@ export const accounts: Account[] = [
     category: "expense",
     explanation_ja: "店舗や事務所の家賃",
     examples_ja: "支払家賃 100 / 現金 100",
+    synonyms_ja: ["しはらいやちん", "家賃", "賃借料", "地代家賃"],
   },
   {
     id: "utilities",
@@ -168,6 +191,7 @@ export const accounts: Account[] = [
     category: "expense",
     explanation_ja: "電気・ガス・水道などの料金",
     examples_ja: "水道光熱費 30 / 現金 30",
+    synonyms_ja: ["すいどうこうねつひ", "光熱費", "電気代", "ガス代", "水道代"],
   },
   {
     id: "communication",
@@ -175,6 +199,7 @@ export const accounts: Account[] = [
     category: "expense",
     explanation_ja: "電話やインターネットの料金",
     examples_ja: "通信費 20 / 現金 20",
+    synonyms_ja: ["つうしんひ", "電話代", "インターネット代"],
   },
   {
     id: "travel",
@@ -182,6 +207,7 @@ export const accounts: Account[] = [
     category: "expense",
     explanation_ja: "出張や通勤にかかる交通費",
     examples_ja: "旅費交通費 15 / 現金 15",
+    synonyms_ja: ["りょひこうつうひ", "交通費", "出張費", "旅費"],
   },
   {
     id: "advertising",
@@ -189,6 +215,7 @@ export const accounts: Account[] = [
     category: "expense",
     explanation_ja: "広告や宣伝にかかる費用",
     examples_ja: "広告宣伝費 80 / 現金 80",
+    synonyms_ja: ["こうこくせんでんひ", "広告費", "宣伝費"],
   },
   {
     id: "interest_expense",
@@ -196,6 +223,7 @@ export const accounts: Account[] = [
     category: "expense",
     explanation_ja: "借入金などに対して支払う利息",
     examples_ja: "支払利息 25 / 現金 25",
+    synonyms_ja: ["しはらいりそく", "利息", "借入利息"],
   },
   {
     id: "depreciation",
@@ -203,6 +231,7 @@ export const accounts: Account[] = [
     category: "expense",
     explanation_ja: "固定資産の価値減少を費用計上したもの",
     examples_ja: "減価償却費 100 / 備品 100",
+    synonyms_ja: ["げんかしょうきゃくひ", "償却費"],
   },
   {
     id: "supplies_expense",
@@ -210,6 +239,7 @@ export const accounts: Account[] = [
     category: "expense",
     explanation_ja: "消耗品を使用した際の費用",
     examples_ja: "消耗品費 30 / 消耗品 30",
+    synonyms_ja: ["しょうもうひんひ", "事務用品費"],
   },
 ];
 
@@ -257,6 +287,7 @@ export const advancedAccounts: Account[] = [
     category: "asset",
     explanation_ja: "事業で使用するトラックや自動車などの車両",
     examples_ja: "車両運搬具 2000 / 現金 2000",
+    synonyms_ja: ["しゃりょううんぱんぐ", "車両", "自動車", "トラック"],
   },
   {
     id: "software",
@@ -264,6 +295,7 @@ export const advancedAccounts: Account[] = [
     category: "asset",
     explanation_ja: "業務で使用するコンピュータプログラム",
     examples_ja: "ソフトウェア 500 / 現金 500",
+    synonyms_ja: ["そふとうぇあ", "ソフト"],
   },
   {
     id: "investment_securities",
@@ -271,6 +303,7 @@ export const advancedAccounts: Account[] = [
     category: "asset",
     explanation_ja: "投資目的で保有する株式や債券",
     examples_ja: "有価証券 1000 / 現金 1000",
+    synonyms_ja: ["ゆうかしょうけん", "株式", "債券", "投資有価証券"],
   },
   {
     id: "deposits",
@@ -278,6 +311,7 @@ export const advancedAccounts: Account[] = [
     category: "asset",
     explanation_ja: "賃貸物件の敷金など、将来返還される保証金",
     examples_ja: "差入保証金 200 / 現金 200",
+    synonyms_ja: ["さしいれほしょうきん", "敷金", "保証金"],
   },
   {
     id: "temporary_payments",
@@ -285,6 +319,7 @@ export const advancedAccounts: Account[] = [
     category: "asset",
     explanation_ja: "使途不明または精算前の仮払い",
     examples_ja: "仮払金 50 / 現金 50",
+    synonyms_ja: ["かりばらいきん", "仮払い金"],
   },
   {
     id: "advance_payments",
@@ -292,6 +327,7 @@ export const advancedAccounts: Account[] = [
     category: "asset",
     explanation_ja: "商品購入の前に支払った内金",
     examples_ja: "前払金 100 / 現金 100",
+    synonyms_ja: ["まえばらいきん", "前払い金", "内金", "手付金"],
   },
   {
     id: "long_term_loans",
@@ -299,6 +335,7 @@ export const advancedAccounts: Account[] = [
     category: "liability",
     explanation_ja: "返済期限が1年を超える借入金",
     examples_ja: "現金 5000 / 長期借入金 5000",
+    synonyms_ja: ["ちょうきかりいれきん", "長期借入"],
   },
   {
     id: "deposits_received",
@@ -306,6 +343,7 @@ export const advancedAccounts: Account[] = [
     category: "liability",
     explanation_ja: "従業員から預かった源泉税など",
     examples_ja: "給料 300 / 預り金 30 / 現金 270",
+    synonyms_ja: ["あずかりきん", "預かり金", "源泉預り金"],
   },
   {
     id: "temporary_receipts",
@@ -313,6 +351,7 @@ export const advancedAccounts: Account[] = [
     category: "liability",
     explanation_ja: "内容不明または勘定科目未確定の受入金",
     examples_ja: "現金 100 / 仮受金 100",
+    synonyms_ja: ["かりうけきん", "仮受け金"],
   },
   {
     id: "allowance",
@@ -320,6 +359,7 @@ export const advancedAccounts: Account[] = [
     category: "liability",
     explanation_ja: "回収不能になるかもしれない売掛金の見積もり",
     examples_ja: "貸倒引当金繰入 10 / 貸倒引当金 10",
+    synonyms_ja: ["かしだおれひきあてきん", "引当金"],
   },
   {
     id: "bad_debt_expense",
@@ -327,6 +367,7 @@ export const advancedAccounts: Account[] = [
     category: "expense",
     explanation_ja: "貸倒引当金を設定する際の費用",
     examples_ja: "貸倒引当金繰入 20 / 貸倒引当金 20",
+    synonyms_ja: ["かしだおれひきあてきんくりいれ", "貸倒繰入"],
   },
   {
     id: "dividend_income",
@@ -334,6 +375,7 @@ export const advancedAccounts: Account[] = [
     category: "revenue",
     explanation_ja: "保有株式から受け取った配当金",
     examples_ja: "現金 50 / 受取配当金 50",
+    synonyms_ja: ["うけとりはいとうきん", "配当金収入"],
   },
   {
     id: "rental_income",
@@ -341,6 +383,7 @@ export const advancedAccounts: Account[] = [
     category: "revenue",
     explanation_ja: "不動産を貸して受け取った賃料",
     examples_ja: "現金 80 / 受取地代家賃 80",
+    synonyms_ja: ["うけとりちだいやちん", "受取家賃", "家賃収入"],
   },
   {
     id: "miscellaneous_income",
@@ -348,6 +391,7 @@ export const advancedAccounts: Account[] = [
     category: "revenue",
     explanation_ja: "本業以外で発生した少額の収入",
     examples_ja: "現金 5 / 雑収入 5",
+    synonyms_ja: ["ざっしゅうにゅう", "雑益"],
   },
   {
     id: "insurance_expense",
@@ -355,6 +399,7 @@ export const advancedAccounts: Account[] = [
     category: "expense",
     explanation_ja: "火災保険や自動車保険などの支払い",
     examples_ja: "保険料 60 / 現金 60",
+    synonyms_ja: ["ほけんりょう", "支払保険料"],
   },
   {
     id: "repair_expense",
@@ -362,6 +407,7 @@ export const advancedAccounts: Account[] = [
     category: "expense",
     explanation_ja: "建物や設備の修理費用",
     examples_ja: "修繕費 100 / 現金 100",
+    synonyms_ja: ["しゅうぜんひ", "修理費"],
   },
   {
     id: "tax_expense",
@@ -369,6 +415,7 @@ export const advancedAccounts: Account[] = [
     category: "expense",
     explanation_ja: "固定資産税や印紙税などの税金・公課",
     examples_ja: "租税公課 40 / 現金 40",
+    synonyms_ja: ["そぜいこうか", "税金", "公租公課"],
   },
   {
     id: "entertainment_expense",
@@ -376,6 +423,7 @@ export const advancedAccounts: Account[] = [
     category: "expense",
     explanation_ja: "取引先への接待や贈答品の費用",
     examples_ja: "接待交際費 30 / 現金 30",
+    synonyms_ja: ["せったいこうさいひ", "交際費", "接待費"],
   },
   {
     id: "miscellaneous_expense",
@@ -383,6 +431,7 @@ export const advancedAccounts: Account[] = [
     category: "expense",
     explanation_ja: "他の費用に分類できない少額の支出",
     examples_ja: "雑費 10 / 現金 10",
+    synonyms_ja: ["ざっぴ", "雑損"],
   },
   {
     id: "loss_on_sale",
@@ -390,6 +439,7 @@ export const advancedAccounts: Account[] = [
     category: "expense",
     explanation_ja: "固定資産を帳簿価額より安く売却した損失",
     examples_ja: "現金 800 / 備品 1000 / 固定資産売却損 200",
+    synonyms_ja: ["こていしさんばいきゃくそん", "売却損"],
   },
 ];
 
