@@ -215,28 +215,16 @@ export default function Home() {
             </Card>
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
-            <Button
-              variant="outline"
-              size="lg"
-              className="py-4 flex-col gap-1"
-              onClick={() => navigate("/statements")}
-              data-testid="button-statements"
-            >
-              <FileText className="w-5 h-5" />
-              <span className="text-xs">財務諸表</span>
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="py-4 flex-col gap-1"
-              onClick={() => navigate("/settings")}
-              data-testid="button-settings-main"
-            >
-              <Settings className="w-5 h-5" />
-              <span className="text-xs">設定</span>
-            </Button>
-          </div>
+          <Button
+            variant="outline"
+            size="lg"
+            className="w-full py-4 flex-col gap-1"
+            onClick={() => navigate("/statements")}
+            data-testid="button-statements"
+          >
+            <FileText className="w-5 h-5" />
+            <span className="text-xs">財務諸表</span>
+          </Button>
         </motion.section>
 
         <motion.section
