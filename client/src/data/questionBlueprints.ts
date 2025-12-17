@@ -93,7 +93,7 @@ export const journalBlueprints: JournalBlueprint[] = [
     },
     answerTemplate: {
       debit: { accountId: "accounts_payable", amountKey: "amount" },
-      credit: { accountId: "checking_account", amountKey: "amount" },
+      credit: { accountId: "cash", amountKey: "amount" },
     },
     explainJa: "買掛金（負債）が減少するので借方、当座預金（資産）が減少するので貸方に記入します。",
     topicTag: "receivables_payables",
@@ -219,8 +219,8 @@ export const journalBlueprints: JournalBlueprint[] = [
       amount: [15000, 80000],
     },
     answerTemplate: {
-      debit: { accountId: "utilities_expense", amountKey: "amount" },
-      credit: { accountId: "ordinary_deposit", amountKey: "amount" },
+      debit: { accountId: "utilities", amountKey: "amount" },
+      credit: { accountId: "cash", amountKey: "amount" },
     },
     explainJa: "水道光熱費（費用）が発生するので借方、普通預金（資産）が減少するので貸方に記入します。",
     topicTag: "salary_expenses",
@@ -235,7 +235,7 @@ export const journalBlueprints: JournalBlueprint[] = [
       amount: [8000, 30000],
     },
     answerTemplate: {
-      debit: { accountId: "communication_expense", amountKey: "amount" },
+      debit: { accountId: "communication", amountKey: "amount" },
       credit: { accountId: "cash", amountKey: "amount" },
     },
     explainJa: "通信費（費用）が発生するので借方、現金（資産）が減少するので貸方に記入します。",
@@ -250,7 +250,7 @@ export const journalBlueprints: JournalBlueprint[] = [
       amount: [10000, 50000],
     },
     answerTemplate: {
-      debit: { accountId: "advances_paid", amountKey: "amount" },
+      debit: { accountId: "temporary_payments", amountKey: "amount" },
       credit: { accountId: "cash", amountKey: "amount" },
     },
     explainJa: "立替金（資産）が増加するので借方、現金（資産）が減少するので貸方に記入します。",
