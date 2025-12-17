@@ -14,26 +14,6 @@ export const categoryLabels: Record<CategoryType, string> = {
   expense: "費用",
 };
 
-export const entrySides = ["debit", "credit"] as const;
-export type EntrySide = typeof entrySides[number];
-
-export const entrySideLabels: Record<EntrySide, string> = {
-  debit: "借方",
-  credit: "貸方",
-};
-
-export const entrySideDescriptions: Record<EntrySide, string> = {
-  debit: "資産・費用",
-  credit: "負債・純資産・収益",
-};
-
-export function categoryToEntrySide(category: CategoryType): EntrySide {
-  if (category === "asset" || category === "expense") {
-    return "debit";
-  }
-  return "credit";
-}
-
 export const accountSchema = z.object({
   id: z.string(),
   name_ja: z.string(),
