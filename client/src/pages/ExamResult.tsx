@@ -192,13 +192,13 @@ export default function ExamResult() {
                     <div className="flex items-center gap-2">
                       <span className="font-semibold w-16">正解:</span>
                       <div className="flex-1 text-green-600 dark:text-green-400">
-                        借方: {getAccountName(question.answer.debit.account_id)} {question.answer.debit.amount}
+                        借方: {getAccountName(question.answer?.debit?.account_id || "")} {question.answer?.debit?.amount ?? ""}
                         {" / "}
-                        貸方: {getAccountName(question.answer.credit.account_id)} {question.answer.credit.amount}
+                        貸方: {getAccountName(question.answer?.credit?.account_id || "")} {question.answer?.credit?.amount ?? ""}
                       </div>
                     </div>
                     <div className="text-muted-foreground mt-1">
-                      {question.explain_ja}
+                      {question.explain_ja || ""}
                     </div>
                   </div>
 
