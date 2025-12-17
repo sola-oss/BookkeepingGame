@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { useMockExamContext } from "@/context/MockExamContext";
+import { useMockExamContext, type JournalAnswer, type LedgerAnswer } from "@/context/MockExamContext";
 import { getTextbookPageByTopicTag } from "@/data/textbookPages";
 import { Home, RotateCcw, Check, X, BookOpen, Lightbulb, CheckCircle2, AlertTriangle, XCircle, HelpCircle } from "lucide-react";
 import type { TextbookPage, GeneratedQuestion } from "@shared/schema";
@@ -177,6 +177,7 @@ export default function MockExamResult() {
             <CardContent className="space-y-4">
               {wrongResults.map((result, idx) => {
                 const question = getQuestionById(result.questionId);
+                const userAnswer = state.answers.get(result.questionId);
                 if (!question) return null;
 
                 return (
@@ -189,8 +190,25 @@ export default function MockExamResult() {
                       <Badge variant="outline">{result.sectionType === "shiwake" ? "仕訳" : result.sectionType === "kanjokiyo" ? "勘定記入" : "決算"}</Badge>
                       <span className="text-sm">{result.earnedPoints}/{result.maxPoints}点</span>
                     </div>
+                    
+                    {result.sectionType === "shiwake" && userAnswer && (
+                      <div className="text-sm space-y-1">
+                        <p className="text-red-600 dark:text-red-400">
+                          あなた: 借方 {(userAnswer as JournalAnswer).debitAccount || "(未入力)"} {(userAnswer as JournalAnswer).debitAmount || ""} / 貸方 {(userAnswer as JournalAnswer).creditAccount || "(未入力)"} {(userAnswer as JournalAnswer).creditAmount || ""}
+                        </p>
+                      </div>
+                    )}
+                    
+                    {result.sectionType === "kanjokiyo" && userAnswer && (
+                      <div className="text-sm space-y-1">
+                        <p className="text-red-600 dark:text-red-400">
+                          あなた: {(userAnswer as LedgerAnswer).entries.map((e, i) => `${e.amount || "(未入力)"}`).join(", ")}
+                        </p>
+                      </div>
+                    )}
+                    
                     {result.feedback && (
-                      <p className="text-sm text-muted-foreground">{result.feedback}</p>
+                      <p className="text-sm text-green-600 dark:text-green-400">{result.feedback}</p>
                     )}
                     {question.topicTag && getTextbookPageByTopicTag(question.topicTag) && (
                       <Button
