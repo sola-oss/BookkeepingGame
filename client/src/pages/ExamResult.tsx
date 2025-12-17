@@ -170,22 +170,22 @@ export default function ExamResult() {
                       <div className="flex-1">
                         <span
                           className={
-                            result.feedback.debitAccountCorrect
+                            result.feedback?.debitAccountCorrect
                               ? "text-green-600 dark:text-green-400"
                               : "text-red-600 dark:text-red-400"
                           }
                         >
-                          借方: {answer.debitAccount || "(未入力)"} {answer.debitAmount || ""}
+                          借方: {answer?.debitAccount || "(未入力)"} {answer?.debitAmount ? answer.debitAmount : ""}
                         </span>
                         {" / "}
                         <span
                           className={
-                            result.feedback.creditAccountCorrect
+                            result.feedback?.creditAccountCorrect
                               ? "text-green-600 dark:text-green-400"
                               : "text-red-600 dark:text-red-400"
                           }
                         >
-                          貸方: {answer.creditAccount || "(未入力)"} {answer.creditAmount || ""}
+                          貸方: {answer?.creditAccount || "(未入力)"} {answer?.creditAmount ? answer.creditAmount : ""}
                         </span>
                       </div>
                     </div>
