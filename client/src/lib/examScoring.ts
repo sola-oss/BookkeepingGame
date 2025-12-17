@@ -1,4 +1,4 @@
-import { allAccounts } from "@/data/accounts";
+import { accounts3kyu, normalizeAccountName as normalize3kyu } from "@/data/accounts3kyu";
 
 export function normalizeAccountName(input: string): string {
   if (!input) return "";
@@ -48,25 +48,25 @@ export function mapInputToAccountId(input: string): AccountMatch | null {
   const normalizedInput = normalizeAccountName(input);
   if (!normalizedInput) return null;
   
-  for (const account of allAccounts) {
-    const normalizedCanonical = normalizeAccountName(account.name_ja);
+  for (const account of accounts3kyu) {
+    const normalizedCanonical = normalizeAccountName(account.canonical_name_ja);
     if (normalizedCanonical === normalizedInput) {
       return {
         id: account.id,
-        name_ja: account.name_ja,
+        name_ja: account.canonical_name_ja,
         matchType: "exact",
       };
     }
   }
   
-  for (const account of allAccounts) {
+  for (const account of accounts3kyu) {
     if (account.synonyms_ja) {
       for (const synonym of account.synonyms_ja) {
         const normalizedSynonym = normalizeAccountName(synonym);
         if (normalizedSynonym === normalizedInput) {
           return {
             id: account.id,
-            name_ja: account.name_ja,
+            name_ja: account.canonical_name_ja,
             matchType: "synonym",
           };
         }

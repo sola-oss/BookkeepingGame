@@ -19,6 +19,8 @@ import ExamStart from "@/pages/ExamStart";
 import ExamMode from "@/pages/ExamMode";
 import ExamReview from "@/pages/ExamReview";
 import ExamResult from "@/pages/ExamResult";
+import AccountList from "@/pages/AccountList";
+import AccountDetail from "@/pages/AccountDetail";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -37,6 +39,8 @@ function Router() {
       <Route path="/exam" component={ExamMode} />
       <Route path="/exam-review" component={ExamReview} />
       <Route path="/exam-result" component={ExamResult} />
+      <Route path="/accounts" component={AccountList} />
+      <Route path="/account/:id" component={AccountDetail} />
       <Route component={NotFound} />
     </Switch>
   );

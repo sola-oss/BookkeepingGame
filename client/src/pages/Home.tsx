@@ -1,6 +1,6 @@
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Play, BookOpen, Settings, Trophy, Flame, Target, Award, FileText, ArrowRightLeft, Layers, PenLine } from "lucide-react";
+import { Play, BookOpen, Settings, Trophy, Flame, Target, Award, FileText, ArrowRightLeft, Layers, PenLine, Library } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGame } from "@/context/GameContext";
@@ -150,7 +150,17 @@ export default function Home() {
             </Card>
           </div>
 
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-5 gap-2">
+            <Button
+              variant="outline"
+              size="lg"
+              className="py-5 flex-col gap-1"
+              onClick={() => navigate("/accounts")}
+              data-testid="button-accounts"
+            >
+              <Library className="w-5 h-5" />
+              <span className="text-xs">辞書</span>
+            </Button>
             <Button
               variant="outline"
               size="lg"
@@ -179,7 +189,7 @@ export default function Home() {
               data-testid="button-statements"
             >
               <FileText className="w-5 h-5" />
-              <span className="text-xs">財務諸表</span>
+              <span className="text-xs">財表</span>
             </Button>
             <Button
               variant="outline"

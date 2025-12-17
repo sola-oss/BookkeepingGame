@@ -1,8 +1,26 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode } from "react";
-import type { Account, GameSettings, UserData, GameResult, CategoryType } from "@shared/schema";
+import type { Account, GameSettings, UserData, GameResult, CategoryType, Account3Kyu } from "@shared/schema";
 import { defaultUserData } from "@shared/schema";
 import { loadUserData, saveUserData, updateStreak, addGameResult } from "@/lib/storage";
-import { getAccountsByDifficulty } from "@/data/accounts";
+import { accounts3kyu } from "@/data/accounts3kyu";
+
+function convert3KyuToAccount(a: Account3Kyu): Account {
+  const category = a.category5 === "other" ? "asset" : a.category5;
+  return {
+    id: a.id,
+    name_ja: a.canonical_name_ja,
+    category: category as CategoryType,
+    explanation_ja: a.definition_ja,
+    examples_ja: a.example_entry_ja,
+    synonyms_ja: a.synonyms_ja,
+  };
+}
+
+function getAllAccounts3Kyu(): Account[] {
+  return accounts3kyu
+    .filter((a) => a.category5 !== "other")
+    .map(convert3KyuToAccount);
+}
 
 type GamePhase = "idle" | "playing" | "result";
 
@@ -82,7 +100,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 
     case "START_GAME": {
       const { settings } = state.userData;
-      const allAccounts = getAccountsByDifficulty(settings.difficulty);
+      const allAccounts = getAllAccounts3Kyu();
       const shuffled = shuffleArray(allAccounts);
       const selected = shuffled.slice(0, Math.min(settings.cardCount, shuffled.length));
       
