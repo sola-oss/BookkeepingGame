@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { ArrowLeft, Search, BookOpen, AlertTriangle } from "lucide-react";
@@ -30,12 +30,15 @@ const filterOptions: { value: CategoryFilter; label: string }[] = [
   { value: "other", label: "その他" },
 ];
 
+const SCROLL_KEY = "accountListScrollPosition";
+
 export default function AccountList() {
   const [, navigate] = useLocation();
   const { state } = useGame();
   const [searchQuery, setSearchQuery] = useState("");
   const [sortMode, setSortMode] = useState<SortMode>("kana");
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
+  const scrollRestored = useRef(false);
 
   const weakAccounts = state.userData.weakAccounts;
 
@@ -46,7 +49,20 @@ export default function AccountList() {
       : sortAccountsByCategory(filtered);
   }, [searchQuery, sortMode, categoryFilter]);
 
+  useEffect(() => {
+    if (!scrollRestored.current) {
+      const savedPosition = sessionStorage.getItem(SCROLL_KEY);
+      if (savedPosition) {
+        setTimeout(() => {
+          window.scrollTo(0, parseInt(savedPosition, 10));
+        }, 50);
+      }
+      scrollRestored.current = true;
+    }
+  }, []);
+
   const handleAccountClick = (account: Account3Kyu) => {
+    sessionStorage.setItem(SCROLL_KEY, String(window.scrollY));
     navigate(`/account/${account.id}`);
   };
 
