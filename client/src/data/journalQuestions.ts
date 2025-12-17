@@ -36,13 +36,13 @@ export const journalQuestions: JournalQuestion[] = [
   {
     id: "j003",
     level: "easy",
-    prompt_ja: "銀行から3,000円を借り入れ、普通預金に入金した。",
+    prompt_ja: "銀行から3,000円を借り入れ、現金で受け取った。",
     amount: 3000,
     answer: {
-      debit: { account_id: "bank_deposit", amount: 3000 },
+      debit: { account_id: "cash", amount: 3000 },
       credit: { account_id: "borrowings", amount: 3000 },
     },
-    explain_ja: "普通預金（資産）が増加するので借方、借入金（負債）が増加するので貸方に記入します。",
+    explain_ja: "現金（資産）が増加するので借方、借入金（負債）が増加するので貸方に記入します。",
   },
   {
     id: "j004",
@@ -61,7 +61,7 @@ export const journalQuestions: JournalQuestion[] = [
     prompt_ja: "家賃800円を現金で支払った。",
     amount: 800,
     answer: {
-      debit: { account_id: "rent_expense", amount: 800 },
+      debit: { account_id: "rent", amount: 800 },
       credit: { account_id: "cash", amount: 800 },
     },
     explain_ja: "支払家賃（費用）が発生するので借方、現金（資産）が減少するので貸方に記入します。",
@@ -116,7 +116,7 @@ export const journalQuestions: JournalQuestion[] = [
     prompt_ja: "給料1,000円を現金で支払った。",
     amount: 1000,
     answer: {
-      debit: { account_id: "salaries_expense", amount: 1000 },
+      debit: { account_id: "salary", amount: 1000 },
       credit: { account_id: "cash", amount: 1000 },
     },
     explain_ja: "給料（費用）が発生するので借方、現金（資産）が減少するので貸方に記入します。",
@@ -127,7 +127,7 @@ export const journalQuestions: JournalQuestion[] = [
     prompt_ja: "水道光熱費600円を現金で支払った。",
     amount: 600,
     answer: {
-      debit: { account_id: "utilities_expense", amount: 600 },
+      debit: { account_id: "utilities", amount: 600 },
       credit: { account_id: "cash", amount: 600 },
     },
     explain_ja: "水道光熱費（費用）が発生するので借方、現金（資産）が減少するので貸方に記入します。",
@@ -138,7 +138,7 @@ export const journalQuestions: JournalQuestion[] = [
     prompt_ja: "通信費500円を現金で支払った。",
     amount: 500,
     answer: {
-      debit: { account_id: "communication_expense", amount: 500 },
+      debit: { account_id: "communication", amount: 500 },
       credit: { account_id: "cash", amount: 500 },
     },
     explain_ja: "通信費（費用）が発生するので借方、現金（資産）が減少するので貸方に記入します。",
@@ -146,13 +146,13 @@ export const journalQuestions: JournalQuestion[] = [
   {
     id: "j013",
     level: "easy",
-    prompt_ja: "受取利息300円が普通預金に振り込まれた。",
+    prompt_ja: "受取利息300円を現金で受け取った。",
     amount: 300,
     answer: {
-      debit: { account_id: "bank_deposit", amount: 300 },
+      debit: { account_id: "cash", amount: 300 },
       credit: { account_id: "interest_income", amount: 300 },
     },
-    explain_ja: "普通預金（資産）が増加するので借方、受取利息（収益）が発生するので貸方に記入します。",
+    explain_ja: "現金（資産）が増加するので借方、受取利息（収益）が発生するので貸方に記入します。",
   },
   {
     id: "j014",
