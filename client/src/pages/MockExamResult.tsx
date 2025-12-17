@@ -189,7 +189,9 @@ export default function MockExamResult() {
                       <Badge variant="outline">{result.sectionType === "shiwake" ? "仕訳" : result.sectionType === "kanjokiyo" ? "勘定記入" : "決算"}</Badge>
                       <span className="text-sm">{result.earnedPoints}/{result.maxPoints}点</span>
                     </div>
-                    <p className="text-sm text-muted-foreground">{result.feedback}</p>
+                    {result.feedback && (
+                      <p className="text-sm text-muted-foreground">{result.feedback}</p>
+                    )}
                     {question.topicTag && getTextbookPageByTopicTag(question.topicTag) && (
                       <Button
                         variant="ghost"
