@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { GameProvider } from "@/context/GameContext";
 import { JournalProvider } from "@/context/JournalContext";
+import { ExamProvider } from "@/context/ExamContext";
 import Home from "@/pages/Home";
 import Game from "@/pages/Game";
 import Result from "@/pages/Result";
@@ -14,6 +15,10 @@ import Badges from "@/pages/Badges";
 import FinancialStatements from "@/pages/FinancialStatements";
 import JournalMode from "@/pages/JournalMode";
 import JournalResult from "@/pages/JournalResult";
+import ExamStart from "@/pages/ExamStart";
+import ExamMode from "@/pages/ExamMode";
+import ExamReview from "@/pages/ExamReview";
+import ExamResult from "@/pages/ExamResult";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -28,6 +33,10 @@ function Router() {
       <Route path="/statements" component={FinancialStatements} />
       <Route path="/journal" component={JournalMode} />
       <Route path="/journal-result" component={JournalResult} />
+      <Route path="/exam-start" component={ExamStart} />
+      <Route path="/exam" component={ExamMode} />
+      <Route path="/exam-review" component={ExamReview} />
+      <Route path="/exam-result" component={ExamResult} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -39,8 +48,10 @@ function App() {
       <TooltipProvider>
         <GameProvider>
           <JournalProvider>
-            <Toaster />
-            <Router />
+            <ExamProvider>
+              <Toaster />
+              <Router />
+            </ExamProvider>
           </JournalProvider>
         </GameProvider>
       </TooltipProvider>

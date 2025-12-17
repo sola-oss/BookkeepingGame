@@ -1,6 +1,6 @@
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Play, BookOpen, Settings, Trophy, Flame, Target, Award, FileText, ArrowRightLeft, Layers } from "lucide-react";
+import { Play, BookOpen, Settings, Trophy, Flame, Target, Award, FileText, ArrowRightLeft, Layers, PenLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGame } from "@/context/GameContext";
@@ -100,19 +100,19 @@ export default function Home() {
           transition={{ duration: 0.3, delay: 0.1 }}
           className="space-y-3"
         >
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
             <Card
               className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
               onClick={handleStartClassification}
               data-testid="button-start-classification"
             >
-              <CardContent className="pt-6 pb-4 text-center space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <Layers className="w-6 h-6 text-primary" />
+              <CardContent className="pt-4 pb-3 text-center space-y-2">
+                <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <Layers className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="font-bold text-foreground">分類モード</h3>
+                <h3 className="font-bold text-foreground text-sm">分類</h3>
                 <p className="text-xs text-muted-foreground">
-                  勘定科目を5要素に分類
+                  5要素に分類
                 </p>
               </CardContent>
             </Card>
@@ -122,13 +122,29 @@ export default function Home() {
               onClick={handleStartJournal}
               data-testid="button-start-journal"
             >
-              <CardContent className="pt-6 pb-4 text-center space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <ArrowRightLeft className="w-6 h-6 text-primary" />
+              <CardContent className="pt-4 pb-3 text-center space-y-2">
+                <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <ArrowRightLeft className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="font-bold text-foreground">仕訳モード</h3>
+                <h3 className="font-bold text-foreground text-sm">仕訳</h3>
                 <p className="text-xs text-muted-foreground">
-                  借方・貸方を完成させる
+                  選択式
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card
+              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
+              onClick={() => navigate("/exam-start")}
+              data-testid="button-start-exam"
+            >
+              <CardContent className="pt-4 pb-3 text-center space-y-2">
+                <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <PenLine className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="font-bold text-foreground text-sm">試験</h3>
+                <p className="text-xs text-muted-foreground">
+                  記述式
                 </p>
               </CardContent>
             </Card>
@@ -186,7 +202,7 @@ export default function Home() {
           <Card className="bg-muted/50 border-border">
             <CardContent className="py-4">
               <p className="text-sm text-muted-foreground text-center">
-                分類モードで科目を覚えたら、仕訳モードで実際の取引を練習しましょう！
+                分類で科目を覚え、仕訳で取引を練習、試験モードで力試し！
               </p>
             </CardContent>
           </Card>
