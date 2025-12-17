@@ -132,3 +132,48 @@ export function getNewBadges(userData: UserData, previousBadges: BadgeId[]): Bad
   const current = getEarnedBadges(userData);
   return current.filter(id => !previousBadges.includes(id));
 }
+
+export const transactionPatternSchema = z.object({
+  scenario: z.string(),
+  journalEntry: z.string(),
+  explanation: z.string(),
+});
+
+export type TransactionPattern = z.infer<typeof transactionPatternSchema>;
+
+export const commonMistakeSchema = z.object({
+  ngExample: z.string(),
+  reason: z.string(),
+});
+
+export type CommonMistake = z.infer<typeof commonMistakeSchema>;
+
+export const checklistItemSchema = z.object({
+  question: z.string(),
+  answer: z.enum(["yes", "no"]),
+});
+
+export type ChecklistItem = z.infer<typeof checklistItemSchema>;
+
+export const miniQuizSchema = z.object({
+  question: z.string(),
+  answer: z.string(),
+  explanation: z.string(),
+});
+
+export type MiniQuiz = z.infer<typeof miniQuizSchema>;
+
+export const textbookPageSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  subtitle: z.string(),
+  topicTag: z.string(),
+  keywords: z.array(z.string()),
+  summary: z.string(),
+  transactionPatterns: z.array(transactionPatternSchema),
+  commonMistakes: z.array(commonMistakeSchema),
+  checklist: z.array(checklistItemSchema),
+  miniQuiz: miniQuizSchema,
+});
+
+export type TextbookPage = z.infer<typeof textbookPageSchema>;

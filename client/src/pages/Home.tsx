@@ -150,51 +150,84 @@ export default function Home() {
             </Card>
           </div>
 
-          <div className="grid grid-cols-5 gap-2">
-            <Button
-              variant="outline"
-              size="lg"
-              className="py-5 flex-col gap-1"
+          <div className="grid grid-cols-4 gap-2">
+            <Card
+              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
+              onClick={() => navigate("/textbook")}
+              data-testid="button-textbook"
+            >
+              <CardContent className="pt-4 pb-3 text-center space-y-2">
+                <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <BookOpen className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="font-bold text-foreground text-sm">教科書</h3>
+                <p className="text-xs text-muted-foreground">
+                  考え方を学ぶ
+                </p>
+              </CardContent>
+            </Card>
+            <Card
+              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
               onClick={() => navigate("/accounts")}
               data-testid="button-accounts"
             >
-              <Library className="w-5 h-5" />
-              <span className="text-xs">辞書</span>
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="py-5 flex-col gap-1"
+              <CardContent className="pt-4 pb-3 text-center space-y-2">
+                <div className="w-10 h-10 mx-auto rounded-full bg-muted flex items-center justify-center">
+                  <Library className="w-5 h-5 text-muted-foreground" />
+                </div>
+                <h3 className="font-bold text-foreground text-sm">辞書</h3>
+                <p className="text-xs text-muted-foreground">
+                  科目一覧
+                </p>
+              </CardContent>
+            </Card>
+            <Card
+              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
               onClick={() => navigate("/weakpoints")}
               data-testid="button-weakpoints"
             >
-              <BookOpen className="w-5 h-5" />
-              <span className="text-xs">弱点帳</span>
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="py-5 flex-col gap-1"
+              <CardContent className="pt-4 pb-3 text-center space-y-2">
+                <div className="w-10 h-10 mx-auto rounded-full bg-muted flex items-center justify-center">
+                  <Target className="w-5 h-5 text-muted-foreground" />
+                </div>
+                <h3 className="font-bold text-foreground text-sm">弱点帳</h3>
+                <p className="text-xs text-muted-foreground">
+                  苦手克服
+                </p>
+              </CardContent>
+            </Card>
+            <Card
+              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
               onClick={() => navigate("/badges")}
               data-testid="button-badges"
             >
-              <Award className="w-5 h-5" />
-              <span className="text-xs">{earnedBadges.length}/{badgeDefinitions.length}</span>
-            </Button>
+              <CardContent className="pt-4 pb-3 text-center space-y-2">
+                <div className="w-10 h-10 mx-auto rounded-full bg-muted flex items-center justify-center">
+                  <Award className="w-5 h-5 text-muted-foreground" />
+                </div>
+                <h3 className="font-bold text-foreground text-sm">バッジ</h3>
+                <p className="text-xs text-muted-foreground">
+                  {earnedBadges.length}/{badgeDefinitions.length}
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2">
             <Button
               variant="outline"
               size="lg"
-              className="py-5 flex-col gap-1"
+              className="py-4 flex-col gap-1"
               onClick={() => navigate("/statements")}
               data-testid="button-statements"
             >
               <FileText className="w-5 h-5" />
-              <span className="text-xs">財表</span>
+              <span className="text-xs">財務諸表</span>
             </Button>
             <Button
               variant="outline"
               size="lg"
-              className="py-5 flex-col gap-1"
+              className="py-4 flex-col gap-1"
               onClick={() => navigate("/settings")}
               data-testid="button-settings-main"
             >

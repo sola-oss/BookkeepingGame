@@ -21,6 +21,7 @@ import ExamReview from "@/pages/ExamReview";
 import ExamResult from "@/pages/ExamResult";
 import AccountList from "@/pages/AccountList";
 import AccountDetail from "@/pages/AccountDetail";
+import TextbookList from "@/pages/TextbookList";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -41,6 +42,7 @@ function Router() {
       <Route path="/exam-result" component={ExamResult} />
       <Route path="/accounts" component={AccountList} />
       <Route path="/account/:id" component={AccountDetail} />
+      <Route path="/textbook" component={TextbookList} />
       <Route component={NotFound} />
     </Switch>
   );
