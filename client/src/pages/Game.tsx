@@ -199,10 +199,7 @@ export default function Game() {
               </AnimatePresence>
             </div>
           </section>
-        <DragOverlay dropAnimation={{
-              duration: 200,
-              easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)",
-            }}>
+        <DragOverlay dropAnimation={null}>
               {activeCard ? <DragOverlayCard account={activeCard} /> : null}
             </DragOverlay>
           </DndContext>
