@@ -1,15 +1,15 @@
 import { useState, useCallback, useEffect } from "react";
 import { useLocation } from "wouter";
-import { DndContext, DragEndEvent, DragStartEvent, DragOverEvent, pointerWithin, TouchSensor, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { DndContext, DragEndEvent, DragStartEvent, DragOverEvent, DragOverlay, pointerWithin, TouchSensor, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useGame } from "@/context/GameContext";
-import { DraggableCard } from "@/components/game/DraggableCard";
+import { DraggableCard, DragOverlayCard } from "@/components/game/DraggableCard";
 import { DroppableCategory } from "@/components/game/DroppableCategory";
 import { FeedbackOverlay } from "@/components/game/FeedbackOverlay";
 import { ScoreDisplay } from "@/components/game/ScoreDisplay";
-import { categoryTypes, type CategoryType } from "@shared/schema";
+import { categoryTypes, type CategoryType, type Account } from "@shared/schema";
 
 export default function Game() {
   const [, navigate] = useLocation();
@@ -17,6 +17,7 @@ export default function Game() {
   const { remainingCards, currentCards, score, combo, timeLeft, userData, phase, showFeedback, lastAnswerFeedback } = state;
 
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [activeCard, setActiveCard] = useState<Account | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
   const [categoryFeedback, setCategoryFeedback] = useState<Record<CategoryType, "correct" | "wrong" | null>>({
     asset: null,
@@ -54,8 +55,11 @@ export default function Game() {
   }, [phase, state.lastResult, navigate]);
 
   const handleDragStart = useCallback((event: DragStartEvent) => {
-    setActiveId(event.active.id as string);
-  }, []);
+    const id = event.active.id as string;
+    setActiveId(id);
+    const card = remainingCards.find((c) => c.id === id);
+    setActiveCard(card || null);
+  }, [remainingCards]);
 
   const handleDragOver = useCallback((event: DragOverEvent) => {
     setOverId(event.over?.id as string | null);
@@ -63,6 +67,7 @@ export default function Game() {
 
   const handleDragEnd = useCallback((event: DragEndEvent) => {
     setActiveId(null);
+    setActiveCard(null);
     setOverId(null);
 
     const { active, over } = event;
@@ -194,7 +199,13 @@ export default function Game() {
               </AnimatePresence>
             </div>
           </section>
-        </DndContext>
+        <DragOverlay dropAnimation={{
+              duration: 200,
+              easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)",
+            }}>
+              {activeCard ? <DragOverlayCard account={activeCard} /> : null}
+            </DragOverlay>
+          </DndContext>
       </main>
 
       <FeedbackOverlay

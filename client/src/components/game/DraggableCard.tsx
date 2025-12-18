@@ -1,6 +1,5 @@
 import { forwardRef } from "react";
 import { useDraggable } from "@dnd-kit/core";
-import { CSS } from "@dnd-kit/utilities";
 import type { Account } from "@shared/schema";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
@@ -12,15 +11,10 @@ interface DraggableCardProps {
 
 export const DraggableCard = forwardRef<HTMLDivElement, DraggableCardProps>(
   function DraggableCard({ account, isDragging: externalDragging }, forwardedRef) {
-    const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
       id: account.id,
       data: { account },
     });
-
-    const style = {
-      transform: CSS.Translate.toString(transform),
-      touchAction: "none" as const,
-    };
 
     const dragging = isDragging || externalDragging;
 
@@ -34,13 +28,16 @@ export const DraggableCard = forwardRef<HTMLDivElement, DraggableCardProps>(
             forwardedRef.current = node;
           }
         }}
-        style={style}
+        style={{ touchAction: "none" }}
         {...listeners}
         {...attributes}
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
+        animate={{ 
+          opacity: dragging ? 0.3 : 1, 
+          scale: dragging ? 0.95 : 1 
+        }}
         exit={{ opacity: 0, scale: 0.8, y: -20 }}
-        transition={{ duration: 0.2 }}
+        transition={{ duration: 0.15 }}
         className="touch-none"
         data-testid={`card-account-${account.id}`}
       >
@@ -48,8 +45,8 @@ export const DraggableCard = forwardRef<HTMLDivElement, DraggableCardProps>(
           className={`
             px-4 py-3 cursor-grab select-none
             bg-card border-card-border
-            transition-all duration-150
-            ${dragging ? "opacity-70 scale-105 shadow-lg rotate-2 cursor-grabbing z-50" : "hover-elevate"}
+            transition-shadow duration-150
+            ${dragging ? "cursor-grabbing" : "hover-elevate"}
           `}
         >
           <span className="text-base font-medium text-foreground whitespace-nowrap">
@@ -60,3 +57,30 @@ export const DraggableCard = forwardRef<HTMLDivElement, DraggableCardProps>(
     );
   }
 );
+
+interface DragOverlayCardProps {
+  account: Account;
+}
+
+export function DragOverlayCard({ account }: DragOverlayCardProps) {
+  return (
+    <motion.div
+      initial={{ scale: 1, rotate: 0 }}
+      animate={{ scale: 1.08, rotate: 2 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      style={{ pointerEvents: "none" }}
+    >
+      <Card
+        className="
+          px-4 py-3 cursor-grabbing select-none
+          bg-card border-card-border
+          shadow-xl ring-2 ring-primary/30
+        "
+      >
+        <span className="text-base font-medium text-foreground whitespace-nowrap">
+          {account.name_ja}
+        </span>
+      </Card>
+    </motion.div>
+  );
+}
