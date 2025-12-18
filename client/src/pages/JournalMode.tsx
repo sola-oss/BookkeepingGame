@@ -1,4 +1,7 @@
+import { useState, useCallback } from "react";
 import { useLocation } from "wouter";
+import { DndContext, DragEndEvent, DragStartEvent, DragOverEvent, DragOverlay, pointerWithin, TouchSensor, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Check, X, ArrowRight, ArrowRightLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,20 +9,136 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useJournal } from "@/context/JournalContext";
 import { getAccountById } from "@/data/accounts";
-import { categoryLabels } from "@shared/schema";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { useState } from "react";
+import { categoryLabels, type Account } from "@shared/schema";
+
+function DraggableAccountCard({ account, isDragging }: { account: Account; isDragging: boolean }) {
+  const { attributes, listeners, setNodeRef } = useDraggable({
+    id: account.id,
+    data: { account },
+  });
+
+  return (
+    <motion.div
+      ref={setNodeRef}
+      style={{ touchAction: "none" }}
+      {...listeners}
+      {...attributes}
+      animate={{ 
+        opacity: isDragging ? 0.3 : 1, 
+        scale: isDragging ? 0.95 : 1 
+      }}
+      transition={{ duration: 0.15 }}
+      className="touch-none"
+      data-testid={`card-account-${account.id}`}
+    >
+      <Card className={`px-3 py-2 cursor-grab select-none bg-card border-card-border ${isDragging ? "" : "hover-elevate"}`}>
+        <span className="font-medium text-sm text-foreground">{account.name_ja}</span>
+        <Badge variant="secondary" className="ml-2 text-xs">
+          {categoryLabels[account.category]}
+        </Badge>
+      </Card>
+    </motion.div>
+  );
+}
+
+function DragOverlayAccountCard({ account }: { account: Account }) {
+  return (
+    <motion.div
+      initial={{ scale: 1, rotate: 0 }}
+      animate={{ scale: 1.08, rotate: 2 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      style={{ pointerEvents: "none" }}
+    >
+      <Card className="px-3 py-2 cursor-grabbing select-none bg-card border-card-border shadow-xl ring-2 ring-primary/30">
+        <span className="font-medium text-sm text-foreground">{account.name_ja}</span>
+        <Badge variant="secondary" className="ml-2 text-xs">
+          {categoryLabels[account.category]}
+        </Badge>
+      </Card>
+    </motion.div>
+  );
+}
+
+function DroppableZone({ 
+  id, 
+  title, 
+  icon, 
+  colorClass, 
+  isOver, 
+  account,
+  amount,
+  feedbackState,
+}: { 
+  id: string;
+  title: string;
+  icon: React.ReactNode;
+  colorClass: string;
+  isOver: boolean;
+  account: Account | null;
+  amount: number;
+  feedbackState?: "correct" | "wrong" | null;
+}) {
+  const { setNodeRef } = useDroppable({ id });
+
+  return (
+    <motion.div
+      ref={setNodeRef}
+      className={`
+        min-h-[120px] p-3 rounded-lg border-2 transition-colors
+        ${account ? `border-solid ${colorClass}` : "border-dashed border-muted-foreground/30"}
+        ${isOver ? "scale-105 shadow-md bg-muted/50" : ""}
+        ${feedbackState === "correct" ? "ring-4 ring-green-500 bg-green-100 dark:bg-green-900/50" : ""}
+        ${feedbackState === "wrong" ? "ring-4 ring-red-500 bg-red-100 dark:bg-red-900/50" : ""}
+      `}
+      animate={{
+        scale: feedbackState ? [1, 1.05, 0.98, 1] : isOver ? 1.03 : 1,
+      }}
+      transition={{
+        scale: feedbackState ? { duration: 0.3, times: [0, 0.3, 0.6, 1] } : { type: "spring", stiffness: 400, damping: 25 },
+      }}
+      data-testid={`drop-zone-${id}`}
+    >
+      <div className={`text-sm font-bold flex items-center gap-1 mb-2 ${colorClass.replace("border-", "text-").replace("-500", "-600").replace("dark:border-", "dark:text-").replace("-400", "-300")}`}>
+        {icon}
+        {title}
+      </div>
+      {account ? (
+        <div className="space-y-1">
+          <p className="font-medium text-foreground">{account.name_ja}</p>
+          <Badge variant="outline" className="text-xs">
+            {categoryLabels[account.category]}
+          </Badge>
+          <p className="text-sm text-muted-foreground font-mono">
+            {amount.toLocaleString()}円
+          </p>
+        </div>
+      ) : (
+        <p className="text-sm text-muted-foreground">ここにドロップ</p>
+      )}
+    </motion.div>
+  );
+}
 
 export default function JournalMode() {
   const [, navigate] = useLocation();
   const { state, dispatch } = useJournal();
-  const [selectingAccount, setSelectingAccount] = useState<string | null>(null);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const [activeCard, setActiveCard] = useState<Account | null>(null);
+  const [overId, setOverId] = useState<string | null>(null);
+  const [zoneFeedback, setZoneFeedback] = useState<Record<string, "correct" | "wrong" | null>>({
+    debit: null,
+    credit: null,
+  });
+
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: { distance: 5 },
+  });
+  
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: { delay: 100, tolerance: 5 },
+  });
+
+  const sensors = useSensors(mouseSensor, touchSensor);
 
   const currentQuestion = state.questions[state.currentQuestionIndex];
   const progress = state.questions.length > 0
@@ -31,21 +150,41 @@ export default function JournalMode() {
     navigate("/");
   };
 
-  const handleSelectSide = (side: "debit" | "credit") => {
-    if (!selectingAccount) return;
-    dispatch({ type: "SELECT_ACCOUNT", payload: { accountId: selectingAccount, side } });
-    setSelectingAccount(null);
-  };
+  const handleDragStart = useCallback((event: DragStartEvent) => {
+    const id = event.active.id as string;
+    setActiveId(id);
+    const card = state.choices.find((c) => c.id === id);
+    setActiveCard(card || null);
+  }, [state.choices]);
 
-  const handleAccountClick = (accountId: string) => {
-    if (state.selectedDebit === accountId) {
-      dispatch({ type: "SELECT_ACCOUNT", payload: { accountId, side: "debit" } });
-    } else if (state.selectedCredit === accountId) {
-      dispatch({ type: "SELECT_ACCOUNT", payload: { accountId, side: "credit" } });
-    } else {
-      setSelectingAccount(accountId);
-    }
-  };
+  const handleDragOver = useCallback((event: DragOverEvent) => {
+    setOverId(event.over?.id as string | null);
+  }, []);
+
+  const handleDragEnd = useCallback((event: DragEndEvent) => {
+    setActiveId(null);
+    setActiveCard(null);
+    setOverId(null);
+
+    const { active, over } = event;
+    if (!over) return;
+
+    const accountId = active.id as string;
+    const zoneId = over.id as string;
+
+    if (zoneId !== "debit" && zoneId !== "credit") return;
+
+    dispatch({ type: "SELECT_ACCOUNT", payload: { accountId, side: zoneId } });
+
+    setZoneFeedback((prev) => ({
+      ...prev,
+      [zoneId]: "correct",
+    }));
+
+    setTimeout(() => {
+      setZoneFeedback({ debit: null, credit: null });
+    }, 300);
+  }, [dispatch]);
 
   const handleSubmit = () => {
     if (state.selectedDebit && state.selectedCredit) {
@@ -68,9 +207,12 @@ export default function JournalMode() {
     );
   }
 
-  const debitAccount = state.selectedDebit ? getAccountById(state.selectedDebit) : null;
-  const creditAccount = state.selectedCredit ? getAccountById(state.selectedCredit) : null;
-  const selectingAccountData = selectingAccount ? getAccountById(selectingAccount) : null;
+  const debitAccount = state.selectedDebit ? getAccountById(state.selectedDebit) ?? null : null;
+  const creditAccount = state.selectedCredit ? getAccountById(state.selectedCredit) ?? null : null;
+
+  const availableChoices = state.choices.filter(
+    (account) => account.id !== state.selectedDebit && account.id !== state.selectedCredit
+  );
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -129,98 +271,53 @@ export default function JournalMode() {
           </Card>
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-3">
-          <Card
-            className={`min-h-[120px] transition-colors ${
-              state.selectedDebit
-                ? "border-blue-500 bg-blue-500/10"
-                : "border-dashed border-muted-foreground/30"
-            }`}
-          >
-            <CardHeader className="pb-1 pt-3">
-              <CardTitle className="text-sm text-blue-600 dark:text-blue-400 flex items-center gap-1">
-                <ArrowRight className="w-4 h-4" />
-                借方（Debit）
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="pb-3">
-              {debitAccount ? (
-                <div className="space-y-1">
-                  <p className="font-medium text-foreground">{debitAccount.name_ja}</p>
-                  <Badge variant="outline" className="text-xs">
-                    {categoryLabels[debitAccount.category]}
-                  </Badge>
-                  <p className="text-sm text-muted-foreground font-mono">
-                    {currentQuestion.amount.toLocaleString()}円
-                  </p>
-                </div>
-              ) : (
-                <p className="text-sm text-muted-foreground">科目を選択</p>
-              )}
-            </CardContent>
-          </Card>
-
-          <Card
-            className={`min-h-[120px] transition-colors ${
-              state.selectedCredit
-                ? "border-red-500 bg-red-500/10"
-                : "border-dashed border-muted-foreground/30"
-            }`}
-          >
-            <CardHeader className="pb-1 pt-3">
-              <CardTitle className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
-                <ArrowRight className="w-4 h-4 rotate-180" />
-                貸方（Credit）
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="pb-3">
-              {creditAccount ? (
-                <div className="space-y-1">
-                  <p className="font-medium text-foreground">{creditAccount.name_ja}</p>
-                  <Badge variant="outline" className="text-xs">
-                    {categoryLabels[creditAccount.category]}
-                  </Badge>
-                  <p className="text-sm text-muted-foreground font-mono">
-                    {currentQuestion.amount.toLocaleString()}円
-                  </p>
-                </div>
-              ) : (
-                <p className="text-sm text-muted-foreground">科目を選択</p>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-muted-foreground">科目を選んでタップ</p>
-          <div className="grid grid-cols-2 gap-2">
-            {state.choices.map((account) => {
-              const isDebit = state.selectedDebit === account.id;
-              const isCredit = state.selectedCredit === account.id;
-              const isSelected = isDebit || isCredit;
-              
-              return (
-                <Button
-                  key={account.id}
-                  variant={isSelected ? "default" : "outline"}
-                  className={`h-auto py-3 px-3 flex flex-col items-start gap-1 ${
-                    isDebit ? "bg-blue-500 hover:bg-blue-600" : ""
-                  } ${isCredit ? "bg-red-500 hover:bg-red-600" : ""}`}
-                  onClick={() => handleAccountClick(account.id)}
-                  data-testid={`button-account-${account.id}`}
-                >
-                  <span className="font-medium text-sm">{account.name_ja}</span>
-                  <Badge
-                    variant="secondary"
-                    className={`text-xs ${isSelected ? "bg-white/20 text-white" : ""}`}
-                  >
-                    {categoryLabels[account.category]}
-                  </Badge>
-                </Button>
-              );
-            })}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={pointerWithin}
+          onDragStart={handleDragStart}
+          onDragOver={handleDragOver}
+          onDragEnd={handleDragEnd}
+        >
+          <div className="grid grid-cols-2 gap-3">
+            <DroppableZone
+              id="debit"
+              title="借方（Debit）"
+              icon={<ArrowRight className="w-4 h-4" />}
+              colorClass="border-blue-500 dark:border-blue-400"
+              isOver={overId === "debit"}
+              account={debitAccount}
+              amount={currentQuestion.amount}
+              feedbackState={zoneFeedback.debit}
+            />
+            <DroppableZone
+              id="credit"
+              title="貸方（Credit）"
+              icon={<ArrowRight className="w-4 h-4 rotate-180" />}
+              colorClass="border-red-500 dark:border-red-400"
+              isOver={overId === "credit"}
+              account={creditAccount}
+              amount={currentQuestion.amount}
+              feedbackState={zoneFeedback.credit}
+            />
           </div>
-        </div>
+
+          <div className="space-y-2">
+            <p className="text-sm font-medium text-muted-foreground">科目をドラッグして配置</p>
+            <div className="flex flex-wrap gap-2">
+              {availableChoices.map((account) => (
+                <DraggableAccountCard
+                  key={account.id}
+                  account={account}
+                  isDragging={activeId === account.id}
+                />
+              ))}
+            </div>
+          </div>
+
+          <DragOverlay dropAnimation={null}>
+            {activeCard ? <DragOverlayAccountCard account={activeCard} /> : null}
+          </DragOverlay>
+        </DndContext>
 
         {state.selectedDebit && state.selectedCredit && (
           <motion.div
@@ -239,37 +336,6 @@ export default function JournalMode() {
           </motion.div>
         )}
       </main>
-
-      <Dialog open={!!selectingAccount} onOpenChange={() => setSelectingAccount(null)}>
-        <DialogContent className="max-w-xs">
-          <DialogHeader>
-            <DialogTitle>{selectingAccountData?.name_ja}</DialogTitle>
-            <DialogDescription>
-              どちらに入れますか？
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid grid-cols-2 gap-3 mt-4">
-            <Button
-              variant="outline"
-              className="h-auto py-4 flex-col gap-2 border-blue-500 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950"
-              onClick={() => handleSelectSide("debit")}
-              data-testid="button-select-debit"
-            >
-              <ArrowRight className="w-5 h-5" />
-              <span>借方</span>
-            </Button>
-            <Button
-              variant="outline"
-              className="h-auto py-4 flex-col gap-2 border-red-500 text-red-600 hover:bg-red-50 dark:hover:bg-red-950"
-              onClick={() => handleSelectSide("credit")}
-              data-testid="button-select-credit"
-            >
-              <ArrowRight className="w-5 h-5 rotate-180" />
-              <span>貸方</span>
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
 
       <AnimatePresence>
         {state.showFeedback && state.lastFeedback && (
