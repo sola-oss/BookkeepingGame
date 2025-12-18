@@ -222,6 +222,7 @@ export default function JournalMode() {
             <Button variant="ghost" size="icon" onClick={handleBack} data-testid="button-back">
               <ArrowLeft className="w-5 h-5" />
             </Button>
+            <span className="text-sm font-bold text-foreground">仕訳ゲーム</span>
             <div className="flex-1">
               <div className="flex items-center justify-between gap-2 mb-1">
                 <span className="text-sm font-medium text-foreground">
