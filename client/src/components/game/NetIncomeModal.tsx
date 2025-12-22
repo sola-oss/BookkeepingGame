@@ -1,25 +1,9 @@
-import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight, CheckCircle2, TrendingUp, PieChart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean, onClose: () => void, onAction: () => void }) {
-  const [incomeStep, setIncomeStep] = React.useState(0);
-
-  React.useEffect(() => {
-    if (!isOpen) {
-      setIncomeStep(0);
-      return;
-    }
-
-    const timer = setInterval(() => {
-      setIncomeStep(prev => (prev + 1) % 2);
-    }, 5000); // Animation duration (3.5s) + delay (1.5s) approx
-
-    return () => clearInterval(timer);
-  }, [isOpen]);
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -101,8 +85,8 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
                       <div className="flex-1 flex items-center justify-center text-[8px] text-blue-600/60 font-medium">資本</div>
                       <motion.div 
                          initial={{ height: "0%" }}
-                         animate={{ height: incomeStep === 0 ? "20%" : "40%" }}
-                         transition={{ duration: 1, ease: "easeInOut" }}
+                         animate={{ height: "40%" }}
+                         transition={{ delay: 5, duration: 1 }}
                          className="w-full bg-green-500 flex items-center justify-center text-white font-bold text-[7px] shadow-[0_-2px_4px_rgba(0,0,0,0.1)] px-0.5"
                       >
                          当期純利益
