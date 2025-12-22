@@ -3,15 +3,12 @@ import {
   Search, 
   ArrowLeft, 
   ChevronRight, 
-  FileText,
   History
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { 
   GeneralLedger, 
   LedgerAccount,
@@ -41,13 +38,19 @@ export function GeneralLedgerViewer({ ledger }: GeneralLedgerViewerProps) {
   return (
     <div className="flex flex-col h-full bg-background border rounded-xl overflow-hidden shadow-sm">
       {/* Meta Header */}
-      <div className="p-4 bg-muted/30 border-b flex justify-between items-center shrink-0">
-        <div>
-          <h2 className="text-sm font-bold text-foreground">{ledger.meta.companyName}</h2>
-          <p className="text-[10px] text-muted-foreground">{ledger.meta.fyText}</p>
-        </div>
-        <div className="text-[10px] text-muted-foreground bg-background px-2 py-1 rounded border">
-          単位：{ledger.meta.unitText}
+      <div className="p-4 bg-white dark:bg-zinc-950 border-b flex flex-col items-center shrink-0">
+        <h2 className="text-xl font-bold tracking-[0.2em] border-b-2 border-zinc-800 pb-1 mb-2">
+          総勘定元帳
+        </h2>
+        <div className="w-full flex justify-between items-end text-[10px] text-muted-foreground px-2">
+          <div className="flex flex-col">
+            <span className="font-bold">{ledger.meta.companyName}</span>
+            <span>{ledger.meta.fyText}</span>
+          </div>
+          <div className="flex flex-col items-end">
+            <span>頁</span>
+            <span>（単位：{ledger.meta.unitText}）</span>
+          </div>
         </div>
       </div>
 
@@ -128,59 +131,84 @@ export function GeneralLedgerViewer({ ledger }: GeneralLedgerViewerProps) {
 
               {/* Detail Content */}
               <ScrollArea className="flex-1">
-                <div className="p-4 min-w-[500px]">
-                  <table className="w-full border-collapse text-[11px]">
+                <div className="p-4 min-w-[600px] font-serif">
+                  <div className="text-center mb-4">
+                    <h4 className="text-lg font-bold border-b-2 border-double border-zinc-300 inline-block px-12 py-1">
+                      {selectedAccount.account}
+                    </h4>
+                  </div>
+                  <table className="w-full border-collapse text-[11px] border-t-2 border-b-2 border-zinc-800">
                     <thead>
-                      <tr className="bg-muted/30">
-                        <th className="border p-2 text-left font-bold w-20">日付</th>
-                        <th className="border p-2 text-left font-bold">摘要 / 相手科目</th>
-                        <th className="border p-2 text-right font-bold w-24">借方</th>
-                        <th className="border p-2 text-right font-bold w-24">貸方</th>
-                        <th className="border p-2 text-right font-bold w-28">残高</th>
+                      <tr className="border-b border-zinc-800">
+                        <th className="border-r border-zinc-300 p-1 text-center font-bold" colSpan={2}>日付</th>
+                        <th className="border-r border-zinc-300 p-1 text-center font-bold">摘要</th>
+                        <th className="border-r border-zinc-300 p-1 text-center font-bold w-12">仕丁</th>
+                        <th className="border-r border-zinc-300 p-1 text-center font-bold w-24">借方</th>
+                        <th className="border-r border-zinc-300 p-1 text-center font-bold w-24">貸方</th>
+                        <th className="border-r border-zinc-300 p-1 text-center font-bold w-12">借/貸</th>
+                        <th className="p-1 text-center font-bold w-28">残高</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="bg-muted/10 italic">
-                        <td className="border p-2 text-muted-foreground">前期繰越</td>
-                        <td className="border p-2 text-muted-foreground">-</td>
-                        <td className="border p-2 text-right">-</td>
-                        <td className="border p-2 text-right">-</td>
-                        <td className="border p-2 text-right font-mono">
+                      <tr className="border-b border-zinc-200 bg-zinc-50/50 italic">
+                        <td className="border-r border-zinc-300 p-1 text-center w-8"></td>
+                        <td className="border-r border-zinc-300 p-1 text-center w-8"></td>
+                        <td className="border-r border-zinc-300 p-1 text-muted-foreground">前期繰越</td>
+                        <td className="border-r border-zinc-300 p-1 text-center">-</td>
+                        <td className="border-r border-zinc-300 p-1 text-right">-</td>
+                        <td className="border-r border-zinc-300 p-1 text-right">-</td>
+                        <td className="border-r border-zinc-300 p-1 text-center">借</td>
+                        <td className="p-1 text-right font-mono">
                           {selectedAccount.openingBalance.toLocaleString()}
                         </td>
                       </tr>
-                      {selectedAccount.rows.map((row: LedgerRow, idx: number) => (
-                        <tr key={idx} className="hover:bg-muted/20 transition-colors">
-                          <td className="border p-2 font-mono whitespace-nowrap">{row.date}</td>
-                          <td className="border p-2">
-                            <div className="flex flex-col">
-                              <span className="font-medium">{row.memo}</span>
-                              <div className="flex items-center gap-1 mt-0.5 opacity-70">
-                                <Badge variant="secondary" className="text-[8px] py-0 px-1 rounded-sm">
-                                  {row.counterAccount}
-                                </Badge>
-                                <span className="text-[8px] font-mono uppercase tracking-tighter">Ref: {row.sourceEntryId}</span>
+                      {selectedAccount.rows.map((row: LedgerRow, idx: number) => {
+                        const prevRow = idx > 0 ? selectedAccount.rows[idx-1] : null;
+                        const showMonth = !prevRow || prevRow.month !== row.month;
+
+                        return (
+                          <tr key={idx} className="border-b border-zinc-200 hover:bg-zinc-50/50 transition-colors">
+                            <td className="border-r border-zinc-300 p-1 text-center w-8 font-mono">
+                              {showMonth ? row.month : ""}
+                            </td>
+                            <td className="border-r border-zinc-300 p-1 text-center w-8 font-mono">
+                              {row.day}
+                            </td>
+                            <td className="border-r border-zinc-300 p-1">
+                              <div className="flex flex-col">
+                                <span className="font-medium">{row.counterAccount}</span>
+                                {row.memo && row.memo !== selectedAccount.account && (
+                                  <span className="text-[9px] text-muted-foreground opacity-70 italic">{row.memo}</span>
+                                )}
                               </div>
-                            </div>
-                          </td>
-                          <td className="border p-2 text-right font-mono">
-                            {row.debit > 0 ? row.debit.toLocaleString() : "-"}
-                          </td>
-                          <td className="border p-2 text-right font-mono">
-                            {row.credit > 0 ? row.credit.toLocaleString() : "-"}
-                          </td>
-                          <td className="border p-2 text-right font-mono font-bold bg-primary/5">
-                            {row.balance < 0 ? `△${Math.abs(row.balance).toLocaleString()}` : row.balance.toLocaleString()}
-                          </td>
-                        </tr>
-                      ))}
+                            </td>
+                            <td className="border-r border-zinc-300 p-1 text-center font-mono">
+                              {row.postingRef}
+                            </td>
+                            <td className="border-r border-zinc-300 p-1 text-right font-mono">
+                              {row.debit > 0 ? row.debit.toLocaleString() : ""}
+                            </td>
+                            <td className="border-r border-zinc-300 p-1 text-right font-mono">
+                              {row.credit > 0 ? row.credit.toLocaleString() : ""}
+                            </td>
+                            <td className="border-r border-zinc-300 p-1 text-center">
+                              {row.side}
+                            </td>
+                            <td className="p-1 text-right font-mono font-bold">
+                              {row.balance.toLocaleString()}
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
-                    <tfoot>
-                      <tr className="bg-muted/40 font-bold">
-                        <td className="border p-2 text-center" colSpan={2}>合 計</td>
-                        <td className="border p-2 text-right font-mono">{selectedAccount.debitTotal.toLocaleString()}</td>
-                        <td className="border p-2 text-right font-mono">{selectedAccount.creditTotal.toLocaleString()}</td>
-                        <td className="border p-2 text-right font-mono text-primary">{selectedAccount.closingBalance.toLocaleString()}</td>
+                    <tfoot className="bg-muted/40 font-bold border-t border-zinc-800">
+                      <tr>
+                        <td className="p-2 text-center border-r border-zinc-300" colSpan={3}>合 計</td>
+                        <td className="border-r border-zinc-300"></td>
+                        <td className="border-r border-zinc-300 p-2 text-right font-mono">{selectedAccount.debitTotal.toLocaleString()}</td>
+                        <td className="border-r border-zinc-300 p-2 text-right font-mono">{selectedAccount.creditTotal.toLocaleString()}</td>
+                        <td className="border-r border-zinc-300"></td>
+                        <td className="p-2 text-right font-mono text-primary">{selectedAccount.closingBalance.toLocaleString()}</td>
                       </tr>
                     </tfoot>
                   </table>

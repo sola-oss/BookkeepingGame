@@ -3,11 +3,15 @@ export type JournalEntry = { id: string; date: string; description: string; debi
 
 export type LedgerRow = {
   date: string;
+  month: string;
+  day: string;
   memo: string;
   counterAccount: string;
+  postingRef: string; // 仕丁
   debit: number;
   credit: number;
   balance: number;
+  side: "借" | "貸"; // 借/貸
   sourceEntryId: string;
 };
 
@@ -66,13 +70,21 @@ export function buildGeneralLedger(
         (entry.credit.length === 1 ? entry.credit[0].account : 
          entry.credit.length > 1 ? "諸口" : "-");
 
+      const dateParts = entry.date.split("/");
+      const month = dateParts[1] || "";
+      const day = dateParts[2] || "";
+
       acc.rows.push({
         date: entry.date,
+        month,
+        day,
         memo: line.memo || entry.description,
         counterAccount: counterAcc,
+        postingRef: (Math.floor(Math.random() * 10) + 1).toString(), // Mock posting ref
         debit: line.amount,
         credit: 0,
         balance: 0, // Calculated later
+        side: "借", // Calculated later
         sourceEntryId: entry.id
       });
     });
@@ -97,13 +109,21 @@ export function buildGeneralLedger(
         (entry.debit.length === 1 ? entry.debit[0].account : 
          entry.debit.length > 1 ? "諸口" : "-");
 
+      const dateParts = entry.date.split("/");
+      const month = dateParts[1] || "";
+      const day = dateParts[2] || "";
+
       acc.rows.push({
         date: entry.date,
+        month,
+        day,
         memo: line.memo || entry.description,
         counterAccount: counterAcc,
+        postingRef: (Math.floor(Math.random() * 10) + 1).toString(), // Mock posting ref
         debit: 0,
         credit: line.amount,
         balance: 0, // Calculated later
+        side: "借", // Calculated later
         sourceEntryId: entry.id
       });
     });
@@ -116,12 +136,13 @@ export function buildGeneralLedger(
 
     // Calculate running balance
     let currentBalance = acc.openingBalance;
-    // Note: Balance behavior depends on account type, but for simple ledger we'll do (D - C) for Assets/Expenses and (C - D) for Liab/Equity/Revenue
-    // In practice, many Japanese ledgers show (D - C) or (C - D) depending on the side. 
-    // Here we'll use a simplified (Debit - Credit) logic for all but handle display
     acc.rows = acc.rows.map(row => {
       currentBalance += (row.debit - row.credit);
-      return { ...row, balance: currentBalance };
+      return { 
+        ...row, 
+        balance: Math.abs(currentBalance),
+        side: currentBalance >= 0 ? "借" : "貸"
+      };
     });
 
     acc.closingBalance = currentBalance;
