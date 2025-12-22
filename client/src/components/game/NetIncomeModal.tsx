@@ -1,0 +1,142 @@
+import { motion, AnimatePresence } from "framer-motion";
+import { X, ArrowRight, CheckCircle2, TrendingUp, PieChart } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+
+export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean, onClose: () => void, onAction: () => void }) {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { staggerChildren: 0.8 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0 }
+  };
+
+  return (
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="max-w-md rounded-3xl p-0 overflow-hidden border-none">
+        <div className="bg-gradient-to-b from-primary/10 to-background p-6">
+          <DialogHeader className="mb-6">
+            <div className="flex items-center justify-between">
+              <DialogTitle className="text-xl font-bold">当期純利益はどこへ行く？</DialogTitle>
+              <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full">
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+            <DialogDescription className="text-sm">
+              利益が会社を強くする仕組みを学びましょう
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="relative h-48 bg-background/50 rounded-2xl border border-primary/10 p-4 mb-8 overflow-hidden">
+            <div className="flex justify-between items-center h-full gap-8 px-4">
+              {/* P/L Visualization */}
+              <div className="flex-1 h-32 flex flex-col items-center">
+                <div className="text-[10px] font-bold text-muted-foreground mb-2 flex items-center gap-1">
+                  <TrendingUp className="w-3 h-3" /> P/L (損益計算書)
+                </div>
+                <div className="w-full flex-1 bg-muted/30 rounded-lg relative overflow-hidden flex flex-col justify-end">
+                   <motion.div 
+                     initial={{ height: "0%" }}
+                     animate={{ height: "40%" }}
+                     transition={{ delay: 0.5, duration: 1 }}
+                     className="w-full bg-green-500 flex items-center justify-center text-white font-bold text-[10px] z-10"
+                   >
+                     利益
+                   </motion.div>
+                   <div className="flex-1 w-full bg-blue-100 dark:bg-blue-900/30"></div>
+                </div>
+              </div>
+
+              {/* Animation Block */}
+              <motion.div
+                initial={{ x: -100, y: 30, opacity: 0, scale: 0.5 }}
+                animate={{ 
+                  x: [null, 0, 100],
+                  y: [null, 30, 30],
+                  opacity: [0, 1, 1, 0],
+                  scale: [0.5, 1, 1, 0.8]
+                }}
+                transition={{ 
+                  delay: 2,
+                  duration: 3,
+                  repeat: Infinity,
+                  times: [0, 0.2, 0.8, 1]
+                }}
+                className="absolute left-1/2 top-0 -translate-x-1/2 w-16 h-8 bg-green-500 rounded-lg shadow-lg flex items-center justify-center text-white text-[10px] font-bold z-20"
+              >
+                当期純利益
+              </motion.div>
+
+              {/* B/S Visualization */}
+              <div className="flex-1 h-32 flex flex-col items-center">
+                <div className="text-[10px] font-bold text-muted-foreground mb-2 flex items-center gap-1">
+                  <PieChart className="w-3 h-3" /> B/S (貸借対照表)
+                </div>
+                <div className="w-full flex-1 flex gap-1">
+                  <div className="flex-1 bg-blue-50 dark:bg-blue-900/20 rounded-lg"></div>
+                  <div className="flex-1 flex flex-col gap-1">
+                    <div className="h-1/3 bg-red-50 dark:bg-red-900/20 rounded-lg"></div>
+                    <div className="flex-1 border border-primary/20 rounded-lg flex flex-col justify-end overflow-hidden">
+                      <motion.div 
+                         initial={{ height: "20%" }}
+                         animate={{ height: "50%" }}
+                         transition={{ delay: 4, duration: 1 }}
+                         className="w-full bg-primary flex items-center justify-center text-white font-bold text-[8px]"
+                      >
+                         純資産
+                      </motion.div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+              <ArrowRight className="w-8 h-8 text-primary/10" />
+            </div>
+          </div>
+
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="space-y-4"
+          >
+            <motion.div variants={itemVariants} className="flex gap-3">
+              <div className="bg-green-500 text-white w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold">1</div>
+              <p className="text-sm text-foreground">当期純利益は、当期稼いだ<span className="font-bold">収益から費用を引いた残り</span>の結果です。</p>
+            </motion.div>
+            
+            <motion.div variants={itemVariants} className="flex gap-3">
+              <div className="bg-green-500 text-white w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold">2</div>
+              <p className="text-sm text-foreground">決算整理が終わると、この利益はP/Lから<span className="font-bold">B/Sの「純資産」</span>の箱へと移されます。</p>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="flex gap-3">
+              <div className="bg-green-500 text-white w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold">3</div>
+              <p className="text-sm text-foreground">利益が積み上がることで、会社自身の財産である<span className="font-bold">純資産が厚くなり、経営が安定</span>します。</p>
+            </motion.div>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 3.5 }}
+            className="mt-8"
+          >
+            <Button className="w-full h-12 rounded-2xl font-bold shadow-lg shadow-primary/20 group" onClick={onAction}>
+              この論点を3問だけ解く
+              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </motion.div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}

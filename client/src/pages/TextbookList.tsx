@@ -29,6 +29,8 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { FlowDiagram } from "@/components/game/FlowDiagram";
+import { NetIncomeBridgeCard } from "@/components/game/NetIncomeBridgeCard";
+import { NetIncomeModal } from "@/components/game/NetIncomeModal";
 import { textbookPages, searchTextbookPages, getTextbookPageByTopicTag } from "@/data/textbookPages";
 import type { TextbookPage } from "@shared/schema";
 
@@ -85,6 +87,7 @@ export default function TextbookList() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPage, setSelectedPage] = useState<TextbookPage | null>(null);
   const [showQuizAnswer, setShowQuizAnswer] = useState(false);
+  const [isNetIncomeModalOpen, setIsNetIncomeModalOpen] = useState(false);
 
   const filteredPages = useMemo(() => searchTextbookPages(searchQuery), [searchQuery]);
 
@@ -145,6 +148,17 @@ export default function TextbookList() {
           
           <FlowDiagram onNavigate={navigate} />
           
+          <NetIncomeBridgeCard onClick={() => setIsNetIncomeModalOpen(true)} />
+          
+          <NetIncomeModal 
+            isOpen={isNetIncomeModalOpen} 
+            onClose={() => setIsNetIncomeModalOpen(false)}
+            onAction={() => {
+              setIsNetIncomeModalOpen(false);
+              navigate("/journal");
+            }}
+          />
+
           <div className="grid gap-4 mt-4">
             {BOKI_FLOW.map((flow, idx) => (
               <motion.div
