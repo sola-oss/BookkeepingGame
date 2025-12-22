@@ -107,12 +107,14 @@ export function StepModal({
   step, 
   isOpen, 
   onClose, 
-  onAction 
+  onAction,
+  navigate
 }: { 
   step: FlowStep | null; 
   isOpen: boolean; 
   onClose: () => void; 
   onAction: (link: string) => void;
+  navigate: (to: string) => void;
 }) {
   if (!step) return null;
 
@@ -213,7 +215,10 @@ export function StepModal({
           <div className="absolute bottom-0 left-0 right-0 p-4 pt-8 bg-gradient-to-t from-background via-background/95 to-transparent z-20 pointer-events-none">
             <Button 
               className="w-full h-12 rounded-2xl font-bold shadow-lg shadow-primary/20 group pointer-events-auto"
-              onClick={() => onAction(step.link)}
+              onClick={() => {
+                onClose();
+                navigate(step.link);
+              }}
             >
               このステップを練習する
               <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
