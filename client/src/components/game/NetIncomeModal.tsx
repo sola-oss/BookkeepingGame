@@ -53,10 +53,10 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
 
               {/* Animation Block */}
               <motion.div
-                initial={{ x: -80, y: 60, opacity: 0, scale: 0.5 }}
+                initial={{ x: -85, y: 100, opacity: 0, scale: 0.5 }}
                 animate={{ 
-                  x: [-80, 0, 85],
-                  y: [60, 20, 85],
+                  x: [-85, 0, 85],
+                  y: [100, 40, 100],
                   opacity: [0, 1, 1, 0],
                   scale: [0.5, 1, 1, 0.8]
                 }}
