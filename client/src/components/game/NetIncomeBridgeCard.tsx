@@ -19,7 +19,7 @@ export function NetIncomeBridgeCard({ onClick }: { onClick: () => void }) {
               <Info className="w-4 h-4 text-primary" />
               P/LとB/Sのつながり
             </h3>
-            <span className="text-[10px] text-muted-foreground bg-muted px-2 py-0.5 rounded-full">解説を表示</span>
+            <span className="text-[10px] text-muted-foreground bg-muted px-2 py-0.5 rounded-full">もっと詳しく</span>
           </div>
 
           <div className="flex items-center justify-between gap-2 relative h-24">
