@@ -125,8 +125,12 @@ export function StepModal({
     onClose();
     if (step.link === "/journal") {
       journalDispatch({ type: "START_JOURNAL_GAME" });
+      setTimeout(() => {
+        navigate(step.link);
+      }, 0);
+    } else {
+      navigate(step.link);
     }
-    navigate(step.link);
   };
 
   return (
