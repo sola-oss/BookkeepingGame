@@ -42,9 +42,9 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
                        initial={{ height: "0%" }}
                        animate={{ height: "35%" }}
                        transition={{ delay: 0.5, duration: 1 }}
-                       className="w-full bg-white dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 font-bold text-[9px] z-10 border-t border-zinc-200 dark:border-zinc-700"
+                       className="w-full bg-white dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 font-bold text-[8px] z-10 border-t border-zinc-200 dark:border-zinc-700"
                      >
-                       利益
+                       当期純利益
                      </motion.div>
                    </div>
                    <div className="flex-1 bg-[#FCE4EC] dark:bg-pink-900/20 flex items-center justify-center text-[9px] text-pink-700/80 font-medium h-full border-l border-pink-200/40">収益</div>
