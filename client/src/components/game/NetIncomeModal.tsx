@@ -56,7 +56,7 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
                 initial={{ x: -85, y: 100, opacity: 0, scale: 0.5 }}
                 animate={{ 
                   x: [-85, 0, 85],
-                  y: [100, -30, 100],
+                  y: [100, 60, 100],
                   opacity: [0, 1, 1, 0],
                   scale: [0.5, 1.1, 0.8]
                 }}
