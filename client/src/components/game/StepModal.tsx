@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { useLocation } from "wouter";
+import { useJournal } from "@/context/JournalContext";
 import { 
   X, 
   ArrowRight, 
@@ -108,15 +110,24 @@ export function StepModal({
   isOpen, 
   onClose, 
   onAction,
-  navigate
 }: { 
   step: FlowStep | null; 
   isOpen: boolean; 
   onClose: () => void; 
   onAction: (link: string) => void;
-  navigate: (to: string) => void;
 }) {
+  const [, navigate] = useLocation();
+  const { dispatch: journalDispatch } = useJournal();
+  
   if (!step) return null;
+
+  const handleAction = () => {
+    onClose();
+    if (step.link === "/journal") {
+      journalDispatch({ type: "START_JOURNAL_GAME" });
+    }
+    navigate(step.link);
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -215,10 +226,7 @@ export function StepModal({
           <div className="absolute bottom-0 left-0 right-0 p-4 pt-8 bg-gradient-to-t from-background via-background/95 to-transparent z-20 pointer-events-none">
             <Button 
               className="w-full h-12 rounded-2xl font-bold shadow-lg shadow-primary/20 group pointer-events-auto"
-              onClick={() => {
-                onClose();
-                navigate(step.link);
-              }}
+              onClick={handleAction}
             >
               このステップを練習する
               <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />

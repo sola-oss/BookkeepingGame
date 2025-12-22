@@ -108,7 +108,6 @@ export function FlowDiagram({ onNavigate }: { onNavigate: (path: string) => void
           setSelectedStep(null);
           onNavigate(link);
         }}
-        navigate={onNavigate}
       />
     </div>
   );
