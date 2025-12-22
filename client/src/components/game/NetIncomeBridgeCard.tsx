@@ -26,12 +26,14 @@ export function NetIncomeBridgeCard({ onClick }: { onClick: () => void }) {
             {/* P/L Side */}
             <div className="flex-1 h-full border-2 border-dashed border-primary/20 rounded-xl p-2 flex flex-col justify-between bg-background/50">
               <div className="text-[10px] font-bold text-center text-muted-foreground uppercase tracking-wider">P/L</div>
-              <div className="space-y-1">
-                <div className="h-3 w-full bg-blue-100 dark:bg-blue-900/40 rounded flex items-center justify-center text-[8px] font-medium text-blue-600">収益</div>
-                <div className="h-3 w-full bg-red-100 dark:bg-red-900/40 rounded flex items-center justify-center text-[8px] font-medium text-red-600">費用</div>
-              </div>
-              <div className="mt-1 h-5 w-full bg-green-500 rounded flex items-center justify-center text-[9px] font-bold text-white shadow-sm ring-2 ring-white/20">
-                当期純利益
+              <div className="flex-1 flex gap-0.5 mt-1 overflow-hidden">
+                <div className="flex-1 flex flex-col gap-0.5 h-full">
+                  <div className="h-2/5 bg-green-500 rounded flex items-center justify-center text-[7px] font-bold text-white px-0.5">
+                    当期純利益
+                  </div>
+                  <div className="flex-1 bg-[#E8F5E9] dark:bg-green-900/20 rounded flex items-center justify-center text-[8px] text-green-700/80 font-medium">費用</div>
+                </div>
+                <div className="flex-1 bg-[#FCE4EC] dark:bg-pink-900/20 rounded flex items-center justify-center text-[8px] text-pink-700/80 font-medium h-full border-l border-pink-200/20">収益</div>
               </div>
             </div>
 
@@ -49,12 +51,12 @@ export function NetIncomeBridgeCard({ onClick }: { onClick: () => void }) {
             <div className="flex-1 h-full border-2 border-dashed border-primary/20 rounded-xl p-2 flex flex-col justify-between bg-background/50">
               <div className="text-[10px] font-bold text-center text-muted-foreground uppercase tracking-wider">B/S</div>
               <div className="flex flex-1 gap-1 mt-1">
-                <div className="w-1/2 h-full bg-blue-50 dark:bg-blue-950 rounded flex items-center justify-center text-[8px] text-blue-600 font-medium">資産</div>
+                <div className="w-1/2 h-full bg-[#FFF9C4] dark:bg-yellow-900/20 rounded flex items-center justify-center text-[8px] text-yellow-700/60 font-medium border border-yellow-200/20">資産</div>
                 <div className="w-1/2 h-full flex flex-col gap-1">
-                  <div className="h-2/5 bg-red-50 dark:bg-red-950 rounded flex items-center justify-center text-[8px] text-red-600 font-medium">負債</div>
-                  <div className="h-3/5 border border-primary/20 bg-primary/5 rounded flex flex-col justify-end p-1">
-                    <div className="text-[7px] text-primary font-bold text-center mb-0.5">純資産</div>
-                    <div className="h-3 w-full bg-green-500/80 rounded flex items-center justify-center text-[7px] font-bold text-white">利益</div>
+                  <div className="h-2/5 bg-[#F5F5F5] dark:bg-zinc-800/20 rounded flex items-center justify-center text-[8px] text-zinc-600/60 font-medium border border-zinc-200/20">負債</div>
+                  <div className="h-3/5 border border-blue-200/20 bg-[#E3F2FD] dark:bg-blue-900/20 rounded flex flex-col justify-end p-0.5 overflow-hidden">
+                    <div className="flex-1 flex items-center justify-center text-[7px] text-blue-600/60 font-medium">資本</div>
+                    <div className="h-2/5 w-full bg-green-500 rounded flex items-center justify-center text-[6px] font-bold text-white px-0.5">当期純利益</div>
                   </div>
                 </div>
               </div>
