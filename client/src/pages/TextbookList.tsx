@@ -1,22 +1,17 @@
 import { useState, useMemo, useEffect } from "react";
 import { useLocation, useSearch } from "wouter";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { 
   ArrowLeft, 
   Search, 
   BookOpen, 
-  ChevronRight, 
-  ArrowRight,
   Info,
-  Layers,
-  FileText,
-  PieChart,
   HelpCircle,
   Tag,
   CheckCircle2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { 
   Dialog, 
@@ -32,35 +27,7 @@ import { FlowDiagram } from "@/components/game/FlowDiagram";
 import { NetIncomeBridgeCard } from "@/components/game/NetIncomeBridgeCard";
 import { NetIncomeModal } from "@/components/game/NetIncomeModal";
 import { textbookPages, searchTextbookPages, getTextbookPageByTopicTag } from "@/data/textbookPages";
-import { flowSteps } from "@/data/flowSteps";
 import type { TextbookPage } from "@shared/schema";
-
-const stepIconMap: Record<string, any> = {
-  transaction: HelpCircle,
-  journal: FileText,
-  ledger: Layers,
-  statements: PieChart,
-};
-
-const BOKI_FLOW = flowSteps.map(step => ({
-  step: `${step.title} (${step.subtitle})`,
-  id: step.id,
-  icon: stepIconMap[step.id],
-  purpose: step.description.split("。")[0] + "。",
-  input: step.inLabel.join("、"),
-  output: step.outLabel.join("、"),
-  mistake: step.keyPoint || "",
-  mode: `学習モード: ${step.title}`,
-  link: step.link,
-  bg: step.id === "transaction" ? "bg-blue-50 dark:bg-blue-950" : 
-      step.id === "journal" ? "bg-purple-50 dark:bg-purple-950" :
-      step.id === "ledger" ? "bg-orange-50 dark:bg-orange-950" :
-      "bg-green-50 dark:bg-green-950",
-  color: step.id === "transaction" ? "text-blue-500" : 
-         step.id === "journal" ? "text-purple-500" :
-         step.id === "ledger" ? "text-orange-500" :
-         "text-green-500"
-}));
 
 export default function TextbookList() {
   const [, navigate] = useLocation();
@@ -139,53 +106,6 @@ export default function TextbookList() {
               navigate("/journal");
             }}
           />
-
-          <div className="grid gap-4 mt-4">
-            {BOKI_FLOW.map((flow, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.1 }}
-              >
-                <Card className="relative overflow-hidden border-l-4 border-l-primary/50">
-                  <CardHeader className={`pb-3 ${flow.bg}`}>
-                    <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-lg bg-background ${flow.color}`}>
-                        {flow.icon && <flow.icon className="w-5 h-5" />}
-                      </div>
-                      <div>
-                        <CardTitle className="text-base font-bold">{idx + 1}. {flow.step}</CardTitle>
-                        <CardDescription className="text-xs">{flow.purpose}</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-4 pb-4 grid grid-cols-2 gap-4 text-xs">
-                    <div className="space-y-2">
-                      <p><span className="font-bold text-muted-foreground">IN:</span> {flow.input}</p>
-                      <p><span className="font-bold text-muted-foreground">OUT:</span> {flow.output}</p>
-                    </div>
-                    <div className="space-y-2 border-l pl-4">
-                      <p className="font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
-                        <Info className="w-3 h-3" /> 注意点
-                      </p>
-                      <p className="text-muted-foreground leading-relaxed">{flow.mistake}</p>
-                    </div>
-                    <div className="col-span-2 pt-2 border-t mt-1 text-primary font-medium flex items-center gap-1">
-                      <Badge variant="outline" className="text-[10px] bg-primary/5">
-                        {flow.mode}
-                      </Badge>
-                    </div>
-                  </CardContent>
-                  {idx < BOKI_FLOW.length - 1 && (
-                    <div className="absolute -bottom-3 left-8 z-10 bg-background rounded-full p-1 border">
-                      <ArrowRight className="w-3 h-3 rotate-90 text-muted-foreground" />
-                    </div>
-                  )}
-                </Card>
-              </motion.div>
-            ))}
-          </div>
         </section>
 
         <section className="space-y-4">
@@ -302,7 +222,9 @@ export default function TextbookList() {
 
                   <section className="bg-amber-50 dark:bg-amber-950/20 p-4 rounded-lg border border-amber-200 dark:border-amber-900">
                     <h3 className="font-bold text-sm mb-2 text-amber-800 dark:text-amber-400 flex items-center gap-2">
-                      <Info className="w-4 h-4" />
+                      <div className="w-4 h-4 flex items-center justify-center">
+                        <Info className="w-4 h-4" />
+                      </div>
                       見分け・注意ポイント
                     </h3>
                     <p className="text-xs text-amber-700 dark:text-amber-500 mb-3 leading-relaxed">
