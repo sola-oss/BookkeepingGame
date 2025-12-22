@@ -41,7 +41,7 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
                      <motion.div 
                        initial={{ height: "0%" }}
                        animate={{ height: "35%" }}
-                       transition={{ delay: 0.5, duration: 1 }}
+                       transition={{ delay: 1.5, duration: 1 }}
                        className="w-full bg-green-500 flex items-center justify-center text-white font-bold text-[8px] z-10 border-t border-green-400"
                      >
                        当期純利益
@@ -61,7 +61,7 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
                   scale: [0.5, 1.1, 0.8]
                 }}
                 transition={{ 
-                  delay: 0.8,
+                  delay: 1.8,
                   duration: 3.5,
                   repeat: Infinity,
                   repeatDelay: 1.5,
@@ -86,7 +86,7 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
                       <motion.div 
                          initial={{ height: "0%" }}
                          animate={{ height: "40%" }}
-                         transition={{ delay: 4, duration: 1 }}
+                         transition={{ delay: 5, duration: 1 }}
                          className="w-full bg-green-500 flex items-center justify-center text-white font-bold text-[7px] shadow-[0_-2px_4px_rgba(0,0,0,0.1)] px-0.5"
                       >
                          当期純利益
