@@ -127,7 +127,7 @@ export function StepModal({
         </DialogHeader>
 
         <ScrollArea className="flex-1">
-          <div className="p-6 space-y-6 pb-24">
+          <div className="p-6 space-y-6 pb-32">
             <section className="space-y-2">
               <p className="text-sm leading-relaxed text-foreground">
                 {step.description}
@@ -205,7 +205,7 @@ export function StepModal({
           </div>
         </ScrollArea>
 
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background via-background/90 to-transparent">
+        <div className="sticky bottom-0 left-0 right-0 p-4 pt-8 bg-gradient-to-t from-background via-background/95 to-transparent z-20">
           <Button 
             className="w-full h-12 rounded-2xl font-bold shadow-lg shadow-primary/20 group"
             onClick={() => onAction(step.link)}
