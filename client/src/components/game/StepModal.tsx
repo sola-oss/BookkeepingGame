@@ -116,8 +116,8 @@ export function StepModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-lg max-h-[90vh] p-0 flex flex-col rounded-3xl overflow-hidden border-none shadow-2xl">
-        <DialogHeader className="p-6 pb-4 border-b bg-muted/20">
+      <DialogContent className="max-w-lg h-[85vh] p-0 flex flex-col rounded-3xl overflow-hidden border-none shadow-2xl">
+        <DialogHeader className="p-6 pb-4 border-b bg-muted/20 shrink-0">
           <div>
             <DialogTitle className="text-xl font-bold">{step.title}</DialogTitle>
             {step.subtitle && (
@@ -126,93 +126,95 @@ export function StepModal({
           </div>
         </DialogHeader>
 
-        <ScrollArea className="flex-1">
-          <div className="p-6 space-y-6 pb-32">
-            <section className="space-y-2">
-              <p className="text-sm leading-relaxed text-foreground">
-                {step.description}
-              </p>
-            </section>
+        <div className="flex-1 overflow-hidden flex flex-col min-h-0 relative">
+          <ScrollArea className="h-full w-full">
+            <div className="p-6 space-y-6 pb-36">
+              <section className="space-y-2">
+                <p className="text-sm leading-relaxed text-foreground">
+                  {step.description}
+                </p>
+              </section>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Input</p>
-                <div className="flex flex-wrap gap-1">
-                  {step.inLabel.map((label, i) => (
-                    <Badge key={i} variant="secondary" className="text-[10px] bg-blue-50 text-blue-700 border-blue-100 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-900">
-                      {label}
-                    </Badge>
-                  ))}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Input</p>
+                  <div className="flex flex-wrap gap-1">
+                    {step.inLabel.map((label, i) => (
+                      <Badge key={i} variant="secondary" className="text-[10px] bg-blue-50 text-blue-700 border-blue-100 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-900">
+                        {label}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+                <div className="space-y-1.5">
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Output</p>
+                  <div className="flex flex-wrap gap-1">
+                    {step.outLabel.map((label, i) => (
+                      <Badge key={i} variant="secondary" className="text-[10px] bg-green-50 text-green-700 border-green-100 dark:bg-green-950 dark:text-green-300 dark:border-green-900">
+                        {label}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
               </div>
-              <div className="space-y-1.5">
-                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Output</p>
-                <div className="flex flex-wrap gap-1">
-                  {step.outLabel.map((label, i) => (
-                    <Badge key={i} variant="secondary" className="text-[10px] bg-green-50 text-green-700 border-green-100 dark:bg-green-950 dark:text-green-300 dark:border-green-900">
-                      {label}
-                    </Badge>
-                  ))}
+
+              {step.keyPoint && (
+                <Card className="bg-amber-50/50 border-amber-100 dark:bg-amber-950/20 dark:border-amber-900 shadow-none">
+                  <CardContent className="p-3 flex gap-2">
+                    <Info className="w-4 h-4 text-amber-500 shrink-0" />
+                    <p className="text-xs text-amber-800 dark:text-amber-400 leading-relaxed">
+                      {step.keyPoint}
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+
+              <Separator />
+
+              <section className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <div className="h-4 w-1 bg-primary rounded-full" />
+                  <h3 className="font-bold text-sm">サンプル表示</h3>
                 </div>
-              </div>
+                <div className="space-y-6">
+                  {step.id === "statements" ? (
+                    <Tabs defaultValue="bs" className="w-full">
+                      <TabsList className="grid w-full grid-cols-2 mb-4 bg-muted/50 p-1 rounded-xl">
+                        <TabsTrigger value="bs" className="rounded-lg text-xs py-1.5 data-[state=active]:shadow-sm">
+                          <FileText className="w-3 h-3 mr-1.5" />
+                          貸借対照表
+                        </TabsTrigger>
+                        <TabsTrigger value="pl" className="rounded-lg text-xs py-1.5 data-[state=active]:shadow-sm">
+                          <BarChart3 className="w-3 h-3 mr-1.5" />
+                          損益計算書
+                        </TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="bs" className="mt-0 focus-visible:ring-0">
+                        <FinancialStatementView meta={companyMeta} statementType="BS" data={bsData} />
+                      </TabsContent>
+                      <TabsContent value="pl" className="mt-0 focus-visible:ring-0">
+                        <FinancialStatementView meta={companyMeta} statementType="PL" data={plData} />
+                      </TabsContent>
+                    </Tabs>
+                  ) : (
+                    step.samples.map((sample, i) => (
+                      <FlowSampleRenderer key={i} sample={sample} />
+                    ))
+                  )}
+                </div>
+              </section>
             </div>
-
-            {step.keyPoint && (
-              <Card className="bg-amber-50/50 border-amber-100 dark:bg-amber-950/20 dark:border-amber-900 shadow-none">
-                <CardContent className="p-3 flex gap-2">
-                  <Info className="w-4 h-4 text-amber-500 shrink-0" />
-                  <p className="text-xs text-amber-800 dark:text-amber-400 leading-relaxed">
-                    {step.keyPoint}
-                  </p>
-                </CardContent>
-              </Card>
-            )}
-
-            <Separator />
-
-            <section className="space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="h-4 w-1 bg-primary rounded-full" />
-                <h3 className="font-bold text-sm">サンプル表示</h3>
-              </div>
-              <div className="space-y-6">
-                {step.id === "statements" ? (
-                  <Tabs defaultValue="bs" className="w-full">
-                    <TabsList className="grid w-full grid-cols-2 mb-4 bg-muted/50 p-1 rounded-xl">
-                      <TabsTrigger value="bs" className="rounded-lg text-xs py-1.5 data-[state=active]:shadow-sm">
-                        <FileText className="w-3 h-3 mr-1.5" />
-                        貸借対照表
-                      </TabsTrigger>
-                      <TabsTrigger value="pl" className="rounded-lg text-xs py-1.5 data-[state=active]:shadow-sm">
-                        <BarChart3 className="w-3 h-3 mr-1.5" />
-                        損益計算書
-                      </TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="bs" className="mt-0 focus-visible:ring-0">
-                      <FinancialStatementView meta={companyMeta} statementType="BS" data={bsData} />
-                    </TabsContent>
-                    <TabsContent value="pl" className="mt-0 focus-visible:ring-0">
-                      <FinancialStatementView meta={companyMeta} statementType="PL" data={plData} />
-                    </TabsContent>
-                  </Tabs>
-                ) : (
-                  step.samples.map((sample, i) => (
-                    <FlowSampleRenderer key={i} sample={sample} />
-                  ))
-                )}
-              </div>
-            </section>
+          </ScrollArea>
+          
+          <div className="absolute bottom-0 left-0 right-0 p-4 pt-8 bg-gradient-to-t from-background via-background/95 to-transparent z-20 pointer-events-none">
+            <Button 
+              className="w-full h-12 rounded-2xl font-bold shadow-lg shadow-primary/20 group pointer-events-auto"
+              onClick={() => onAction(step.link)}
+            >
+              このステップを練習する
+              <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </Button>
           </div>
-        </ScrollArea>
-
-        <div className="sticky bottom-0 left-0 right-0 p-4 pt-8 bg-gradient-to-t from-background via-background/95 to-transparent z-20">
-          <Button 
-            className="w-full h-12 rounded-2xl font-bold shadow-lg shadow-primary/20 group"
-            onClick={() => onAction(step.link)}
-          >
-            このステップを練習する
-            <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-          </Button>
         </div>
       </DialogContent>
     </Dialog>
