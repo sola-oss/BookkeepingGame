@@ -32,54 +32,35 @@ import { FlowDiagram } from "@/components/game/FlowDiagram";
 import { NetIncomeBridgeCard } from "@/components/game/NetIncomeBridgeCard";
 import { NetIncomeModal } from "@/components/game/NetIncomeModal";
 import { textbookPages, searchTextbookPages, getTextbookPageByTopicTag } from "@/data/textbookPages";
+import { flowSteps } from "@/data/flowSteps";
 import type { TextbookPage } from "@shared/schema";
 
-const BOKI_FLOW = [
-  {
-    step: "取引 (Transaction)",
-    icon: HelpCircle,
-    color: "text-blue-500",
-    bg: "bg-blue-50 dark:bg-blue-950",
-    purpose: "経済活動を記録の対象として識別する",
-    input: "領収書、請求書、契約書",
-    output: "仕訳の検討",
-    mistake: "すべての出来事が取引になるわけではない（例：注文、採用のみは取引ではない）",
-    mode: "分類ゲーム（資産・負債などの性質を学ぶ）"
-  },
-  {
-    step: "仕訳 (Journal Entry)",
-    icon: FileText,
-    color: "text-purple-500",
-    bg: "bg-purple-50 dark:bg-purple-950",
-    purpose: "取引を借方・貸方に分解して仕訳帳に記録する",
-    input: "識別された取引",
-    output: "仕訳帳 (Journal)",
-    mistake: "借方と貸方の合計金額は必ず一致する（貸借平均の原理）",
-    mode: "仕訳ゲーム・試験モード（記帳のルールを学ぶ）"
-  },
-  {
-    step: "勘定記入 (Posting)",
-    icon: Layers,
-    color: "text-orange-500",
-    bg: "bg-orange-50 dark:bg-orange-950",
-    purpose: "勘定科目ごとに集計し、総勘定元帳へ転記する",
-    input: "仕訳帳の記録",
-    output: "総勘定元帳 (General Ledger)",
-    mistake: "仕訳の借方・貸方をそのまま元帳の同じ側へ転記する",
-    mode: "模試モード 第2問（集計の流れを学ぶ）"
-  },
-  {
-    step: "決算書作成 (Reporting)",
-    icon: PieChart,
-    color: "text-green-500",
-    bg: "bg-green-50 dark:bg-green-950",
-    purpose: "経営成績（損益）と財政状態（資産・負債）を報告する",
-    input: "総勘定元帳の残高・決算整理仕訳",
-    output: "貸借対照表 (B/S), 損益計算書 (P/L)",
-    mistake: "当期の正しい損益を算出するために「決算整理」が必要",
-    mode: "模試モード 第3問（最終成果物の作り方を学ぶ）"
-  }
-];
+const stepIconMap: Record<string, any> = {
+  transaction: HelpCircle,
+  journal: FileText,
+  ledger: Layers,
+  statements: PieChart,
+};
+
+const BOKI_FLOW = flowSteps.map(step => ({
+  step: `${step.title} (${step.subtitle})`,
+  id: step.id,
+  icon: stepIconMap[step.id],
+  purpose: step.description.split("。")[0] + "。",
+  input: step.inLabel.join("、"),
+  output: step.outLabel.join("、"),
+  mistake: step.keyPoint || "",
+  mode: `学習モード: ${step.title}`,
+  link: step.link,
+  bg: step.id === "transaction" ? "bg-blue-50 dark:bg-blue-950" : 
+      step.id === "journal" ? "bg-purple-50 dark:bg-purple-950" :
+      step.id === "ledger" ? "bg-orange-50 dark:bg-orange-950" :
+      "bg-green-50 dark:bg-green-950",
+  color: step.id === "transaction" ? "text-blue-500" : 
+         step.id === "journal" ? "text-purple-500" :
+         step.id === "ledger" ? "text-orange-500" :
+         "text-green-500"
+}));
 
 export default function TextbookList() {
   const [, navigate] = useLocation();
@@ -171,7 +152,7 @@ export default function TextbookList() {
                   <CardHeader className={`pb-3 ${flow.bg}`}>
                     <div className="flex items-center gap-3">
                       <div className={`p-2 rounded-lg bg-background ${flow.color}`}>
-                        <flow.icon className="w-5 h-5" />
+                        {flow.icon && <flow.icon className="w-5 h-5" />}
                       </div>
                       <div>
                         <CardTitle className="text-base font-bold">{idx + 1}. {flow.step}</CardTitle>
@@ -192,7 +173,7 @@ export default function TextbookList() {
                     </div>
                     <div className="col-span-2 pt-2 border-t mt-1 text-primary font-medium flex items-center gap-1">
                       <Badge variant="outline" className="text-[10px] bg-primary/5">
-                        学習モード: {flow.mode}
+                        {flow.mode}
                       </Badge>
                     </div>
                   </CardContent>
