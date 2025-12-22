@@ -22,12 +22,7 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
       <DialogContent className="max-w-md rounded-3xl p-0 overflow-hidden border-none">
         <div className="bg-gradient-to-b from-primary/10 to-background p-6">
           <DialogHeader className="mb-6">
-            <div className="flex items-center justify-between">
-              <DialogTitle className="text-xl font-bold">当期純利益はどこへ行く？</DialogTitle>
-              <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full">
-                <X className="w-5 h-5" />
-              </Button>
-            </div>
+            <DialogTitle className="text-xl font-bold">当期純利益はどこへ行く？</DialogTitle>
             <DialogDescription className="text-sm">
               利益が会社を強くする仕組みを学びましょう
             </DialogDescription>

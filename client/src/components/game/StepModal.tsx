@@ -113,16 +113,11 @@ export function StepModal({
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-lg max-h-[90vh] p-0 flex flex-col rounded-3xl overflow-hidden border-none shadow-2xl">
         <DialogHeader className="p-6 pb-4 border-b bg-muted/20">
-          <div className="flex items-center justify-between">
-            <div>
-              <DialogTitle className="text-xl font-bold">{step.title}</DialogTitle>
-              {step.subtitle && (
-                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{step.subtitle}</p>
-              )}
-            </div>
-            <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full">
-              <X className="w-5 h-5" />
-            </Button>
+          <div>
+            <DialogTitle className="text-xl font-bold">{step.title}</DialogTitle>
+            {step.subtitle && (
+              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{step.subtitle}</p>
+            )}
           </div>
         </DialogHeader>
 
