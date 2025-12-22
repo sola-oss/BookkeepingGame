@@ -20,20 +20,20 @@ export const flowSteps: FlowStep[] = [
     id: "transaction",
     title: "取引",
     subtitle: "Transaction",
-    description: "経済活動を記録の対象として識別します。領収書や請求書がその証拠となります。",
+    description: "1期（1年間）の始まりから終わりまで、様々な経済活動が「取引」として識別されます。",
     inLabel: ["領収書", "請求書", "契約書"],
     outLabel: ["仕訳の検討"],
-    keyPoint: "すべての出来事が取引になるわけではありません（例：採用、契約のみは取引ではない）。",
+    keyPoint: "期中には売買、期末には決算整理のための取引（減価償却など）が発生します。",
     link: "/game",
     samples: [
       {
         type: "cards",
-        title: "取引の例",
+        title: "主な期中取引の例",
         items: [
-          { label: "日付", value: "202X年12月20日" },
-          { label: "内容", value: "備品（PC）を現金で購入した" },
-          { label: "金額", value: "30,000円" },
-          { label: "証憑", value: "領収書" }
+          { label: "設立", value: "現金100,000円の出資を受け開始" },
+          { label: "仕入", value: "商品60,000円を掛けで仕入れた" },
+          { label: "売上", value: "商品100,000円を掛けで売り上げた" },
+          { label: "回収", value: "売掛金100,000円を現金で回収した" }
         ]
       }
     ]
@@ -42,18 +42,21 @@ export const flowSteps: FlowStep[] = [
     id: "journal",
     title: "仕訳",
     subtitle: "Journal Entry",
-    description: "取引を借方・貸方に分解して仕訳帳に記録します。簿記の最も重要なステップです。",
+    description: "発生したすべての取引を日付順に仕訳帳へ記録します。これがすべての帳簿の基礎となります。",
     inLabel: ["取引内容"],
     outLabel: ["仕訳（借方/貸方）"],
-    keyPoint: "借方と貸方の合計金額は必ず一致します（貸借平均の原理）。",
+    keyPoint: "期中の営業取引に加え、期末には「決算整理仕訳」を行って1期の正確な利益を計算します。",
     link: "/journal",
     samples: [
       {
         type: "table",
-        title: "仕訳表の例",
-        columns: ["借方科目", "金額", "貸方科目", "金額"],
+        title: "1期分の主要な仕訳例",
+        columns: ["日付", "借方科目", "金額", "貸方科目", "金額"],
         rows: [
-          ["備品", "30,000", "現金", "30,000"]
+          ["4/1", "現金", "100,000", "資本金", "100,000"],
+          ["5/10", "仕入", "60,000", "買掛金", "60,000"],
+          ["8/20", "売掛金", "100,000", "売上", "100,000"],
+          ["3/31", "減価償却費", "5,000", "備品", "5,000"]
         ]
       }
     ]
@@ -62,18 +65,21 @@ export const flowSteps: FlowStep[] = [
     id: "ledger",
     title: "勘定記入",
     subtitle: "Posting",
-    description: "仕訳帳の記録を勘定科目ごとに集計し、総勘定元帳へ転記します。",
+    description: "仕訳帳から「総勘定元帳」へ転記します。これにより科目ごとの1年間の動きと残高が明らかになります。",
     inLabel: ["仕訳"],
     outLabel: ["総勘定元帳"],
-    keyPoint: "仕訳の借方・貸方をそのまま元帳の同じ側へ転記します。",
+    keyPoint: "転記漏れがないか、期末に「試算表」を作成して確認します。",
     link: "/mock-exam",
     samples: [
       {
         type: "table",
-        title: "総勘定元帳（備品勘定）の例",
-        columns: ["日付", "相手勘定", "金額"],
+        title: "総勘定元帳（現金勘定）の1期分推移",
+        columns: ["日付", "摘要", "借方", "貸方", "差引残高"],
         rows: [
-          ["12/20", "現金", "30,000"]
+          ["4/1", "資本金より", "100,000", "0", "100,000"],
+          ["9/1", "売掛金回収", "100,000", "0", "200,000"],
+          ["10/1", "買掛金支払", "0", "60,000", "140,000"],
+          ["3/31", "次期繰越", "0", "140,000", "0"]
         ]
       }
     ]
@@ -82,30 +88,32 @@ export const flowSteps: FlowStep[] = [
     id: "statements",
     title: "決算書作成",
     subtitle: "Reporting",
-    description: "経営成績と財政状態を報告するために、損益計算書と貸借対照表を作成します。",
+    description: "1年間の集大成として決算書を作成します。P/Lで稼いだ利益がB/Sの純資産を増やします。",
     inLabel: ["元帳残高（試算表）"],
     outLabel: ["損益計算書", "貸借対照表"],
-    keyPoint: "当期の正しい損益を算出するために「決算整理」が必要です。",
+    keyPoint: "当期純利益が貸借対照表の「繰越利益剰余金」等に加算されることで1期が完結します。",
     link: "/statements",
     samples: [
       {
         type: "statement",
-        title: "簡易決算書サンプル",
+        title: "第1期 決算報告書（要約）",
         blocks: [
           {
-            heading: "損益計算書 (P/L)",
+            heading: "損益計算書 (4/1-3/31)",
             lines: [
               { label: "売上高", amount: 100000 },
               { label: "売上原価", amount: 60000 },
-              { label: "当期純利益", amount: 40000 }
+              { label: "営業費用", amount: 5000 },
+              { label: "当期純利益", amount: 35000 }
             ]
           },
           {
-            heading: "貸借対照表 (B/S)",
+            heading: "貸借対照表 (3/31現在)",
             lines: [
-              { label: "資産", amount: 150000 },
-              { label: "負債", amount: 50000 },
-              { label: "純資産", amount: 100000 }
+              { label: "資産合計", amount: 140000 },
+              { label: "負債合計", amount: 5000 },
+              { label: "資本金", amount: 100000 },
+              { label: "利益剰余金", amount: 35000 }
             ]
           }
         ]
