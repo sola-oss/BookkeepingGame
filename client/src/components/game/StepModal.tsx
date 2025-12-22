@@ -23,7 +23,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { FlowStep, FlowSample } from "@/data/flowSteps";
 import { FinancialStatementView } from "./FinancialStatementView";
-import { companyMeta, bsData, plData } from "@/data/financialStatementsSample";
+import { BalanceSheetClassic } from "./BalanceSheetClassic";
+import { companyMeta, bsData, plData, classicBSData } from "@/data/financialStatementsSample";
 
 function FlowSampleRenderer({ sample }: { sample: FlowSample }) {
   switch (sample.type) {
