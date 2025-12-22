@@ -56,16 +56,16 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
                 initial={{ x: -85, y: 100, opacity: 0, scale: 0.5 }}
                 animate={{ 
                   x: [-85, 0, 85],
-                  y: [100, -20, 100],
+                  y: [100, -80, 100],
                   opacity: [0, 1, 1, 0],
                   scale: [0.5, 1.1, 0.8]
                 }}
                 transition={{ 
                   delay: 0.8,
-                  duration: 1.6,
+                  duration: 3.5,
                   repeat: Infinity,
-                  repeatDelay: 1.0,
-                  ease: [0.4, 0, 0.2, 1]
+                  repeatDelay: 1.5,
+                  ease: "easeInOut"
                 }}
                 className="absolute left-1/2 top-0 -translate-x-1/2 w-20 h-7 bg-green-500 rounded-md shadow-lg flex items-center justify-center text-white text-[9px] font-bold z-20 border border-white/20"
               >
