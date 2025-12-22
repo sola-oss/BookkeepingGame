@@ -24,7 +24,7 @@ export const flowSteps: FlowStep[] = [
     inLabel: ["領収書", "請求書", "契約書"],
     outLabel: ["仕訳の検討"],
     keyPoint: "期中には売買、期末には決算整理のための取引（減価償却など）が発生します。",
-    link: "/game",
+    link: "/journal",
     samples: [
       {
         type: "cards",
