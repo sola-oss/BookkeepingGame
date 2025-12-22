@@ -191,8 +191,8 @@ export function StepModal({
                         </TabsTrigger>
                       </TabsList>
                       <TabsContent value="bs" className="mt-0 focus-visible:ring-0">
-                        <FinancialStatementView meta={companyMeta} statementType="BS" data={bsData} />
-                      </TabsContent>
+                      <BalanceSheetClassic data={classicBSData} />
+                    </TabsContent>
                       <TabsContent value="pl" className="mt-0 focus-visible:ring-0">
                         <FinancialStatementView meta={companyMeta} statementType="PL" data={plData} />
                       </TabsContent>
