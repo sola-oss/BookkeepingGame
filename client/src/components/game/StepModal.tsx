@@ -68,11 +68,19 @@ function FlowSampleRenderer({ sample }: { sample: FlowSample }) {
           <p className="text-xs font-bold text-muted-foreground">{sample.title}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {sample.blocks.map((block, i) => (
-              <div key={i} className="border rounded-lg p-3 bg-card space-y-2">
-                <p className="text-[10px] font-bold text-center border-b pb-1 mb-2">{block.heading}</p>
+              <div key={i} className={`border rounded-lg p-3 bg-card space-y-2 ${
+                block.heading.includes("借方") ? "border-blue-100 dark:border-blue-900/30" : 
+                block.heading.includes("貸方") ? "border-red-100 dark:border-red-900/30" : ""
+              }`}>
+                <p className={`text-[10px] font-bold text-center border-b pb-1 mb-2 ${
+                  block.heading.includes("借方") ? "text-blue-600 dark:text-blue-400 border-blue-50" : 
+                  block.heading.includes("貸方") ? "text-red-600 dark:text-red-400 border-red-50" : ""
+                }`}>{block.heading}</p>
                 <div className="space-y-1">
                   {block.lines.map((line, j) => (
-                    <div key={j} className="flex justify-between text-[11px]">
+                    <div key={j} className={`flex justify-between text-[11px] ${
+                      line.label === "当期純利益" || line.label === "繰越利益剰余金" ? "font-bold text-green-600 dark:text-green-400 pt-1 border-t border-dashed" : ""
+                    }`}>
                       <span>{line.label}</span>
                       <span className="font-mono">{line.amount.toLocaleString()}</span>
                     </div>

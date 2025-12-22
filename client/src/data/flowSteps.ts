@@ -1,7 +1,7 @@
 export type FlowSample =
 | { type: "table"; title: string; columns: string[]; rows: (string | number)[][] }
 | { type: "cards"; title: string; items: { label: string; value: string }[] }
-| { type: "statement"; title: string; blocks: { heading: string; lines: { label: string; amount: number }[] }[] };
+| { type: "statement"; title: string; blocks: { heading: string; lines: { label: string; amount: number; side?: "debit" | "credit" }[] }[] };
 
 export type FlowStep = {
   id: "transaction" | "journal" | "ledger" | "statements";
@@ -45,7 +45,7 @@ export const flowSteps: FlowStep[] = [
     description: "発生したすべての取引を日付順に仕訳帳へ記録します。これがすべての帳簿の基礎となります。",
     inLabel: ["取引内容"],
     outLabel: ["仕訳（借方/貸方）"],
-    keyPoint: "期中の営業取引に加え、期末には「決算整理仕訳」を行って1期の正確な利益を計算します。",
+    keyPoint: "借方と貸方の合計金額は必ず一致します（貸借平均の原理）。",
     link: "/journal",
     samples: [
       {
@@ -88,7 +88,7 @@ export const flowSteps: FlowStep[] = [
     id: "statements",
     title: "決算書作成",
     subtitle: "Reporting",
-    description: "1年間の集大成として決算書を作成します。P/Lで稼いだ利益がB/Sの純資産を増やします。",
+    description: "1年間の集大成として決算書を作成します。P/Lで損益を計算し、B/Sで財政状態を報告します。",
     inLabel: ["元帳残高（試算表）"],
     outLabel: ["損益計算書", "貸借対照表"],
     keyPoint: "当期純利益が貸借対照表の「繰越利益剰余金」等に加算されることで1期が完結します。",
@@ -96,24 +96,41 @@ export const flowSteps: FlowStep[] = [
     samples: [
       {
         type: "statement",
-        title: "第1期 決算報告書（要約）",
+        title: "第1期 損益計算書 (P/L)",
         blocks: [
           {
-            heading: "損益計算書 (4/1-3/31)",
+            heading: "費用（借方）",
             lines: [
-              { label: "売上高", amount: 100000 },
-              { label: "売上原価", amount: 60000 },
-              { label: "営業費用", amount: 5000 },
-              { label: "当期純利益", amount: 35000 }
+              { label: "売上原価", amount: 60000, side: "debit" },
+              { label: "販売費及び一般管理費", amount: 5000, side: "debit" },
+              { label: "当期純利益", amount: 35000, side: "debit" }
             ]
           },
           {
-            heading: "貸借対照表 (3/31現在)",
+            heading: "収益（貸方）",
             lines: [
-              { label: "資産合計", amount: 140000 },
-              { label: "負債合計", amount: 5000 },
-              { label: "資本金", amount: 100000 },
-              { label: "利益剰余金", amount: 35000 }
+              { label: "売上高", amount: 100000, side: "credit" }
+            ]
+          }
+        ]
+      },
+      {
+        type: "statement",
+        title: "第1期 貸借対照表 (B/S)",
+        blocks: [
+          {
+            heading: "資産（借方）",
+            lines: [
+              { label: "流動資産（現金等）", amount: 140000, side: "debit" },
+              { label: "固定資産（備品等）", amount: 5000, side: "debit" }
+            ]
+          },
+          {
+            heading: "負債・純資産（貸方）",
+            lines: [
+              { label: "流動負債（買掛金等）", amount: 10000, side: "credit" },
+              { label: "資本金", amount: 100000, side: "credit" },
+              { label: "繰越利益剰余金", amount: 35000, side: "credit" }
             ]
           }
         ]

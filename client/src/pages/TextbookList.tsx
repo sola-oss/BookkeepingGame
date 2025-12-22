@@ -195,9 +195,9 @@ export default function TextbookList() {
               <h2 className="text-lg font-bold">主要トピック解説</h2>
             </div>
             <Button 
-              variant="link" 
+              variant="ghost" 
               size="sm" 
-              className="text-xs"
+              className="text-xs text-primary underline-offset-4 hover:underline"
               onClick={() => navigate("/weakpoints")}
             >
               間違えやすい仕訳は弱点帳へ ➔
