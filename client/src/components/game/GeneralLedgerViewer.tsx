@@ -14,8 +14,9 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { 
   GeneralLedger, 
-  LedgerAccount 
-} from "../lib/buildGeneralLedger";
+  LedgerAccount,
+  LedgerRow
+} from "@/lib/buildGeneralLedger";
 
 interface GeneralLedgerViewerProps {
   ledger: GeneralLedger;
@@ -26,11 +27,11 @@ export function GeneralLedgerViewer({ ledger }: GeneralLedgerViewerProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showMobileDetail, setShowMobileDetail] = useState(false);
 
-  const filteredAccounts = ledger.accounts.filter(acc => 
+  const filteredAccounts = ledger.accounts.filter((acc: LedgerAccount) => 
     acc.account.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const selectedAccount = ledger.accounts.find(acc => acc.account === selectedAccountName);
+  const selectedAccount = ledger.accounts.find((acc: LedgerAccount) => acc.account === selectedAccountName);
 
   const handleAccountSelect = (name: string) => {
     setSelectedAccountName(name);
@@ -66,7 +67,7 @@ export function GeneralLedgerViewer({ ledger }: GeneralLedgerViewerProps) {
           </div>
           <ScrollArea className="flex-1">
             <div className="p-2 space-y-1">
-              {filteredAccounts.map((acc) => (
+              {filteredAccounts.map((acc: LedgerAccount) => (
                 <button
                   key={acc.account}
                   onClick={() => handleAccountSelect(acc.account)}
@@ -148,7 +149,7 @@ export function GeneralLedgerViewer({ ledger }: GeneralLedgerViewerProps) {
                           {selectedAccount.openingBalance.toLocaleString()}
                         </td>
                       </tr>
-                      {selectedAccount.rows.map((row, idx) => (
+                      {selectedAccount.rows.map((row: LedgerRow, idx: number) => (
                         <tr key={idx} className="hover:bg-muted/20 transition-colors">
                           <td className="border p-2 font-mono whitespace-nowrap">{row.date}</td>
                           <td className="border p-2">

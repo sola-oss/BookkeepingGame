@@ -25,7 +25,7 @@ import type { FlowStep, FlowSample } from "@/data/flowSteps";
 import { FinancialStatementView } from "./FinancialStatementView";
 import { BalanceSheetClassic } from "./BalanceSheetClassic";
 import { GeneralLedgerViewer } from "./GeneralLedgerViewer";
-import { companyMeta, bsData, plData, classicBSData } from "@/data/financialStatementsSample";
+import { companyMeta, plData, classicBSData } from "@/data/financialStatementsSample";
 import { sampleLedger } from "@/data/sample_company_fy_journal";
 
 function FlowSampleRenderer({ sample }: { sample: FlowSample }) {
