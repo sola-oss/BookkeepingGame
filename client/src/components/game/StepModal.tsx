@@ -227,15 +227,17 @@ export function StepModal({
             </div>
           </ScrollArea>
           
-          <div className="absolute bottom-0 left-0 right-0 p-4 pt-8 bg-gradient-to-t from-background via-background/95 to-transparent z-20 pointer-events-none">
-            <Button 
-              className="w-full h-12 rounded-2xl font-bold shadow-lg shadow-primary/20 group pointer-events-auto"
-              onClick={handleAction}
-            >
-              このステップを練習する
-              <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-            </Button>
-          </div>
+          {step.id !== "transaction" && (
+            <div className="absolute bottom-0 left-0 right-0 p-4 pt-8 bg-gradient-to-t from-background via-background/95 to-transparent z-20 pointer-events-none">
+              <Button 
+                className="w-full h-12 rounded-2xl font-bold shadow-lg shadow-primary/20 group pointer-events-auto"
+                onClick={handleAction}
+              >
+                このステップを練習する
+                <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </Button>
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>
