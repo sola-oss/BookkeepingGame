@@ -1,16 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-
-export interface LedgerRow {
-  month: string;
-  day: string;
-  memo: string;
-  sourceEntryId: string | number;
-  debit: number;
-  credit: number;
-  balance: number;
-  balanceSide: "借" | "貸" | "";
-}
+import { LedgerRow } from "@/data/ledgerData";
 
 interface LedgerSheetProps {
   accountName: string;

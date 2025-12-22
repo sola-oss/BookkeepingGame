@@ -194,12 +194,12 @@ export function StepModal({
                         </TabsTrigger>
                       </TabsList>
                       <TabsContent value="bs" className="mt-0 focus-visible:ring-0">
-                      <BalanceSheetClassic data={classicBSData} />
-                    </TabsContent>
-                    <TabsContent value="pl" className="mt-0 focus-visible:ring-0">
-                      <FinancialStatementView meta={companyMeta} statementType="PL" data={plData} />
-                    </TabsContent>
-                  </Tabs>
+                        <BalanceSheetClassic data={classicBSData} />
+                      </TabsContent>
+                      <TabsContent value="pl" className="mt-0 focus-visible:ring-0">
+                        <FinancialStatementView meta={companyMeta} statementType="PL" data={plData} />
+                      </TabsContent>
+                    </Tabs>
                   ) : (
                     step.samples.map((sample, i) => (
                       <FlowSampleRenderer key={i} sample={sample} />

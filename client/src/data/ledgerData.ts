@@ -1,4 +1,13 @@
-import { LedgerRow } from "./LedgerSheet";
+export interface LedgerRow {
+  month: string;
+  day: string;
+  memo: string;
+  sourceEntryId: string | number;
+  debit: number;
+  credit: number;
+  balance: number;
+  balanceSide: "借" | "貸" | "";
+}
 
 export interface JournalEntry {
   id: number;
