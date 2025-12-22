@@ -124,10 +124,8 @@ export default function TextbookList() {
         <section className="space-y-4">
           <div className="flex items-center gap-2 mb-2">
             <div className="h-6 w-1 bg-primary rounded-full" />
-            <h2 className="text-lg font-bold">簿記の一連の流れ</h2>
+            <h2 className="text-lg font-bold">P/LとB/Sのつながり</h2>
           </div>
-          
-          <FlowDiagram onNavigate={navigate} />
           
           <NetIncomeBridgeCard onClick={() => setIsNetIncomeModalOpen(true)} />
           
@@ -139,53 +137,6 @@ export default function TextbookList() {
               navigate("/journal");
             }}
           />
-
-          <div className="grid gap-4 mt-4">
-            {BOKI_FLOW.map((flow, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.1 }}
-              >
-                <Card className="relative overflow-hidden border-l-4 border-l-primary/50">
-                  <CardHeader className={`pb-3 ${flow.bg}`}>
-                    <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-lg bg-background ${flow.color}`}>
-                        {flow.icon && <flow.icon className="w-5 h-5" />}
-                      </div>
-                      <div>
-                        <CardTitle className="text-base font-bold">{idx + 1}. {flow.step}</CardTitle>
-                        <CardDescription className="text-xs">{flow.purpose}</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-4 pb-4 grid grid-cols-2 gap-4 text-xs">
-                    <div className="space-y-2">
-                      <p><span className="font-bold text-muted-foreground">IN:</span> {flow.input}</p>
-                      <p><span className="font-bold text-muted-foreground">OUT:</span> {flow.output}</p>
-                    </div>
-                    <div className="space-y-2 border-l pl-4">
-                      <p className="font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
-                        <Info className="w-3 h-3" /> 注意点
-                      </p>
-                      <p className="text-muted-foreground leading-relaxed">{flow.mistake}</p>
-                    </div>
-                    <div className="col-span-2 pt-2 border-t mt-1 text-primary font-medium flex items-center gap-1">
-                      <Badge variant="outline" className="text-[10px] bg-primary/5">
-                        {flow.mode}
-                      </Badge>
-                    </div>
-                  </CardContent>
-                  {idx < BOKI_FLOW.length - 1 && (
-                    <div className="absolute -bottom-3 left-8 z-10 bg-background rounded-full p-1 border">
-                      <ArrowRight className="w-3 h-3 rotate-90 text-muted-foreground" />
-                    </div>
-                  )}
-                </Card>
-              </motion.div>
-            ))}
-          </div>
         </section>
 
         <section className="space-y-4">
