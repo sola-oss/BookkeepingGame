@@ -37,15 +37,15 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
                 </div>
                 <div className="w-full flex-1 bg-muted/20 rounded-lg relative overflow-hidden flex gap-0.5 border border-primary/20">
                    <div className="flex-1 flex flex-col gap-0.5 h-full">
+                     <div className="flex-1 bg-[#E8F5E9] dark:bg-green-900/20 flex items-center justify-center text-[9px] text-green-700/80 font-medium">費用</div>
                      <motion.div 
                        initial={{ height: "0%" }}
                        animate={{ height: "35%" }}
                        transition={{ delay: 0.5, duration: 1 }}
-                       className="w-full bg-white dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 font-bold text-[9px] z-10 border-b border-zinc-200 dark:border-zinc-700"
+                       className="w-full bg-white dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 font-bold text-[9px] z-10 border-t border-zinc-200 dark:border-zinc-700"
                      >
                        利益
                      </motion.div>
-                     <div className="flex-1 bg-[#E8F5E9] dark:bg-green-900/20 flex items-center justify-center text-[9px] text-green-700/80 font-medium">費用</div>
                    </div>
                    <div className="flex-1 bg-[#FCE4EC] dark:bg-pink-900/20 flex items-center justify-center text-[9px] text-pink-700/80 font-medium h-full border-l border-pink-200/40">収益</div>
                 </div>
@@ -56,7 +56,7 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
                 initial={{ x: -85, y: 100, opacity: 0, scale: 0.5 }}
                 animate={{ 
                   x: [-85, 0, 85],
-                  y: [40, -10, 165],
+                  y: [140, 40, 155],
                   opacity: [0, 1, 1, 0],
                   scale: [0.5, 1.1, 0.8]
                 }}
