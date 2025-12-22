@@ -24,7 +24,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { FlowStep, FlowSample } from "@/data/flowSteps";
 import { FinancialStatementView } from "./FinancialStatementView";
 import { BalanceSheetClassic } from "./BalanceSheetClassic";
+import { GeneralLedgerViewer } from "./GeneralLedgerViewer";
 import { companyMeta, bsData, plData, classicBSData } from "@/data/financialStatementsSample";
+import { sampleLedger } from "@/data/sample_company_fy_journal";
 
 function FlowSampleRenderer({ sample }: { sample: FlowSample }) {
   switch (sample.type) {
@@ -178,7 +180,11 @@ export function StepModal({
                   <h3 className="font-bold text-sm">サンプル表示</h3>
                 </div>
                 <div className="space-y-6">
-                  {step.id === "statements" ? (
+                  {step.id === "ledger" ? (
+                  <div className="h-[450px]">
+                    <GeneralLedgerViewer ledger={sampleLedger} />
+                  </div>
+                ) : step.id === "statements" ? (
                     <Tabs defaultValue="bs" className="w-full">
                       <TabsList className="grid w-full grid-cols-2 mb-4 bg-muted/50 p-1 rounded-xl">
                         <TabsTrigger value="bs" className="rounded-lg text-xs py-1.5 data-[state=active]:shadow-sm">
