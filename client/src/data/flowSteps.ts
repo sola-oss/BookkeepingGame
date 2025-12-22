@@ -88,53 +88,11 @@ export const flowSteps: FlowStep[] = [
     id: "statements",
     title: "決算書作成",
     subtitle: "Reporting",
-    description: "1年間の集大成として決算書を作成します。P/Lで損益を計算し、B/Sで財政状態を報告します。",
-    inLabel: ["元帳残高（試算表）"],
+    description: "1年間の記録をまとめ、会社の「成績表」と「財政状態」を作成します。利益が純資産を増やします。",
+    inLabel: ["総勘定元帳（残高）"],
     outLabel: ["損益計算書", "貸借対照表"],
-    keyPoint: "当期純利益が貸借対照表の「繰越利益剰余金」等に加算されることで1期が完結します。",
+    keyPoint: "P/Lで計算した当期純利益は、B/Sの純資産（利益剰余金）を増加させます。",
     link: "/statements",
-    samples: [
-      {
-        type: "statement",
-        title: "第1期 損益計算書 (P/L)",
-        blocks: [
-          {
-            heading: "費用（借方）",
-            lines: [
-              { label: "売上原価", amount: 60000, side: "debit" },
-              { label: "販売費及び一般管理費", amount: 5000, side: "debit" },
-              { label: "当期純利益", amount: 35000, side: "debit" }
-            ]
-          },
-          {
-            heading: "収益（貸方）",
-            lines: [
-              { label: "売上高", amount: 100000, side: "credit" }
-            ]
-          }
-        ]
-      },
-      {
-        type: "statement",
-        title: "第1期 貸借対照表 (B/S)",
-        blocks: [
-          {
-            heading: "資産（借方）",
-            lines: [
-              { label: "流動資産（現金等）", amount: 140000, side: "debit" },
-              { label: "固定資産（備品等）", amount: 5000, side: "debit" }
-            ]
-          },
-          {
-            heading: "負債・純資産（貸方）",
-            lines: [
-              { label: "流動負債（買掛金等）", amount: 10000, side: "credit" },
-              { label: "資本金", amount: 100000, side: "credit" },
-              { label: "繰越利益剰余金", amount: 35000, side: "credit" }
-            ]
-          }
-        ]
-      }
-    ]
+    samples: [] 
   }
 ];

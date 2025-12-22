@@ -4,7 +4,9 @@ import {
   ArrowRight, 
   Info,
   CheckCircle2,
-  ChevronRight
+  ChevronRight,
+  FileText,
+  BarChart3
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { 
@@ -18,7 +20,10 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { FlowStep, FlowSample } from "@/data/flowSteps";
+import { FinancialStatementView } from "./FinancialStatementView";
+import { companyMeta, bsData, plData } from "@/data/financialStatementsSample";
 
 function FlowSampleRenderer({ sample }: { sample: FlowSample }) {
   switch (sample.type) {
@@ -171,9 +176,30 @@ export function StepModal({
                 <h3 className="font-bold text-sm">サンプル表示</h3>
               </div>
               <div className="space-y-6">
-                {step.samples.map((sample, i) => (
-                  <FlowSampleRenderer key={i} sample={sample} />
-                ))}
+                {step.id === "statements" ? (
+                  <Tabs defaultValue="bs" className="w-full">
+                    <TabsList className="grid w-full grid-cols-2 mb-4 bg-muted/50 p-1 rounded-xl">
+                      <TabsTrigger value="bs" className="rounded-lg text-xs py-1.5 data-[state=active]:shadow-sm">
+                        <FileText className="w-3 h-3 mr-1.5" />
+                        貸借対照表
+                      </TabsTrigger>
+                      <TabsTrigger value="pl" className="rounded-lg text-xs py-1.5 data-[state=active]:shadow-sm">
+                        <BarChart3 className="w-3 h-3 mr-1.5" />
+                        損益計算書
+                      </TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="bs" className="mt-0 focus-visible:ring-0">
+                      <FinancialStatementView meta={companyMeta} statementType="BS" data={bsData} />
+                    </TabsContent>
+                    <TabsContent value="pl" className="mt-0 focus-visible:ring-0">
+                      <FinancialStatementView meta={companyMeta} statementType="PL" data={plData} />
+                    </TabsContent>
+                  </Tabs>
+                ) : (
+                  step.samples.map((sample, i) => (
+                    <FlowSampleRenderer key={i} sample={sample} />
+                  ))
+                )}
               </div>
             </section>
           </div>
