@@ -35,25 +35,28 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
                 <div className="text-[10px] font-bold text-muted-foreground mb-2 flex items-center gap-1">
                   <TrendingUp className="w-3 h-3" /> P/L (損益計算書)
                 </div>
-                <div className="w-full flex-1 bg-muted/30 rounded-lg relative overflow-hidden flex flex-col justify-end">
+                <div className="w-full flex-1 bg-muted/20 rounded-lg relative overflow-hidden flex flex-col justify-end">
+                   <div className="flex-1 w-full flex flex-col">
+                     <div className="flex-1 bg-orange-100/30 dark:bg-orange-900/10 flex items-center justify-center text-[8px] text-orange-600/50">費用</div>
+                     <div className="h-1/2 bg-blue-100/30 dark:bg-blue-900/10 flex items-center justify-center text-[8px] text-blue-600/50 border-t border-blue-200/20">収益</div>
+                   </div>
                    <motion.div 
                      initial={{ height: "0%" }}
-                     animate={{ height: "40%" }}
+                     animate={{ height: "30%" }}
                      transition={{ delay: 0.5, duration: 1 }}
-                     className="w-full bg-green-500 flex items-center justify-center text-white font-bold text-[10px] z-10"
+                     className="w-full bg-green-500 flex items-center justify-center text-white font-bold text-[9px] z-10 shadow-[0_-2px_4px_rgba(0,0,0,0.1)]"
                    >
-                     利益
+                     当期純利益
                    </motion.div>
-                   <div className="flex-1 w-full bg-blue-100 dark:bg-blue-900/30"></div>
                 </div>
               </div>
 
               {/* Animation Block */}
               <motion.div
-                initial={{ x: -100, y: 30, opacity: 0, scale: 0.5 }}
+                initial={{ x: -80, y: 60, opacity: 0, scale: 0.5 }}
                 animate={{ 
-                  x: [null, 0, 100],
-                  y: [null, 30, 30],
+                  x: [-80, 0, 85],
+                  y: [60, 20, 85],
                   opacity: [0, 1, 1, 0],
                   scale: [0.5, 1, 1, 0.8]
                 }}
@@ -61,9 +64,10 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
                   delay: 2,
                   duration: 3,
                   repeat: Infinity,
-                  times: [0, 0.2, 0.8, 1]
+                  times: [0, 0.2, 0.8, 1],
+                  ease: "easeInOut"
                 }}
-                className="absolute left-1/2 top-0 -translate-x-1/2 w-16 h-8 bg-green-500 rounded-lg shadow-lg flex items-center justify-center text-white text-[10px] font-bold z-20"
+                className="absolute left-1/2 top-0 -translate-x-1/2 w-20 h-7 bg-green-500 rounded-md shadow-lg flex items-center justify-center text-white text-[9px] font-bold z-20 border border-white/20"
               >
                 当期純利益
               </motion.div>
@@ -74,17 +78,18 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
                   <PieChart className="w-3 h-3" /> B/S (貸借対照表)
                 </div>
                 <div className="w-full flex-1 flex gap-1">
-                  <div className="flex-1 bg-blue-50 dark:bg-blue-900/20 rounded-lg"></div>
+                  <div className="flex-1 bg-blue-50/50 dark:bg-blue-900/10 rounded-lg flex items-center justify-center text-[8px] text-blue-600/30">資産</div>
                   <div className="flex-1 flex flex-col gap-1">
-                    <div className="h-1/3 bg-red-50 dark:bg-red-900/20 rounded-lg"></div>
-                    <div className="flex-1 border border-primary/20 rounded-lg flex flex-col justify-end overflow-hidden">
+                    <div className="h-1/3 bg-red-50/50 dark:bg-red-900/10 rounded-lg flex items-center justify-center text-[8px] text-red-600/30">負債</div>
+                    <div className="flex-1 bg-zinc-50/50 dark:bg-zinc-900/10 rounded-lg flex flex-col justify-end overflow-hidden border border-primary/5">
+                      <div className="flex-1 flex items-center justify-center text-[8px] text-zinc-600/30">純資産</div>
                       <motion.div 
-                         initial={{ height: "20%" }}
-                         animate={{ height: "50%" }}
+                         initial={{ height: "0%" }}
+                         animate={{ height: "40%" }}
                          transition={{ delay: 4, duration: 1 }}
-                         className="w-full bg-primary flex items-center justify-center text-white font-bold text-[8px]"
+                         className="w-full bg-primary flex items-center justify-center text-white font-bold text-[8px] shadow-[0_-2px_4px_rgba(0,0,0,0.1)]"
                       >
-                         純資産
+                         利益
                       </motion.div>
                     </div>
                   </div>
