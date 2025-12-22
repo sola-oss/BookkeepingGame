@@ -28,6 +28,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { FlowDiagram } from "@/components/game/FlowDiagram";
 import { textbookPages, searchTextbookPages, getTextbookPageByTopicTag } from "@/data/textbookPages";
 import type { TextbookPage } from "@shared/schema";
 
@@ -142,7 +143,9 @@ export default function TextbookList() {
             <h2 className="text-lg font-bold">簿記の一連の流れ</h2>
           </div>
           
-          <div className="grid gap-4">
+          <FlowDiagram onNavigate={navigate} />
+          
+          <div className="grid gap-4 mt-4">
             {BOKI_FLOW.map((flow, idx) => (
               <motion.div
                 key={idx}
