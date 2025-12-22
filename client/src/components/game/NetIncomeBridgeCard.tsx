@@ -28,10 +28,10 @@ export function NetIncomeBridgeCard({ onClick }: { onClick: () => void }) {
               <div className="text-[10px] font-bold text-center text-muted-foreground uppercase tracking-wider">P/L</div>
               <div className="flex-1 flex gap-0.5 mt-1 overflow-hidden">
                 <div className="flex-1 flex flex-col gap-0.5 h-full">
+                  <div className="flex-1 bg-[#E8F5E9] dark:bg-green-900/20 rounded flex items-center justify-center text-[8px] text-green-700/80 font-medium">費用</div>
                   <div className="h-2/5 bg-green-500 rounded flex items-center justify-center text-[7px] font-bold text-white px-0.5">
                     当期純利益
                   </div>
-                  <div className="flex-1 bg-[#E8F5E9] dark:bg-green-900/20 rounded flex items-center justify-center text-[8px] text-green-700/80 font-medium">費用</div>
                 </div>
                 <div className="flex-1 bg-[#FCE4EC] dark:bg-pink-900/20 rounded flex items-center justify-center text-[8px] text-pink-700/80 font-medium h-full border-l border-pink-200/20">収益</div>
               </div>
