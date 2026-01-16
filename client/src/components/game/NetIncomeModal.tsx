@@ -39,8 +39,8 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
                    <div className="flex-1 flex flex-col gap-0.5 h-full">
                      <div className="flex-1 bg-[#E8F5E9] dark:bg-green-900/20 flex items-center justify-center text-[9px] text-green-700/80 font-medium">費用</div>
                      <motion.div 
-                       initial={{ height: "0%" }}
-                       animate={{ height: "35%" }}
+                       initial={{ height: 0 }}
+                       animate={{ height: 24 }}
                        transition={{ delay: 1.5, duration: 1 }}
                        className="w-full bg-green-500 flex items-center justify-center text-white font-bold text-[8px] z-10 border-t border-green-400"
                      >
@@ -84,8 +84,8 @@ export function NetIncomeModal({ isOpen, onClose, onAction }: { isOpen: boolean,
                     <div className="flex-1 bg-[#E3F2FD] dark:bg-blue-900/20 rounded-lg flex flex-col justify-end overflow-hidden border border-blue-200/20">
                       <div className="flex-1 flex items-center justify-center text-[8px] text-blue-600/60 font-medium">資本</div>
                       <motion.div 
-                         initial={{ height: "0%" }}
-                         animate={{ height: "40%" }}
+                         initial={{ height: 0 }}
+                         animate={{ height: 24 }}
                          transition={{ delay: 5, duration: 1 }}
                          className="w-full bg-green-500 flex items-center justify-center text-white font-bold text-[7px] shadow-[0_-2px_4px_rgba(0,0,0,0.1)] px-0.5"
                       >
