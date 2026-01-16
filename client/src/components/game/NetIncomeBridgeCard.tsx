@@ -29,7 +29,7 @@ export function NetIncomeBridgeCard({ onClick }: { onClick: () => void }) {
               <div className="flex-1 flex gap-0.5 mt-1 overflow-hidden">
                 <div className="flex-1 flex flex-col gap-0.5 h-full">
                   <div className="flex-1 bg-[#E8F5E9] dark:bg-green-900/20 rounded flex items-center justify-center text-[8px] text-green-700/80 font-medium">費用</div>
-                  <div className="h-2/5 bg-green-500 rounded flex items-center justify-center text-[7px] font-bold text-white px-0.5">
+                  <div className="h-[18px] bg-green-500 rounded flex items-center justify-center text-[7px] font-bold text-white px-0.5">
                     当期純利益
                   </div>
                 </div>
@@ -56,7 +56,7 @@ export function NetIncomeBridgeCard({ onClick }: { onClick: () => void }) {
                   <div className="h-2/5 bg-[#F5F5F5] dark:bg-zinc-800/20 rounded flex items-center justify-center text-[8px] text-zinc-600/60 font-medium border border-zinc-200/20">負債</div>
                   <div className="h-3/5 border border-blue-200/20 bg-[#E3F2FD] dark:bg-blue-900/20 rounded flex flex-col justify-end p-0.5 overflow-hidden">
                     <div className="flex-1 flex items-center justify-center text-[7px] text-blue-600/60 font-medium">資本</div>
-                    <div className="h-2/5 w-full bg-green-500 rounded flex items-center justify-center text-[6px] font-bold text-white px-0.5">当期純利益</div>
+                    <div className="h-[18px] w-full bg-green-500 rounded flex items-center justify-center text-[6px] font-bold text-white px-0.5">当期純利益</div>
                   </div>
                 </div>
               </div>
