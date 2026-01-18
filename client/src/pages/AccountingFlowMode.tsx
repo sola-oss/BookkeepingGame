@@ -337,11 +337,13 @@ function AnimatingChip({
 function DepositAnimation({
   onComplete,
   inputRef,
+  animationKey,
 }: {
   onComplete: () => void;
   inputRef: React.RefObject<HTMLDivElement | null>;
+  animationKey: string;
 }) {
-  const { state, currentQuestion } = useAccountingFlow();
+  const { state, currentQuestion, netIncome } = useAccountingFlow();
   const targetEls = useRef<Record<CategoryType, HTMLDivElement | null>>({
     asset: null,
     liability: null,
@@ -349,31 +351,35 @@ function DepositAnimation({
     revenue: null,
     expense: null,
   });
+  const hasCalledComplete = useRef(false);
+  const lastAnimationKey = useRef("");
 
   const chips = useMemo(() => {
-    if (!currentQuestion || state.phase !== "checking") return [];
+    if (!currentQuestion) return [];
     
     const result: { line: JournalLine; side: "debit" | "credit" }[] = [];
     currentQuestion.debit.forEach((line) => result.push({ line, side: "debit" }));
     currentQuestion.credit.forEach((line) => result.push({ line, side: "credit" }));
     return result;
-  }, [currentQuestion, state.phase]);
-
-  const completedCount = useRef(0);
-
-  const handleChipComplete = useCallback(() => {
-    completedCount.current += 1;
-    if (completedCount.current >= chips.length) {
-      completedCount.current = 0;
-      onComplete();
-    }
-  }, [chips.length, onComplete]);
+  }, [currentQuestion]);
 
   useEffect(() => {
-    if (chips.length === 0 && state.phase === "checking") {
-      onComplete();
-    }
-  }, [chips.length, state.phase, onComplete]);
+    if (lastAnimationKey.current === animationKey) return;
+    lastAnimationKey.current = animationKey;
+    hasCalledComplete.current = false;
+    
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const duration = prefersReducedMotion ? 200 : 800;
+    
+    const timer = setTimeout(() => {
+      if (!hasCalledComplete.current) {
+        hasCalledComplete.current = true;
+        onComplete();
+      }
+    }, duration);
+
+    return () => clearTimeout(timer);
+  }, [onComplete, animationKey]);
 
   const getPositions = (line: JournalLine) => {
     const inputRect = inputRef.current?.getBoundingClientRect();
@@ -404,20 +410,20 @@ function DepositAnimation({
       <MiniFinancialStatements
         targetRefs={targetRefCallbacks}
         totals={state.totals}
-        netIncome={state.totals.pl.revenue - state.totals.pl.expense}
+        netIncome={netIncome}
         highlightCategory={highlightCategory}
       />
       <AnimatePresence>
-        {state.phase === "checking" && chips.map((chip, index) => {
+        {chips.map((chip, index) => {
           const positions = getPositions(chip.line);
           return (
             <AnimatingChip
-              key={`${chip.line.account}-${index}`}
+              key={`${currentQuestion?.id}-${chip.line.account}-${index}`}
               line={chip.line}
               side={chip.side}
               startPos={positions.start}
               endPos={positions.end}
-              onComplete={handleChipComplete}
+              onComplete={() => {}}
             />
           );
         })}
@@ -524,6 +530,8 @@ function AccountingFlowContent() {
   }, [dispatch]);
 
   const isAnimating = state.phase === "checking" || state.phase === "animating";
+  
+  const animationKey = `${state.currentIndex}-${state.phase}-${state.isCorrect}`;
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -570,7 +578,7 @@ function AccountingFlowContent() {
         ) : (
           <>
             {isAnimating ? (
-              <DepositAnimation onComplete={handleAnimationComplete} inputRef={inputRef} />
+              <DepositAnimation onComplete={handleAnimationComplete} inputRef={inputRef} animationKey={animationKey} />
             ) : (
               <MiniFinancialStatements
                 targetRefs={targetRefCallbacks}
