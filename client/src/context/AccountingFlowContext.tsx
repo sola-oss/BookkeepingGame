@@ -2,13 +2,19 @@ import { createContext, useContext, useReducer, type ReactNode } from "react";
 import { flowQuestions, type FlowJournalEntry, type FlowTotals, type JournalLine } from "@/data/accountingFlowQuestions";
 import type { CategoryType } from "@shared/schema";
 
-type FlowPhase = "playing" | "animating" | "completed";
+type FlowPhase = "playing" | "checking" | "showingAnswer" | "animating" | "completed";
 
 interface AnimatingChip {
   id: string;
   line: JournalLine;
   side: "debit" | "credit";
   targetCategory: CategoryType;
+}
+
+interface UserAnswer {
+  debitAccountId: string;
+  creditAccountId: string;
+  amount: string;
 }
 
 interface FlowState {
@@ -20,11 +26,19 @@ interface FlowState {
   completedQuestions: number[];
   showSummary: boolean;
   showNetIncomeTransfer: boolean;
+  userAnswer: UserAnswer;
+  isCorrect: boolean | null;
+  correctCount: number;
+  incorrectCount: number;
 }
 
 type FlowAction =
   | { type: "START_FLOW" }
-  | { type: "ANSWER_CORRECT" }
+  | { type: "SET_DEBIT_ACCOUNT"; payload: string }
+  | { type: "SET_CREDIT_ACCOUNT"; payload: string }
+  | { type: "SET_AMOUNT"; payload: string }
+  | { type: "SUBMIT_ANSWER" }
+  | { type: "DISMISS_ANSWER_MODAL" }
   | { type: "START_ANIMATION"; payload: AnimatingChip[] }
   | { type: "FINISH_ANIMATION" }
   | { type: "NEXT_QUESTION" }
@@ -36,6 +50,12 @@ type FlowAction =
 const initialTotals: FlowTotals = {
   bs: { asset: 0, liability: 0, equity: 0 },
   pl: { revenue: 0, expense: 0 },
+};
+
+const initialUserAnswer: UserAnswer = {
+  debitAccountId: "",
+  creditAccountId: "",
+  amount: "",
 };
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -56,6 +76,10 @@ const initialState: FlowState = {
   completedQuestions: [],
   showSummary: false,
   showNetIncomeTransfer: false,
+  userAnswer: { ...initialUserAnswer },
+  isCorrect: null,
+  correctCount: 0,
+  incorrectCount: 0,
 };
 
 function updateTotals(totals: FlowTotals, line: JournalLine, isDebit: boolean): FlowTotals {
@@ -87,12 +111,64 @@ function updateTotals(totals: FlowTotals, line: JournalLine, isDebit: boolean): 
   return newTotals;
 }
 
+function checkAnswer(state: FlowState): boolean {
+  const question = state.questions[state.currentIndex];
+  if (!question) return false;
+
+  const correctDebit = question.debit[0]?.account;
+  const correctCredit = question.credit[0]?.account;
+  const correctAmount = question.debit[0]?.amount;
+
+  const userAmount = parseInt(state.userAnswer.amount.replace(/,/g, ""), 10);
+
+  return (
+    state.userAnswer.debitAccountId === correctDebit &&
+    state.userAnswer.creditAccountId === correctCredit &&
+    userAmount === correctAmount
+  );
+}
+
 function flowReducer(state: FlowState, action: FlowAction): FlowState {
   switch (action.type) {
     case "START_FLOW":
       return {
         ...initialState,
         questions: shuffleArray(flowQuestions).slice(0, 5),
+      };
+
+    case "SET_DEBIT_ACCOUNT":
+      return {
+        ...state,
+        userAnswer: { ...state.userAnswer, debitAccountId: action.payload },
+      };
+
+    case "SET_CREDIT_ACCOUNT":
+      return {
+        ...state,
+        userAnswer: { ...state.userAnswer, creditAccountId: action.payload },
+      };
+
+    case "SET_AMOUNT":
+      return {
+        ...state,
+        userAnswer: { ...state.userAnswer, amount: action.payload },
+      };
+
+    case "SUBMIT_ANSWER": {
+      const isCorrect = checkAnswer(state);
+      return {
+        ...state,
+        phase: isCorrect ? "checking" : "showingAnswer",
+        isCorrect,
+        correctCount: isCorrect ? state.correctCount + 1 : state.correctCount,
+        incorrectCount: isCorrect ? state.incorrectCount : state.incorrectCount + 1,
+      };
+    }
+
+    case "DISMISS_ANSWER_MODAL":
+      return {
+        ...state,
+        phase: "checking",
       };
 
     case "START_ANIMATION":
@@ -128,12 +204,16 @@ function flowReducer(state: FlowState, action: FlowAction): FlowState {
           ...state,
           phase: "completed",
           showSummary: true,
+          userAnswer: { ...initialUserAnswer },
+          isCorrect: null,
         };
       }
       return {
         ...state,
         phase: "playing",
         currentIndex: nextIndex,
+        userAnswer: { ...initialUserAnswer },
+        isCorrect: null,
       };
     }
 
