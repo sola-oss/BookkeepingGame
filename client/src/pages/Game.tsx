@@ -124,7 +124,7 @@ export default function Game() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur border-b border-border">
-        <div className="max-w-lg mx-auto px-4 py-3">
+        <div className="max-w-2xl mx-auto px-4 py-3">
           <div className="flex items-center gap-3 mb-3">
             <Button
               variant="ghost"
@@ -147,7 +147,7 @@ export default function Game() {
         </div>
       </header>
 
-      <main className="flex-1 max-w-lg mx-auto w-full px-4 py-4 flex flex-col gap-4">
+      <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-4 flex flex-col gap-4">
         <section className="text-center py-2">
           <p className="text-base font-medium text-foreground">
             次の科目を5要素に分類せよ
@@ -161,27 +161,71 @@ export default function Game() {
           onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
         >
-          <section className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {categoryTypes.slice(0, 3).map((category) => (
-              <DroppableCategory
-                key={category}
-                category={category}
-                isOver={overId === category}
-                feedbackState={categoryFeedback[category]}
-              />
-            ))}
-          </section>
+          {/* P/L と B/S の2カラムレイアウト */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* P/L カラム（左） */}
+            <div className="border-2 border-dashed border-purple-300 dark:border-purple-700 rounded-xl p-3 bg-purple-50/30 dark:bg-purple-950/20">
+              <div className="text-center mb-3">
+                <span className="text-sm font-bold text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-900/50 px-3 py-1 rounded-full">
+                  P/L（損益計算書）
+                </span>
+                <div className="flex justify-between text-[10px] text-muted-foreground mt-2 px-1">
+                  <span>借方</span>
+                  <span>貸方</span>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {/* 費用（借方・左） */}
+                <DroppableCategory
+                  category="expense"
+                  isOver={overId === "expense"}
+                  feedbackState={categoryFeedback.expense}
+                />
+                {/* 収益（貸方・右） */}
+                <DroppableCategory
+                  category="revenue"
+                  isOver={overId === "revenue"}
+                  feedbackState={categoryFeedback.revenue}
+                />
+              </div>
+            </div>
 
-          <section className="grid grid-cols-2 gap-3">
-            {categoryTypes.slice(3).map((category) => (
-              <DroppableCategory
-                key={category}
-                category={category}
-                isOver={overId === category}
-                feedbackState={categoryFeedback[category]}
-              />
-            ))}
-          </section>
+            {/* B/S カラム（右） */}
+            <div className="border-2 border-dashed border-blue-300 dark:border-blue-700 rounded-xl p-3 bg-blue-50/30 dark:bg-blue-950/20">
+              <div className="text-center mb-3">
+                <span className="text-sm font-bold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/50 px-3 py-1 rounded-full">
+                  B/S（貸借対照表）
+                </span>
+                <div className="flex justify-between text-[10px] text-muted-foreground mt-2 px-1">
+                  <span>借方</span>
+                  <span>貸方</span>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 grid-rows-2 gap-2">
+                {/* 資産（借方・左）- 縦に2行分を占める */}
+                <div className="row-span-2">
+                  <DroppableCategory
+                    category="asset"
+                    isOver={overId === "asset"}
+                    feedbackState={categoryFeedback.asset}
+                    className="h-full"
+                  />
+                </div>
+                {/* 負債（貸方・右上） */}
+                <DroppableCategory
+                  category="liability"
+                  isOver={overId === "liability"}
+                  feedbackState={categoryFeedback.liability}
+                />
+                {/* 純資産（貸方・右下） */}
+                <DroppableCategory
+                  category="equity"
+                  isOver={overId === "equity"}
+                  feedbackState={categoryFeedback.equity}
+                />
+              </div>
+            </div>
+          </div>
 
           <section className="mt-auto pt-4 border-t border-border">
             <p className="text-sm text-muted-foreground mb-3 text-center">
@@ -199,10 +243,10 @@ export default function Game() {
               </AnimatePresence>
             </div>
           </section>
-        <DragOverlay dropAnimation={null}>
-              {activeCard ? <DragOverlayCard account={activeCard} /> : null}
-            </DragOverlay>
-          </DndContext>
+          <DragOverlay dropAnimation={null}>
+            {activeCard ? <DragOverlayCard account={activeCard} /> : null}
+          </DragOverlay>
+        </DndContext>
       </main>
 
       <FeedbackOverlay

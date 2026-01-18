@@ -7,6 +7,7 @@ interface DroppableCategoryProps {
   category: CategoryType;
   isOver: boolean;
   feedbackState?: "correct" | "wrong" | null;
+  className?: string;
 }
 
 const categoryColors: Record<CategoryType, { bg: string; border: string; text: string; hoverBg: string }> = {
@@ -42,7 +43,7 @@ const categoryColors: Record<CategoryType, { bg: string; border: string; text: s
   },
 };
 
-export function DroppableCategory({ category, isOver, feedbackState }: DroppableCategoryProps) {
+export function DroppableCategory({ category, isOver, feedbackState, className = "" }: DroppableCategoryProps) {
   const { setNodeRef } = useDroppable({
     id: category,
   });
@@ -60,6 +61,7 @@ export function DroppableCategory({ category, isOver, feedbackState }: Droppable
         ${isOver ? `border-solid ${colors.hoverBg} ${colors.border}` : `border-dashed ${colors.bg} ${colors.border}`}
         ${feedbackState === "correct" ? "ring-4 ring-green-500 bg-green-100 dark:bg-green-900/50" : ""}
         ${feedbackState === "wrong" ? "ring-4 ring-red-500 bg-red-100 dark:bg-red-900/50" : ""}
+        ${className}
       `}
       animate={{
         scale: feedbackState === "correct" ? [1, 1.05, 0.98, 1] : 
