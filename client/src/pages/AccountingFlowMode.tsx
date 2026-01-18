@@ -1,126 +1,107 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useMemo, useCallback } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, RotateCcw, Check, ArrowRight, Sparkles } from "lucide-react";
+import { ArrowLeft, Check, X, RefreshCw, Home, TrendingUp, ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useAccountingFlow, AccountingFlowProvider } from "@/context/AccountingFlowContext";
-import { getCategoryLabel, getCategoryColor, getNetIncome, type JournalLine } from "@/data/accountingFlowQuestions";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { AccountingFlowProvider, useAccountingFlow } from "@/context/AccountingFlowContext";
+import { accountChoices, getCategoryLabel, getCategoryColor, type JournalLine } from "@/data/accountingFlowQuestions";
 import type { CategoryType } from "@shared/schema";
 
-function formatAmount(amount: number): string {
-  return `¥${amount.toLocaleString()}`;
-}
-
-interface ChipPosition {
-  x: number;
-  y: number;
-}
-
-function MiniFinancialStatements({ 
-  totals, 
+function MiniFinancialStatements({
+  targetRefs,
+  totals,
   netIncome,
   highlightCategory,
-  targetRefs,
-}: { 
+}: {
+  targetRefs: Record<CategoryType, (el: HTMLDivElement | null) => void>;
   totals: { bs: { asset: number; liability: number; equity: number }; pl: { revenue: number; expense: number } };
   netIncome: number;
   highlightCategory: CategoryType | null;
-  targetRefs: Record<CategoryType, (el: HTMLDivElement | null) => void>;
 }) {
+  const formatAmount = (amount: number) => `¥${amount.toLocaleString()}`;
+  
+  const highlightClass = (category: CategoryType) =>
+    highlightCategory === category ? "ring-2 ring-primary scale-105 transition-all duration-300" : "";
+
   return (
     <div className="grid grid-cols-2 gap-3">
-      <Card className="border-2 border-purple-200 dark:border-purple-800 bg-purple-50/50 dark:bg-purple-950/30">
-        <CardContent className="p-3">
-          <div className="text-center mb-2">
-            <Badge variant="secondary" className="bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs">
-              P/L
-            </Badge>
+      <Card className="border-green-300 dark:border-green-700 bg-green-50/50 dark:bg-green-950/30">
+        <CardContent className="p-3 space-y-2">
+          <div className="text-center font-bold text-green-700 dark:text-green-300 text-sm flex items-center justify-center gap-1">
+            <TrendingUp className="w-4 h-4" />
+            損益計算書 (P/L)
           </div>
-          <div className="space-y-2 text-sm">
-            <div 
+          <div className="space-y-1.5">
+            <div
               ref={targetRefs.expense}
-              className={`flex justify-between items-center p-2 rounded-md transition-all duration-300 ${
-                highlightCategory === "expense" 
-                  ? "bg-orange-200 dark:bg-orange-800 ring-2 ring-orange-400" 
-                  : "bg-orange-50 dark:bg-orange-950/50"
-              }`}
+              className={`flex justify-between items-center p-2 rounded bg-orange-100 dark:bg-orange-900/50 ${highlightClass("expense")}`}
+              data-testid="pl-expense"
             >
-              <span className="text-orange-700 dark:text-orange-300 font-medium">費用</span>
-              <span className="font-mono font-bold text-orange-700 dark:text-orange-300">
+              <span className="text-xs font-medium text-orange-700 dark:text-orange-300">費用</span>
+              <span className="text-sm font-bold text-orange-800 dark:text-orange-200 font-mono">
                 {formatAmount(totals.pl.expense)}
               </span>
             </div>
-            <div 
+            <div
               ref={targetRefs.revenue}
-              className={`flex justify-between items-center p-2 rounded-md transition-all duration-300 ${
-                highlightCategory === "revenue" 
-                  ? "bg-green-200 dark:bg-green-800 ring-2 ring-green-400" 
-                  : "bg-green-50 dark:bg-green-950/50"
-              }`}
+              className={`flex justify-between items-center p-2 rounded bg-green-100 dark:bg-green-900/50 ${highlightClass("revenue")}`}
+              data-testid="pl-revenue"
             >
-              <span className="text-green-700 dark:text-green-300 font-medium">収益</span>
-              <span className="font-mono font-bold text-green-700 dark:text-green-300">
+              <span className="text-xs font-medium text-green-700 dark:text-green-300">収益</span>
+              <span className="text-sm font-bold text-green-800 dark:text-green-200 font-mono">
                 {formatAmount(totals.pl.revenue)}
               </span>
             </div>
-            <div className="border-t border-purple-200 dark:border-purple-700 pt-2">
-              <div className="flex justify-between items-center p-2 bg-emerald-100 dark:bg-emerald-900/50 rounded-md">
-                <span className="text-emerald-700 dark:text-emerald-300 font-medium text-xs">当期純利益</span>
-                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-300">
-                  {formatAmount(netIncome)}
-                </span>
-              </div>
+            <div className="flex justify-between items-center p-2 rounded bg-emerald-200 dark:bg-emerald-800/50 border border-emerald-400 dark:border-emerald-600">
+              <span className="text-xs font-bold text-emerald-700 dark:text-emerald-300">当期純利益</span>
+              <span className={`text-sm font-bold font-mono ${netIncome >= 0 ? "text-emerald-800 dark:text-emerald-200" : "text-red-600 dark:text-red-400"}`}>
+                {formatAmount(netIncome)}
+              </span>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-2 border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-950/30">
-        <CardContent className="p-3">
-          <div className="text-center mb-2">
-            <Badge variant="secondary" className="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs">
-              B/S
-            </Badge>
+      <Card className="border-blue-300 dark:border-blue-700 bg-blue-50/50 dark:bg-blue-950/30">
+        <CardContent className="p-3 space-y-2">
+          <div className="text-center font-bold text-blue-700 dark:text-blue-300 text-sm flex items-center justify-center gap-1">
+            <TrendingUp className="w-4 h-4" />
+            貸借対照表 (B/S)
           </div>
-          <div className="space-y-2 text-sm">
-            <div 
+          <div className="space-y-1.5">
+            <div
               ref={targetRefs.asset}
-              className={`flex justify-between items-center p-2 rounded-md transition-all duration-300 ${
-                highlightCategory === "asset" 
-                  ? "bg-blue-200 dark:bg-blue-800 ring-2 ring-blue-400" 
-                  : "bg-blue-50 dark:bg-blue-950/50"
-              }`}
+              className={`flex justify-between items-center p-2 rounded bg-blue-100 dark:bg-blue-900/50 ${highlightClass("asset")}`}
+              data-testid="bs-asset"
             >
-              <span className="text-blue-700 dark:text-blue-300 font-medium">資産</span>
-              <span className="font-mono font-bold text-blue-700 dark:text-blue-300">
+              <span className="text-xs font-medium text-blue-700 dark:text-blue-300">資産</span>
+              <span className="text-sm font-bold text-blue-800 dark:text-blue-200 font-mono">
                 {formatAmount(totals.bs.asset)}
               </span>
             </div>
-            <div 
+            <div
               ref={targetRefs.liability}
-              className={`flex justify-between items-center p-2 rounded-md transition-all duration-300 ${
-                highlightCategory === "liability" 
-                  ? "bg-red-200 dark:bg-red-800 ring-2 ring-red-400" 
-                  : "bg-red-50 dark:bg-red-950/50"
-              }`}
+              className={`flex justify-between items-center p-2 rounded bg-red-100 dark:bg-red-900/50 ${highlightClass("liability")}`}
+              data-testid="bs-liability"
             >
-              <span className="text-red-700 dark:text-red-300 font-medium">負債</span>
-              <span className="font-mono font-bold text-red-700 dark:text-red-300">
+              <span className="text-xs font-medium text-red-700 dark:text-red-300">負債</span>
+              <span className="text-sm font-bold text-red-800 dark:text-red-200 font-mono">
                 {formatAmount(totals.bs.liability)}
               </span>
             </div>
-            <div 
+            <div
               ref={targetRefs.equity}
-              className={`flex justify-between items-center p-2 rounded-md transition-all duration-300 ${
-                highlightCategory === "equity" 
-                  ? "bg-purple-200 dark:bg-purple-800 ring-2 ring-purple-400" 
-                  : "bg-purple-50 dark:bg-purple-950/50"
-              }`}
+              className={`flex justify-between items-center p-2 rounded bg-purple-100 dark:bg-purple-900/50 ${highlightClass("equity")}`}
+              data-testid="bs-equity"
             >
-              <span className="text-purple-700 dark:text-purple-300 font-medium">純資産</span>
-              <span className="font-mono font-bold text-purple-700 dark:text-purple-300">
+              <span className="text-xs font-medium text-purple-700 dark:text-purple-300">純資産</span>
+              <span className="text-sm font-bold text-purple-800 dark:text-purple-200 font-mono">
                 {formatAmount(totals.bs.equity)}
               </span>
             </div>
@@ -131,87 +112,236 @@ function MiniFinancialStatements({
   );
 }
 
-function JournalEntryCard({ 
-  line, 
-  side,
-  cardRef,
-}: { 
-  line: JournalLine; 
-  side: "debit" | "credit";
-  cardRef?: (el: HTMLDivElement | null) => void;
-}) {
-  const colorClass = getCategoryColor(line.category);
+function JournalInputForm() {
+  const { state, dispatch, currentQuestion } = useAccountingFlow();
   
+  const canSubmit = state.userAnswer.debitAccountId && state.userAnswer.creditAccountId && state.userAnswer.amount;
+
+  const handleSubmit = () => {
+    if (canSubmit) {
+      dispatch({ type: "SUBMIT_ANSWER" });
+    }
+  };
+
+  const formatAmountInput = (value: string) => {
+    const numericValue = value.replace(/[^0-9]/g, "");
+    if (numericValue) {
+      return parseInt(numericValue, 10).toLocaleString();
+    }
+    return "";
+  };
+
+  if (!currentQuestion) return null;
+
   return (
-    <div 
-      ref={cardRef}
-      className={`flex items-center justify-between p-3 rounded-lg border ${colorClass}`}
-    >
-      <div className="flex items-center gap-2">
-        <Badge variant="outline" className="text-xs">
-          {side === "debit" ? "借方" : "貸方"}
-        </Badge>
-        <span className="font-medium">{line.accountName}</span>
-      </div>
-      <span className="font-mono font-bold">{formatAmount(line.amount)}</span>
-    </div>
+    <Card className="border-primary/30">
+      <CardContent className="p-4 space-y-4">
+        <div className="text-center">
+          <Badge variant="outline" className="mb-2">取引</Badge>
+          <p className="font-medium text-foreground">{currentQuestion.description}</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label className="text-sm font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1">
+              <ArrowRight className="w-4 h-4" />
+              借方（増加する側）
+            </Label>
+            <Select
+              value={state.userAnswer.debitAccountId}
+              onValueChange={(v) => dispatch({ type: "SET_DEBIT_ACCOUNT", payload: v })}
+            >
+              <SelectTrigger data-testid="select-debit-account">
+                <SelectValue placeholder="勘定科目を選択" />
+              </SelectTrigger>
+              <SelectContent>
+                {accountChoices.map((acc) => (
+                  <SelectItem key={acc.id} value={acc.id} data-testid={`option-debit-${acc.id}`}>
+                    <span className="flex items-center gap-2">
+                      {acc.name}
+                      <Badge variant="outline" className="text-xs">
+                        {getCategoryLabel(acc.category)}
+                      </Badge>
+                    </span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label className="text-sm font-bold text-red-600 dark:text-red-400 flex items-center gap-1">
+              <ArrowRight className="w-4 h-4 rotate-180" />
+              貸方（減少する側）
+            </Label>
+            <Select
+              value={state.userAnswer.creditAccountId}
+              onValueChange={(v) => dispatch({ type: "SET_CREDIT_ACCOUNT", payload: v })}
+            >
+              <SelectTrigger data-testid="select-credit-account">
+                <SelectValue placeholder="勘定科目を選択" />
+              </SelectTrigger>
+              <SelectContent>
+                {accountChoices.map((acc) => (
+                  <SelectItem key={acc.id} value={acc.id} data-testid={`option-credit-${acc.id}`}>
+                    <span className="flex items-center gap-2">
+                      {acc.name}
+                      <Badge variant="outline" className="text-xs">
+                        {getCategoryLabel(acc.category)}
+                      </Badge>
+                    </span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-sm font-bold text-foreground">金額</Label>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">¥</span>
+            <Input
+              type="text"
+              inputMode="numeric"
+              className="pl-7 text-right font-mono"
+              placeholder="50,000"
+              value={state.userAnswer.amount}
+              onChange={(e) => dispatch({ type: "SET_AMOUNT", payload: formatAmountInput(e.target.value) })}
+              data-testid="input-amount"
+            />
+          </div>
+        </div>
+
+        <Button
+          className="w-full"
+          size="lg"
+          disabled={!canSubmit}
+          onClick={handleSubmit}
+          data-testid="button-submit-answer"
+        >
+          <Check className="w-4 h-4 mr-2" />
+          解答する
+        </Button>
+      </CardContent>
+    </Card>
   );
 }
 
-function AnimatingChip({ 
-  line, 
-  startPos, 
+function AnswerModal() {
+  const { state, dispatch, currentQuestion } = useAccountingFlow();
+
+  if (!currentQuestion || state.phase !== "showingAnswer") return null;
+
+  const correctDebit = currentQuestion.debit[0];
+  const correctCredit = currentQuestion.credit[0];
+
+  return (
+    <Dialog open={true} onOpenChange={() => dispatch({ type: "DISMISS_ANSWER_MODAL" })}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2 text-amber-600 dark:text-amber-400">
+            <X className="w-5 h-5" />
+            不正解
+          </DialogTitle>
+          <DialogDescription>
+            正解の仕訳を確認しましょう
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="space-y-4 py-4">
+          <div className="p-3 bg-muted rounded-lg">
+            <p className="text-sm text-muted-foreground mb-2">取引：</p>
+            <p className="font-medium">{currentQuestion.description}</p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800">
+              <p className="text-xs font-bold text-blue-600 dark:text-blue-400 mb-1">借方</p>
+              <p className="font-medium text-blue-800 dark:text-blue-200">{correctDebit.accountName}</p>
+              <p className="font-mono text-sm text-blue-700 dark:text-blue-300">
+                ¥{correctDebit.amount.toLocaleString()}
+              </p>
+            </div>
+            <div className="p-3 rounded-lg bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800">
+              <p className="text-xs font-bold text-red-600 dark:text-red-400 mb-1">貸方</p>
+              <p className="font-medium text-red-800 dark:text-red-200">{correctCredit.accountName}</p>
+              <p className="font-mono text-sm text-red-700 dark:text-red-300">
+                ¥{correctCredit.amount.toLocaleString()}
+              </p>
+            </div>
+          </div>
+
+          <div className="p-3 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-200 dark:border-amber-800">
+            <p className="text-sm text-amber-800 dark:text-amber-200">
+              <Sparkles className="w-4 h-4 inline mr-1" />
+              {currentQuestion.explain}
+            </p>
+          </div>
+        </div>
+
+        <DialogFooter>
+          <Button
+            onClick={() => dispatch({ type: "DISMISS_ANSWER_MODAL" })}
+            className="w-full"
+            data-testid="button-dismiss-answer"
+          >
+            OK（反映する）
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function AnimatingChip({
+  line,
+  side,
+  startPos,
   endPos,
   onComplete,
-}: { 
+}: {
   line: JournalLine;
-  startPos: ChipPosition;
-  endPos: ChipPosition;
+  side: "debit" | "credit";
+  startPos: { x: number; y: number };
+  endPos: { x: number; y: number };
   onComplete: () => void;
 }) {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      const timer = setTimeout(onComplete, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [prefersReducedMotion, onComplete]);
+
+  if (prefersReducedMotion) return null;
+
   const colorClass = getCategoryColor(line.category);
-  
+  const sign = side === "debit" ? "+" : "-";
+
   return (
     <motion.div
-      className={`fixed z-50 px-3 py-1.5 rounded-full border-2 shadow-lg ${colorClass} font-medium text-sm`}
-      initial={{ 
-        x: startPos.x, 
-        y: startPos.y,
-        scale: 1,
-        opacity: 1,
-      }}
-      animate={{ 
-        x: endPos.x, 
-        y: endPos.y,
-        scale: 0.8,
-        opacity: 0.8,
-      }}
-      transition={{ 
-        duration: 0.6,
-        ease: "easeInOut",
-      }}
+      className={`fixed z-50 px-3 py-2 rounded-lg border shadow-lg ${colorClass} font-medium text-sm`}
+      initial={{ x: startPos.x, y: startPos.y, opacity: 1, scale: 1 }}
+      animate={{ x: endPos.x, y: endPos.y, opacity: 0, scale: 0.8 }}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
       onAnimationComplete={onComplete}
     >
-      <span>+{formatAmount(line.amount)} {line.accountName}</span>
+      {sign}¥{line.amount.toLocaleString()} {line.accountName}
     </motion.div>
   );
 }
 
-function AccountingFlowContent() {
-  const [, navigate] = useLocation();
-  const { state, dispatch, currentQuestion, netIncome } = useAccountingFlow();
-  const [showAnswer, setShowAnswer] = useState(false);
-  const [highlightCategory, setHighlightCategory] = useState<CategoryType | null>(null);
-  const [animatingChips, setAnimatingChips] = useState<Array<{
-    id: string;
-    line: JournalLine;
-    startPos: ChipPosition;
-    endPos: ChipPosition;
-  }>>([]);
-  
-  const debitCardEl = useRef<HTMLDivElement | null>(null);
-  const creditCardEl = useRef<HTMLDivElement | null>(null);
-  
+function DepositAnimation({
+  onComplete,
+  inputRef,
+}: {
+  onComplete: () => void;
+  inputRef: React.RefObject<HTMLDivElement | null>;
+}) {
+  const { state, currentQuestion } = useAccountingFlow();
   const targetEls = useRef<Record<CategoryType, HTMLDivElement | null>>({
     asset: null,
     liability: null,
@@ -219,305 +349,250 @@ function AccountingFlowContent() {
     revenue: null,
     expense: null,
   });
-  
-  const targetRefCallbacks = {
+
+  const chips = useMemo(() => {
+    if (!currentQuestion || state.phase !== "checking") return [];
+    
+    const result: { line: JournalLine; side: "debit" | "credit" }[] = [];
+    currentQuestion.debit.forEach((line) => result.push({ line, side: "debit" }));
+    currentQuestion.credit.forEach((line) => result.push({ line, side: "credit" }));
+    return result;
+  }, [currentQuestion, state.phase]);
+
+  const completedCount = useRef(0);
+
+  const handleChipComplete = useCallback(() => {
+    completedCount.current += 1;
+    if (completedCount.current >= chips.length) {
+      completedCount.current = 0;
+      onComplete();
+    }
+  }, [chips.length, onComplete]);
+
+  useEffect(() => {
+    if (chips.length === 0 && state.phase === "checking") {
+      onComplete();
+    }
+  }, [chips.length, state.phase, onComplete]);
+
+  const getPositions = (line: JournalLine) => {
+    const inputRect = inputRef.current?.getBoundingClientRect();
+    const targetRect = targetEls.current[line.category]?.getBoundingClientRect();
+    
+    if (!inputRect || !targetRect) {
+      return { start: { x: 0, y: 0 }, end: { x: 0, y: 0 } };
+    }
+
+    return {
+      start: { x: inputRect.left + inputRect.width / 2 - 80, y: inputRect.top },
+      end: { x: targetRect.left + targetRect.width / 2 - 80, y: targetRect.top },
+    };
+  };
+
+  const targetRefCallbacks = useMemo(() => ({
     asset: (el: HTMLDivElement | null) => { targetEls.current.asset = el; },
     liability: (el: HTMLDivElement | null) => { targetEls.current.liability = el; },
     equity: (el: HTMLDivElement | null) => { targetEls.current.equity = el; },
     revenue: (el: HTMLDivElement | null) => { targetEls.current.revenue = el; },
     expense: (el: HTMLDivElement | null) => { targetEls.current.expense = el; },
-  };
+  }), []);
 
-  const handleShowAnswer = () => {
-    setShowAnswer(true);
-  };
+  const highlightCategory = chips.length > 0 ? chips[0].line.category : null;
 
-  const handleCorrect = () => {
-    if (!currentQuestion) return;
-    
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    
-    if (prefersReducedMotion) {
-      dispatch({ type: "FINISH_ANIMATION" });
-      setTimeout(() => {
-        dispatch({ type: "NEXT_QUESTION" });
-        setShowAnswer(false);
-      }, 300);
-      return;
-    }
+  return (
+    <>
+      <MiniFinancialStatements
+        targetRefs={targetRefCallbacks}
+        totals={state.totals}
+        netIncome={state.totals.pl.revenue - state.totals.pl.expense}
+        highlightCategory={highlightCategory}
+      />
+      <AnimatePresence>
+        {state.phase === "checking" && chips.map((chip, index) => {
+          const positions = getPositions(chip.line);
+          return (
+            <AnimatingChip
+              key={`${chip.line.account}-${index}`}
+              line={chip.line}
+              side={chip.side}
+              startPos={positions.start}
+              endPos={positions.end}
+              onComplete={handleChipComplete}
+            />
+          );
+        })}
+      </AnimatePresence>
+    </>
+  );
+}
 
-    const chips: Array<{
-      id: string;
-      line: JournalLine;
-      startPos: ChipPosition;
-      endPos: ChipPosition;
-    }> = [];
-
-    currentQuestion.debit.forEach((line, i) => {
-      const startRect = debitCardEl.current?.getBoundingClientRect();
-      const endRect = targetEls.current[line.category]?.getBoundingClientRect();
-      
-      if (startRect && endRect) {
-        chips.push({
-          id: `debit-${i}`,
-          line,
-          startPos: { x: startRect.left, y: startRect.top },
-          endPos: { x: endRect.left, y: endRect.top },
-        });
-      }
-    });
-
-    currentQuestion.credit.forEach((line, i) => {
-      const startRect = creditCardEl.current?.getBoundingClientRect();
-      const endRect = targetEls.current[line.category]?.getBoundingClientRect();
-      
-      if (startRect && endRect) {
-        chips.push({
-          id: `credit-${i}`,
-          line,
-          startPos: { x: startRect.left, y: startRect.top },
-          endPos: { x: endRect.left, y: endRect.top },
-        });
-      }
-    });
-
-    setAnimatingChips(chips);
-    
-    const categories = [
-      ...currentQuestion.debit.map(l => l.category),
-      ...currentQuestion.credit.map(l => l.category),
-    ];
-    
-    categories.forEach((cat, i) => {
-      setTimeout(() => setHighlightCategory(cat), i * 200);
-    });
-    
-    setTimeout(() => {
-      setHighlightCategory(null);
-      setAnimatingChips([]);
-      dispatch({ type: "FINISH_ANIMATION" });
-      setTimeout(() => {
-        dispatch({ type: "NEXT_QUESTION" });
-        setShowAnswer(false);
-      }, 300);
-    }, 800);
-  };
-
-  const handleReset = () => {
-    dispatch({ type: "RESET" });
-    setShowAnswer(false);
-    setHighlightCategory(null);
-    setAnimatingChips([]);
-  };
-
-  const handleTransferNetIncome = () => {
-    dispatch({ type: "SHOW_NET_INCOME_TRANSFER" });
-    setHighlightCategory("equity");
-    setTimeout(() => {
-      dispatch({ type: "FINISH_NET_INCOME_TRANSFER" });
-      setHighlightCategory(null);
-    }, 1000);
-  };
-
-  if (state.phase === "completed" && state.showSummary) {
-    return (
-      <div className="min-h-screen bg-background flex flex-col">
-        <header className="sticky top-0 z-40 bg-background/95 backdrop-blur border-b border-border">
-          <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
-            <Button variant="ghost" size="icon" onClick={() => navigate("/")} data-testid="button-back">
-              <ArrowLeft className="w-5 h-5" />
-            </Button>
-            <h1 className="text-lg font-bold">会計フロー完了</h1>
-            <Button variant="ghost" size="icon" onClick={handleReset} data-testid="button-reset">
-              <RotateCcw className="w-5 h-5" />
-            </Button>
-          </div>
-        </header>
-
-        <main className="flex-1 max-w-lg mx-auto w-full px-4 py-6 space-y-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center"
-          >
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900 mb-4">
-              <Sparkles className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
-            </div>
-            <h2 className="text-xl font-bold mb-2">5問の仕訳が完了しました！</h2>
-            <p className="text-muted-foreground text-sm">
-              これらの仕訳がどのように決算書に反映されたか確認しましょう
-            </p>
-          </motion.div>
-
-          <MiniFinancialStatements 
-            totals={state.totals} 
-            netIncome={netIncome}
-            highlightCategory={highlightCategory}
-            targetRefs={targetRefCallbacks}
-          />
-
-          <Card className="border-2 border-emerald-200 dark:border-emerald-800">
-            <CardContent className="p-4">
-              <div className="text-center space-y-3">
-                <p className="text-sm text-muted-foreground">
-                  当期純利益 <span className="font-bold text-emerald-600">{formatAmount(netIncome)}</span> は
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  純資産（利益剰余金）に振り替えられます
-                </p>
-                {!state.showNetIncomeTransfer && (
-                  <Button 
-                    onClick={handleTransferNetIncome}
-                    className="bg-emerald-600 hover:bg-emerald-700"
-                    data-testid="button-transfer-net-income"
-                  >
-                    <ArrowRight className="w-4 h-4 mr-2" />
-                    純資産へ振替
-                  </Button>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="flex gap-3">
-            <Button variant="outline" className="flex-1" onClick={() => navigate("/")} data-testid="button-home">
-              ホームへ
-            </Button>
-            <Button className="flex-1" onClick={handleReset} data-testid="button-retry">
-              もう一度
-            </Button>
-          </div>
-        </main>
+function CorrectFeedback() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
+      className="absolute inset-0 flex items-center justify-center bg-green-500/20 rounded-lg pointer-events-none z-10"
+    >
+      <div className="bg-green-500 text-white px-4 py-2 rounded-full font-bold flex items-center gap-2 shadow-lg">
+        <Check className="w-5 h-5" />
+        正解！
       </div>
-    );
-  }
+    </motion.div>
+  );
+}
+
+function CompletionSummary() {
+  const [, navigate] = useLocation();
+  const { state, dispatch, netIncome } = useAccountingFlow();
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="space-y-4"
+    >
+      <Card className="border-emerald-300 dark:border-emerald-700 bg-emerald-50/50 dark:bg-emerald-950/30">
+        <CardContent className="p-4 text-center space-y-3">
+          <Sparkles className="w-10 h-10 mx-auto text-emerald-500" />
+          <h2 className="text-xl font-bold text-emerald-700 dark:text-emerald-300">
+            5問完了！
+          </h2>
+          <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="p-3 bg-green-100 dark:bg-green-900/50 rounded-lg">
+              <p className="text-green-600 dark:text-green-400">正解</p>
+              <p className="text-2xl font-bold text-green-700 dark:text-green-300">
+                {state.correctCount}問
+              </p>
+            </div>
+            <div className="p-3 bg-amber-100 dark:bg-amber-900/50 rounded-lg">
+              <p className="text-amber-600 dark:text-amber-400">不正解</p>
+              <p className="text-2xl font-bold text-amber-700 dark:text-amber-300">
+                {state.incorrectCount}問
+              </p>
+            </div>
+          </div>
+
+          <div className="p-3 bg-emerald-100 dark:bg-emerald-900/50 rounded-lg">
+            <p className="text-sm text-emerald-600 dark:text-emerald-400">当期純利益</p>
+            <p className={`text-2xl font-bold font-mono ${netIncome >= 0 ? "text-emerald-700 dark:text-emerald-300" : "text-red-600"}`}>
+              ¥{netIncome.toLocaleString()}
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="grid grid-cols-2 gap-3">
+        <Button
+          variant="outline"
+          onClick={() => dispatch({ type: "RESET" })}
+          data-testid="button-retry"
+        >
+          <RefreshCw className="w-4 h-4 mr-2" />
+          もう一度
+        </Button>
+        <Button
+          onClick={() => navigate("/")}
+          data-testid="button-back-home"
+        >
+          <Home className="w-4 h-4 mr-2" />
+          ホームへ
+        </Button>
+      </div>
+    </motion.div>
+  );
+}
+
+function AccountingFlowContent() {
+  const [, navigate] = useLocation();
+  const { state, dispatch, currentQuestion, netIncome } = useAccountingFlow();
+  const inputRef = useRef<HTMLDivElement>(null);
+
+  const targetRefCallbacks = useMemo(() => ({
+    asset: (el: HTMLDivElement | null) => {},
+    liability: (el: HTMLDivElement | null) => {},
+    equity: (el: HTMLDivElement | null) => {},
+    revenue: (el: HTMLDivElement | null) => {},
+    expense: (el: HTMLDivElement | null) => {},
+  }), []);
+
+  const handleAnimationComplete = useCallback(() => {
+    dispatch({ type: "FINISH_ANIMATION" });
+    setTimeout(() => {
+      dispatch({ type: "NEXT_QUESTION" });
+    }, 300);
+  }, [dispatch]);
+
+  const isAnimating = state.phase === "checking" || state.phase === "animating";
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur border-b border-border">
-        <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
-          <Button variant="ghost" size="icon" onClick={() => navigate("/")} data-testid="button-back">
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-bold">会計フロー</span>
-            <Badge variant="secondary" className="font-mono">
-              {state.currentIndex + 1}/5
-            </Badge>
-          </div>
-          <Button variant="ghost" size="icon" onClick={handleReset} data-testid="button-reset">
-            <RotateCcw className="w-5 h-5" />
-          </Button>
+      <header className="flex items-center justify-between p-3 border-b bg-card">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => navigate("/")}
+          data-testid="button-back"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </Button>
+        <div className="text-center">
+          <h1 className="text-lg font-bold text-foreground" data-testid="accounting-flow-header">
+            会計フロー
+          </h1>
+          {state.phase !== "completed" && (
+            <p className="text-sm text-muted-foreground" data-testid="text-progress">
+              {state.currentIndex + 1} / {state.questions.length}
+            </p>
+          )}
         </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => dispatch({ type: "RESET" })}
+          data-testid="button-reset"
+        >
+          <RefreshCw className="w-5 h-5" />
+        </Button>
       </header>
 
-      <main className="flex-1 max-w-lg mx-auto w-full px-4 py-4 flex flex-col gap-4">
-        <div className="flex gap-1 mb-2">
-          {[0, 1, 2, 3, 4].map((i) => (
-            <div
-              key={i}
-              className={`flex-1 h-1.5 rounded-full transition-colors ${
-                i < state.currentIndex
-                  ? "bg-emerald-500"
-                  : i === state.currentIndex
-                  ? "bg-primary"
-                  : "bg-muted"
-              }`}
+      <main className="flex-1 p-4 space-y-4 max-w-lg mx-auto w-full overflow-y-auto">
+        {state.phase === "completed" ? (
+          <>
+            <MiniFinancialStatements
+              targetRefs={targetRefCallbacks}
+              totals={state.totals}
+              netIncome={netIncome}
+              highlightCategory={null}
             />
-          ))}
-        </div>
+            <CompletionSummary />
+          </>
+        ) : (
+          <>
+            {isAnimating ? (
+              <DepositAnimation onComplete={handleAnimationComplete} inputRef={inputRef} />
+            ) : (
+              <MiniFinancialStatements
+                targetRefs={targetRefCallbacks}
+                totals={state.totals}
+                netIncome={netIncome}
+                highlightCategory={null}
+              />
+            )}
 
-        {currentQuestion && (
-          <Card className="border-2">
-            <CardContent className="p-4">
-              <p className="text-center text-sm text-muted-foreground mb-2">取引</p>
-              <p className="text-center font-medium text-lg">
-                {currentQuestion.description}
-              </p>
-            </CardContent>
-          </Card>
+            <div ref={inputRef} className="relative">
+              <AnimatePresence>
+                {state.isCorrect === true && state.phase === "checking" && (
+                  <CorrectFeedback />
+                )}
+              </AnimatePresence>
+              <JournalInputForm />
+            </div>
+          </>
         )}
-
-        <AnimatePresence mode="wait">
-          {showAnswer && currentQuestion ? (
-            <motion.div
-              key="answer"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="space-y-3"
-            >
-              <p className="text-center text-sm font-medium text-muted-foreground">正解の仕訳</p>
-              <div className="space-y-2">
-                {currentQuestion.debit.map((line, i) => (
-                  <JournalEntryCard 
-                    key={`debit-${i}`} 
-                    line={line} 
-                    side="debit"
-                    cardRef={i === 0 ? (el) => { debitCardEl.current = el; } : undefined}
-                  />
-                ))}
-                {currentQuestion.credit.map((line, i) => (
-                  <JournalEntryCard 
-                    key={`credit-${i}`} 
-                    line={line} 
-                    side="credit"
-                    cardRef={i === 0 ? (el) => { creditCardEl.current = el; } : undefined}
-                  />
-                ))}
-              </div>
-              <Button 
-                className="w-full bg-emerald-600 hover:bg-emerald-700" 
-                onClick={handleCorrect}
-                data-testid="button-confirm-correct"
-              >
-                <Check className="w-4 h-4 mr-2" />
-                正解！決算書に反映
-              </Button>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="question"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="flex-1 flex items-center justify-center"
-            >
-              <Button 
-                size="lg"
-                onClick={handleShowAnswer}
-                data-testid="button-show-answer"
-              >
-                正解を見る
-              </Button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <div className="mt-auto pt-4">
-          <p className="text-center text-xs text-muted-foreground mb-2">
-            ミニ決算書（累計）
-          </p>
-          <MiniFinancialStatements 
-            totals={state.totals} 
-            netIncome={netIncome}
-            highlightCategory={highlightCategory}
-            targetRefs={targetRefCallbacks}
-          />
-        </div>
       </main>
 
-      <AnimatePresence>
-        {animatingChips.map((chip) => (
-          <AnimatingChip
-            key={chip.id}
-            line={chip.line}
-            startPos={chip.startPos}
-            endPos={chip.endPos}
-            onComplete={() => {}}
-          />
-        ))}
-      </AnimatePresence>
+      <AnswerModal />
     </div>
   );
 }
