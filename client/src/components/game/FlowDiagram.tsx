@@ -69,9 +69,14 @@ export function FlowDiagram({ onNavigate }: { onNavigate: (path: string) => void
                     </div>
                     
                     {step.id === "ledger" && (
-                      <Badge variant="outline" className="text-[9px] px-1 py-0 h-4 bg-background/50">
-                        総勘定元帳
-                      </Badge>
+                      <div className="grid grid-cols-1 gap-1 w-full pt-1">
+                        <Badge variant="outline" className="text-[9px] px-1 py-0 h-4 bg-background/50 justify-center">
+                          総勘定元帳
+                        </Badge>
+                        <Badge variant="outline" className="text-[9px] px-1 py-0 h-4 bg-background/50 justify-center">
+                          補助元帳
+                        </Badge>
+                      </div>
                     )}
 
                     {step.id === "statements" && (
