@@ -65,7 +65,7 @@ export default function Result() {
               </Badge>
 
               <p className="text-4xl font-bold font-mono text-foreground mb-2" data-testid="result-score">
-                {lastResult.score}点
+                {lastResult.score}<span className="text-2xl text-muted-foreground">/100点</span>
               </p>
 
               <div className="flex justify-center gap-6 mt-4">

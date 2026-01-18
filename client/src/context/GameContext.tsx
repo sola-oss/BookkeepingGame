@@ -100,10 +100,8 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
-function calculateScore(isCorrect: boolean, combo: number): number {
-  if (!isCorrect) return -5;
-  const multiplier = Math.min(1 + (combo - 1) * 0.1, 2);
-  return Math.floor(10 * Math.max(1, multiplier));
+function calculateScore(isCorrect: boolean): number {
+  return isCorrect ? 10 : 0;
 }
 
 function getTitleByAccuracy(accuracy: number): string {
@@ -156,7 +154,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       const { account, selectedCategory } = action.payload;
       const isCorrect = account.category === selectedCategory;
       const newCombo = isCorrect ? state.combo + 1 : 0;
-      const scoreChange = calculateScore(isCorrect, newCombo);
+      const scoreChange = calculateScore(isCorrect);
       
       const answer: AnswerRecord = {
         accountId: account.id,
