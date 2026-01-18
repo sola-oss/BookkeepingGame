@@ -102,7 +102,7 @@ export default function Home() {
           transition={{ duration: 0.3, delay: 0.1 }}
           className="space-y-3"
         >
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 gap-3">
             <Card
               className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
               onClick={handleStartClassification}
@@ -134,23 +134,25 @@ export default function Home() {
                 </p>
               </CardContent>
             </Card>
+          </div>
 
-            <Card
-              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
-              onClick={() => navigate("/mock-exam-start")}
-              data-testid="button-start-exam"
-            >
-              <CardContent className="pt-4 pb-3 text-center space-y-2">
-                <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <GraduationCap className="w-5 h-5 text-primary" />
-                </div>
+          <Card
+            className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
+            onClick={() => navigate("/mock-exam-start")}
+            data-testid="button-start-exam"
+          >
+            <CardContent className="py-3 flex items-center justify-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <GraduationCap className="w-5 h-5 text-primary" />
+              </div>
+              <div className="text-left">
                 <h3 className="font-bold text-foreground text-sm">模試</h3>
                 <p className="text-xs text-muted-foreground">
-                  3級形式
+                  日商簿記3級形式
                 </p>
-              </CardContent>
-            </Card>
-          </div>
+              </div>
+            </CardContent>
+          </Card>
 
           <div className="grid grid-cols-4 gap-2">
             <Card
