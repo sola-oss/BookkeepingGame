@@ -217,7 +217,7 @@ export default function JournalMode() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
-        <div className="max-w-2xl mx-auto px-4 py-3">
+        <div className="max-w-lg mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-4">
             <Button variant="ghost" size="icon" onClick={handleBack} data-testid="button-back">
               <ArrowLeft className="w-5 h-5" />
@@ -250,7 +250,7 @@ export default function JournalMode() {
         </div>
       </header>
 
-      <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-4 space-y-4">
+      <main className="flex-1 max-w-lg mx-auto w-full px-4 py-4 space-y-4">
         <motion.div
           key={currentQuestion.id}
           initial={{ opacity: 0, x: 20 }}
@@ -279,86 +279,27 @@ export default function JournalMode() {
           onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
         >
-          {/* B/S・P/L形式の仕訳ボード */}
-          <div className="grid grid-cols-2 gap-4">
-            {/* 借方（Debit）- 左側 */}
-            <div className="space-y-3">
-              <div className="text-center">
-                <span className="text-sm font-bold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/50 px-3 py-1 rounded-full">
-                  借方（Debit）
-                </span>
-              </div>
-              
-              {/* P/L セクション */}
-              <div className="border-2 border-dashed border-purple-300 dark:border-purple-700 rounded-xl p-2 bg-purple-50/30 dark:bg-purple-950/20">
-                <p className="text-[10px] text-purple-600 dark:text-purple-400 text-center font-bold mb-2">P/L</p>
-                <div className="text-center py-2 px-2 text-xs text-orange-600 dark:text-orange-400 border border-dashed border-orange-300 dark:border-orange-700 rounded bg-orange-50/50 dark:bg-orange-950/30">
-                  費用↑
-                </div>
-              </div>
-              
-              {/* B/S セクション */}
-              <div className="border-2 border-dashed border-blue-300 dark:border-blue-700 rounded-xl p-2 bg-blue-50/30 dark:bg-blue-950/20">
-                <p className="text-[10px] text-blue-600 dark:text-blue-400 text-center font-bold mb-2">B/S</p>
-                <div className="text-center py-2 px-2 text-xs text-blue-600 dark:text-blue-400 border border-dashed border-blue-300 dark:border-blue-700 rounded bg-blue-50/50 dark:bg-blue-950/30">
-                  資産↑
-                </div>
-              </div>
-
-              {/* ドロップゾーン */}
-              <DroppableZone
-                id="debit"
-                title="ここにドロップ"
-                icon={<ArrowRight className="w-4 h-4" />}
-                colorClass="border-blue-500 dark:border-blue-400"
-                isOver={overId === "debit"}
-                account={debitAccount}
-                amount={currentQuestion.amount}
-                feedbackState={zoneFeedback.debit}
-              />
-            </div>
-
-            {/* 貸方（Credit）- 右側 */}
-            <div className="space-y-3">
-              <div className="text-center">
-                <span className="text-sm font-bold text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/50 px-3 py-1 rounded-full">
-                  貸方（Credit）
-                </span>
-              </div>
-              
-              {/* P/L セクション */}
-              <div className="border-2 border-dashed border-purple-300 dark:border-purple-700 rounded-xl p-2 bg-purple-50/30 dark:bg-purple-950/20">
-                <p className="text-[10px] text-purple-600 dark:text-purple-400 text-center font-bold mb-2">P/L</p>
-                <div className="text-center py-2 px-2 text-xs text-green-600 dark:text-green-400 border border-dashed border-green-300 dark:border-green-700 rounded bg-green-50/50 dark:bg-green-950/30">
-                  収益↑
-                </div>
-              </div>
-              
-              {/* B/S セクション */}
-              <div className="border-2 border-dashed border-blue-300 dark:border-blue-700 rounded-xl p-2 bg-blue-50/30 dark:bg-blue-950/20">
-                <p className="text-[10px] text-blue-600 dark:text-blue-400 text-center font-bold mb-2">B/S</p>
-                <div className="grid grid-cols-1 gap-1">
-                  <div className="text-center py-1 px-2 text-xs text-red-600 dark:text-red-400 border border-dashed border-red-300 dark:border-red-700 rounded bg-red-50/50 dark:bg-red-950/30">
-                    負債↑
-                  </div>
-                  <div className="text-center py-1 px-2 text-xs text-purple-600 dark:text-purple-400 border border-dashed border-purple-300 dark:border-purple-700 rounded bg-purple-50/50 dark:bg-purple-950/30">
-                    純資産↑
-                  </div>
-                </div>
-              </div>
-
-              {/* ドロップゾーン */}
-              <DroppableZone
-                id="credit"
-                title="ここにドロップ"
-                icon={<ArrowRight className="w-4 h-4 rotate-180" />}
-                colorClass="border-red-500 dark:border-red-400"
-                isOver={overId === "credit"}
-                account={creditAccount}
-                amount={currentQuestion.amount}
-                feedbackState={zoneFeedback.credit}
-              />
-            </div>
+          <div className="grid grid-cols-2 gap-3">
+            <DroppableZone
+              id="debit"
+              title="借方（Debit）"
+              icon={<ArrowRight className="w-4 h-4" />}
+              colorClass="border-blue-500 dark:border-blue-400"
+              isOver={overId === "debit"}
+              account={debitAccount}
+              amount={currentQuestion.amount}
+              feedbackState={zoneFeedback.debit}
+            />
+            <DroppableZone
+              id="credit"
+              title="貸方（Credit）"
+              icon={<ArrowRight className="w-4 h-4 rotate-180" />}
+              colorClass="border-red-500 dark:border-red-400"
+              isOver={overId === "credit"}
+              account={creditAccount}
+              amount={currentQuestion.amount}
+              feedbackState={zoneFeedback.credit}
+            />
           </div>
 
           <div className="space-y-2">
