@@ -27,9 +27,6 @@ export default function Settings() {
     dispatch({ type: "UPDATE_SETTINGS", payload: { timeLimitSeconds: value[0] } });
   };
 
-  const handleCardCountChange = (value: number[]) => {
-    dispatch({ type: "UPDATE_SETTINGS", payload: { cardCount: value[0] } });
-  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -87,18 +84,10 @@ export default function Settings() {
 
               <div className="space-y-2">
                 <Label className="text-sm font-medium">
-                  カード枚数: <span className="font-mono">{settings.cardCount}枚</span>
+                  出題数: <span className="font-mono">10問</span>（固定）
                 </Label>
-                <Slider
-                  value={[settings.cardCount]}
-                  onValueChange={handleCardCountChange}
-                  min={5}
-                  max={20}
-                  step={1}
-                  data-testid="slider-card-count"
-                />
                 <p className="text-xs text-muted-foreground">
-                  1回のゲームで出題されるカードの枚数
+                  1回のゲームで10問出題、100点満点で採点されます
                 </p>
               </div>
 

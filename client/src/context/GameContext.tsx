@@ -18,16 +18,16 @@ function convert3KyuToAccount(a: Account3Kyu): Account {
 
 const beginnerAccountIds = [
   "cash", "ordinary_deposit", "accounts_receivable", "accounts_payable",
-  "sales", "purchases", "capital", "travel_expense", "communication_expense",
-  "rent_expense", "utilities_expense", "salary_expense"
+  "sales", "purchases", "capital", "travel", "communication",
+  "rent", "utilities", "salary"
 ];
 
 const intermediateAccountIds = [
   ...beginnerAccountIds,
   "petty_cash", "time_deposit", "current_deposit", "notes_receivable", "notes_payable",
   "merchandise", "supplies", "prepaid_expenses", "accrued_income",
-  "borrowings", "loans_payable", "unearned_revenue", "accrued_expenses",
-  "interest_income", "interest_expense", "miscellaneous_expense", "depreciation_expense"
+  "loans_payable", "unearned_revenue", "accrued_expenses",
+  "interest_income", "interest_expense", "miscellaneous_expense", "depreciation"
 ];
 
 function getAccountsByDifficulty(difficulty: DifficultyLevel): Account[] {
@@ -128,7 +128,8 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       const { settings } = state.userData;
       const allAccounts = getAccountsByDifficulty(settings.difficulty);
       const shuffled = shuffleArray(allAccounts);
-      const selected = shuffled.slice(0, Math.min(settings.cardCount, shuffled.length));
+      const FIXED_CARD_COUNT = 10;
+      const selected = shuffled.slice(0, Math.min(FIXED_CARD_COUNT, shuffled.length));
       
       const updatedUserData = updateStreak(state.userData);
       saveUserData(updatedUserData);
