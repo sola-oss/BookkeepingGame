@@ -1,6 +1,6 @@
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Play, BookOpen, Settings, Trophy, Flame, Target, Award, FileText, ArrowRightLeft, Layers, PenLine, Library, ExternalLink, GraduationCap } from "lucide-react";
+import { Play, BookOpen, Settings, Trophy, Flame, Target, Award, FileText, ArrowRightLeft, Layers, PenLine, Library, ExternalLink, GraduationCap, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGame } from "@/context/GameContext";
@@ -136,23 +136,43 @@ export default function Home() {
             </Card>
           </div>
 
-          <Card
-            className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
-            onClick={() => navigate("/mock-exam-start")}
-            data-testid="button-start-exam"
-          >
-            <CardContent className="py-3 flex items-center justify-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                <GraduationCap className="w-5 h-5 text-primary" />
-              </div>
-              <div className="text-left">
-                <h3 className="font-bold text-foreground text-sm">模試</h3>
-                <p className="text-xs text-muted-foreground">
-                  日商簿記3級形式
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="grid grid-cols-2 gap-3">
+            <Card
+              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
+              onClick={() => navigate("/mock-exam-start")}
+              data-testid="button-start-exam"
+            >
+              <CardContent className="py-3 flex items-center justify-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <GraduationCap className="w-5 h-5 text-primary" />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-bold text-foreground text-sm">模試</h3>
+                  <p className="text-xs text-muted-foreground">
+                    日商簿記3級形式
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card
+              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible border-emerald-200 dark:border-emerald-800"
+              onClick={() => navigate("/accounting-flow")}
+              data-testid="button-accounting-flow"
+            >
+              <CardContent className="py-3 flex items-center justify-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center">
+                  <TrendingUp className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-bold text-foreground text-sm">会計フロー</h3>
+                  <p className="text-xs text-muted-foreground">
+                    仕訳→決算書
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
           <div className="grid grid-cols-4 gap-2">
             <Card

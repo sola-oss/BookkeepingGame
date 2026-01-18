@@ -26,6 +26,7 @@ import MockExamResult from "@/pages/MockExamResult";
 import AccountList from "@/pages/AccountList";
 import AccountDetail from "@/pages/AccountDetail";
 import TextbookList from "@/pages/TextbookList";
+import AccountingFlowMode from "@/pages/AccountingFlowMode";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -50,6 +51,7 @@ function Router() {
       <Route path="/accounts" component={AccountList} />
       <Route path="/account/:id" component={AccountDetail} />
       <Route path="/textbook" component={TextbookList} />
+      <Route path="/accounting-flow" component={AccountingFlowMode} />
       <Route component={NotFound} />
     </Switch>
   );
