@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo, useCallback } from "react";
+import { useEffect, useLayoutEffect, useRef, useMemo, useCallback, useState } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Check, X, RefreshCw, Home, TrendingUp, ArrowRight, Sparkles } from "lucide-react";
@@ -353,6 +353,8 @@ function DepositAnimation({
   });
   const hasCalledComplete = useRef(false);
   const lastAnimationKey = useRef("");
+  const [isReady, setIsReady] = useState(false);
+  const [chipPositions, setChipPositions] = useState<Map<string, { start: { x: number; y: number }; end: { x: number; y: number } }>>(new Map());
 
   const chips = useMemo(() => {
     if (!currentQuestion) return [];
@@ -363,13 +365,51 @@ function DepositAnimation({
     return result;
   }, [currentQuestion]);
 
+  useLayoutEffect(() => {
+    const calculatePositions = () => {
+      const inputRect = inputRef.current?.getBoundingClientRect();
+      if (!inputRect) return;
+
+      const newPositions = new Map<string, { start: { x: number; y: number }; end: { x: number; y: number } }>();
+      
+      chips.forEach((chip, index) => {
+        const targetRect = targetEls.current[chip.line.category]?.getBoundingClientRect();
+        if (targetRect) {
+          const key = `${chip.line.account}-${index}`;
+          newPositions.set(key, {
+            start: { 
+              x: inputRect.left + inputRect.width / 2 - 80, 
+              y: inputRect.top + 50 + (index * 30)
+            },
+            end: { 
+              x: targetRect.left + targetRect.width / 2 - 80, 
+              y: targetRect.top 
+            },
+          });
+        }
+      });
+
+      if (newPositions.size > 0) {
+        setChipPositions(newPositions);
+        setIsReady(true);
+      }
+    };
+
+    const timer = requestAnimationFrame(() => {
+      requestAnimationFrame(calculatePositions);
+    });
+
+    return () => cancelAnimationFrame(timer);
+  }, [chips, inputRef]);
+
   useEffect(() => {
     if (lastAnimationKey.current === animationKey) return;
     lastAnimationKey.current = animationKey;
     hasCalledComplete.current = false;
+    setIsReady(false);
     
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const duration = prefersReducedMotion ? 200 : 800;
+    const duration = prefersReducedMotion ? 200 : 1000;
     
     const timer = setTimeout(() => {
       if (!hasCalledComplete.current) {
@@ -381,20 +421,6 @@ function DepositAnimation({
     return () => clearTimeout(timer);
   }, [onComplete, animationKey]);
 
-  const getPositions = (line: JournalLine) => {
-    const inputRect = inputRef.current?.getBoundingClientRect();
-    const targetRect = targetEls.current[line.category]?.getBoundingClientRect();
-    
-    if (!inputRect || !targetRect) {
-      return { start: { x: 0, y: 0 }, end: { x: 0, y: 0 } };
-    }
-
-    return {
-      start: { x: inputRect.left + inputRect.width / 2 - 80, y: inputRect.top },
-      end: { x: targetRect.left + targetRect.width / 2 - 80, y: targetRect.top },
-    };
-  };
-
   const targetRefCallbacks = useMemo(() => ({
     asset: (el: HTMLDivElement | null) => { targetEls.current.asset = el; },
     liability: (el: HTMLDivElement | null) => { targetEls.current.liability = el; },
@@ -403,7 +429,9 @@ function DepositAnimation({
     expense: (el: HTMLDivElement | null) => { targetEls.current.expense = el; },
   }), []);
 
-  const highlightCategory = chips.length > 0 ? chips[0].line.category : null;
+  const highlightCategories = useMemo(() => {
+    return chips.map(chip => chip.line.category);
+  }, [chips]);
 
   return (
     <>
@@ -411,14 +439,17 @@ function DepositAnimation({
         targetRefs={targetRefCallbacks}
         totals={state.totals}
         netIncome={netIncome}
-        highlightCategory={highlightCategory}
+        highlightCategory={highlightCategories[0] || null}
       />
       <AnimatePresence>
-        {chips.map((chip, index) => {
-          const positions = getPositions(chip.line);
+        {isReady && chips.map((chip, index) => {
+          const key = `${chip.line.account}-${index}`;
+          const positions = chipPositions.get(key);
+          if (!positions) return null;
+          
           return (
             <AnimatingChip
-              key={`${currentQuestion?.id}-${chip.line.account}-${index}`}
+              key={`${currentQuestion?.id}-${key}`}
               line={chip.line}
               side={chip.side}
               startPos={positions.start}
