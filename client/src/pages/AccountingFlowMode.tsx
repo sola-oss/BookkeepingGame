@@ -17,17 +17,17 @@ function MiniFinancialStatements({
   targetRefs,
   totals,
   netIncome,
-  highlightCategory,
+  highlightCategories,
 }: {
   targetRefs: Record<CategoryType, (el: HTMLDivElement | null) => void>;
   totals: { bs: { asset: number; liability: number; equity: number }; pl: { revenue: number; expense: number } };
   netIncome: number;
-  highlightCategory: CategoryType | null;
+  highlightCategories: CategoryType[];
 }) {
   const formatAmount = (amount: number) => `¥${amount.toLocaleString()}`;
   
   const highlightClass = (category: CategoryType) =>
-    highlightCategory === category ? "ring-2 ring-primary scale-105 transition-all duration-300" : "";
+    highlightCategories.includes(category) ? "ring-2 ring-primary scale-105 transition-all duration-300" : "";
 
   return (
     <div className="grid grid-cols-2 gap-3">
@@ -299,37 +299,47 @@ function AnimatingChip({
   side,
   startPos,
   endPos,
-  onComplete,
+  delay,
 }: {
   line: JournalLine;
   side: "debit" | "credit";
   startPos: { x: number; y: number };
   endPos: { x: number; y: number };
-  onComplete: () => void;
+  delay: number;
 }) {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      const timer = setTimeout(onComplete, 100);
-      return () => clearTimeout(timer);
-    }
-  }, [prefersReducedMotion, onComplete]);
 
   if (prefersReducedMotion) return null;
 
   const colorClass = getCategoryColor(line.category);
-  const sign = side === "debit" ? "+" : "-";
+  const categoryLabel = getCategoryLabel(line.category);
 
   return (
     <motion.div
-      className={`fixed z-50 px-3 py-2 rounded-lg border shadow-lg ${colorClass} font-medium text-sm`}
-      initial={{ x: startPos.x, y: startPos.y, opacity: 1, scale: 1 }}
-      animate={{ x: endPos.x, y: endPos.y, opacity: 0, scale: 0.8 }}
-      transition={{ duration: 0.6, ease: "easeInOut" }}
-      onAnimationComplete={onComplete}
+      className={`fixed z-50 px-3 py-1.5 rounded-lg border-2 shadow-xl ${colorClass} font-bold text-sm whitespace-nowrap`}
+      style={{ pointerEvents: "none" }}
+      initial={{ 
+        left: startPos.x, 
+        top: startPos.y, 
+        opacity: 0, 
+        scale: 0.5 
+      }}
+      animate={{ 
+        left: [startPos.x, startPos.x, endPos.x],
+        top: [startPos.y, startPos.y, endPos.y],
+        opacity: [0, 1, 1, 0],
+        scale: [0.5, 1.2, 1, 0.3]
+      }}
+      transition={{ 
+        duration: 0.8, 
+        delay: delay,
+        times: [0, 0.2, 0.8, 1],
+        ease: "easeInOut"
+      }}
     >
-      {sign}¥{line.amount.toLocaleString()} {line.accountName}
+      <span className="text-xs opacity-70">{categoryLabel}</span>
+      <span className="ml-1">{line.accountName}</span>
+      <span className="ml-2 font-mono">¥{line.amount.toLocaleString()}</span>
     </motion.div>
   );
 }
@@ -376,14 +386,15 @@ function DepositAnimation({
         const targetRect = targetEls.current[chip.line.category]?.getBoundingClientRect();
         if (targetRect) {
           const key = `${chip.line.account}-${index}`;
+          const chipWidth = 180;
           newPositions.set(key, {
             start: { 
-              x: inputRect.left + inputRect.width / 2 - 80, 
-              y: inputRect.top + 50 + (index * 30)
+              x: inputRect.left + (inputRect.width - chipWidth) / 2, 
+              y: inputRect.top + inputRect.height / 2
             },
             end: { 
-              x: targetRect.left + targetRect.width / 2 - 80, 
-              y: targetRect.top 
+              x: targetRect.left + (targetRect.width - chipWidth) / 2, 
+              y: targetRect.top + targetRect.height / 2 - 12
             },
           });
         }
@@ -439,7 +450,7 @@ function DepositAnimation({
         targetRefs={targetRefCallbacks}
         totals={state.totals}
         netIncome={netIncome}
-        highlightCategory={highlightCategories[0] || null}
+        highlightCategories={highlightCategories}
       />
       <AnimatePresence>
         {isReady && chips.map((chip, index) => {
@@ -454,7 +465,7 @@ function DepositAnimation({
               side={chip.side}
               startPos={positions.start}
               endPos={positions.end}
-              onComplete={() => {}}
+              delay={index * 0.15}
             />
           );
         })}
@@ -602,7 +613,7 @@ function AccountingFlowContent() {
               targetRefs={targetRefCallbacks}
               totals={state.totals}
               netIncome={netIncome}
-              highlightCategory={null}
+              highlightCategories={[]}
             />
             <CompletionSummary />
           </>
@@ -615,7 +626,7 @@ function AccountingFlowContent() {
                 targetRefs={targetRefCallbacks}
                 totals={state.totals}
                 netIncome={netIncome}
-                highlightCategory={null}
+                highlightCategories={[]}
               />
             )}
 
