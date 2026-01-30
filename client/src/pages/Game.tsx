@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { useLocation } from "wouter";
-import { DndContext, DragEndEvent, DragStartEvent, DragOverEvent, DragOverlay, pointerWithin, TouchSensor, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { DndContext, DragEndEvent, DragStartEvent, DragOverEvent, DragOverlay, pointerWithin, TouchSensor, MouseSensor, useSensor, useSensors, useDroppable } from "@dnd-kit/core";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,78 @@ import { DroppableCategory } from "@/components/game/DroppableCategory";
 import { FeedbackOverlay } from "@/components/game/FeedbackOverlay";
 import { ScoreDisplay } from "@/components/game/ScoreDisplay";
 import { categoryTypes, type CategoryType, type Account } from "@shared/schema";
+
+function ExpenseDropZone({
+  isOver,
+  feedbackState,
+}: {
+  isOver: boolean;
+  feedbackState: "correct" | "wrong" | null;
+}) {
+  const { setNodeRef } = useDroppable({
+    id: "expense",
+  });
+
+  const feedbackRingClass = feedbackState === "correct" 
+    ? "ring-4 ring-green-500" 
+    : feedbackState === "wrong" 
+    ? "ring-4 ring-red-500" 
+    : "";
+
+  return (
+    <motion.div
+      ref={setNodeRef}
+      data-testid="drop-zone-expense"
+      className={`
+        relative flex flex-col
+        rounded-lg border-2 transition-colors duration-150
+        ${isOver ? "border-solid border-orange-400 dark:border-orange-500 bg-orange-100/50 dark:bg-orange-900/30" : "border-dashed border-orange-300 dark:border-orange-700 bg-orange-50/30 dark:bg-orange-950/20"}
+        ${feedbackRingClass}
+      `}
+      animate={{
+        scale: feedbackState === "correct" ? [1, 1.05, 0.98, 1] : 
+               feedbackState === "wrong" ? [1, 0.95, 1.02, 1] : 
+               isOver ? 1.03 : 1,
+        boxShadow: isOver ? "0 4px 20px rgba(0,0,0,0.15)" : "0 0px 0px rgba(0,0,0,0)",
+      }}
+      transition={{
+        scale: feedbackState ? { duration: 0.3, times: [0, 0.3, 0.6, 1] } : { type: "spring", stiffness: 400, damping: 25 },
+        boxShadow: { duration: 0.15 },
+      }}
+    >
+      <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2 bg-background">
+        <span className="text-xs font-bold text-orange-700 dark:text-orange-300">
+          費用
+        </span>
+      </div>
+      
+      <div className="flex flex-col gap-1.5 p-2 pt-3">
+        <div className={`
+          flex items-center justify-center
+          min-h-[32px] px-2 py-1 rounded
+          border border-dashed border-orange-300 dark:border-orange-600
+          bg-orange-100/50 dark:bg-orange-900/30
+          ${isOver ? "bg-orange-200/70 dark:bg-orange-800/40" : ""}
+        `}>
+          <span className="text-xs font-medium text-orange-600 dark:text-orange-400">
+            原価
+          </span>
+        </div>
+        <div className={`
+          flex items-center justify-center
+          min-h-[32px] px-2 py-1 rounded
+          border border-dashed border-orange-300 dark:border-orange-600
+          bg-orange-100/50 dark:bg-orange-900/30
+          ${isOver ? "bg-orange-200/70 dark:bg-orange-800/40" : ""}
+        `}>
+          <span className="text-xs font-medium text-orange-600 dark:text-orange-400">
+            経費
+          </span>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function Game() {
   const [, navigate] = useLocation();
@@ -175,9 +247,8 @@ export default function Game() {
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2">
-                {/* 費用（借方・左） */}
-                <DroppableCategory
-                  category="expense"
+                {/* 費用（借方・左）- 原価と経費のサブボックス */}
+                <ExpenseDropZone
                   isOver={overId === "expense"}
                   feedbackState={categoryFeedback.expense}
                 />
