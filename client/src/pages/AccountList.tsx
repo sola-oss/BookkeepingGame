@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { ArrowLeft, Search, BookOpen, AlertTriangle, Tag, FileText, Lightbulb, X } from "lucide-react";
+import { ArrowLeft, Search, BookOpen, AlertTriangle, Tag, FileText, Lightbulb, Undo2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -93,6 +93,7 @@ export default function AccountList() {
   const [sortMode, setSortMode] = useState<SortMode>("kana");
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [selectedAccount, setSelectedAccount] = useState<Account3Kyu | null>(null);
+  const [accountHistory, setAccountHistory] = useState<Account3Kyu[]>([]);
 
   const weakAccounts = state.userData.weakAccounts;
 
@@ -105,16 +106,27 @@ export default function AccountList() {
 
   const handleAccountClick = (account: Account3Kyu) => {
     setSelectedAccount(account);
+    setAccountHistory([]);
   };
 
   const handleCloseModal = () => {
     setSelectedAccount(null);
+    setAccountHistory([]);
   };
 
   const handleLinkClick = (accountId: string) => {
     const linkedAccount = accounts3kyu.find(a => a.id === accountId);
-    if (linkedAccount) {
+    if (linkedAccount && selectedAccount) {
+      setAccountHistory(prev => [...prev, selectedAccount]);
       setSelectedAccount(linkedAccount);
+    }
+  };
+
+  const handleBackClick = () => {
+    if (accountHistory.length > 0) {
+      const previousAccount = accountHistory[accountHistory.length - 1];
+      setAccountHistory(prev => prev.slice(0, -1));
+      setSelectedAccount(previousAccount);
     }
   };
 
@@ -250,9 +262,22 @@ export default function AccountList() {
             <>
               <DialogHeader>
                 <div className="flex items-start justify-between gap-2">
-                  <DialogTitle className="text-xl">
-                    {selectedAccount.canonical_name_ja}
-                  </DialogTitle>
+                  <div className="flex items-center gap-2">
+                    {accountHistory.length > 0 && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleBackClick}
+                        className="shrink-0 h-8 w-8"
+                        data-testid="button-modal-back"
+                      >
+                        <Undo2 className="w-4 h-4" />
+                      </Button>
+                    )}
+                    <DialogTitle className="text-xl">
+                      {selectedAccount.canonical_name_ja}
+                    </DialogTitle>
+                  </div>
                   {mistakeCount > 0 && (
                     <div className="flex items-center gap-1 text-destructive">
                       <AlertTriangle className="w-4 h-4" />
