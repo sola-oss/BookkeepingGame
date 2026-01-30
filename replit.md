@@ -129,6 +129,13 @@ localStorageを使用してブラウザに保存:
 
 ## 最近の変更
 
+- 2026-01: 勘定科目一覧の説明文リンク機能
+  - LinkedDescriptionコンポーネント追加（[[account_id|label]]構文をパース）
+  - 勘定科目の説明文内にクリック可能なリンクを実装
+  - 関連科目への相互参照リンクを15以上の科目に追加
+  - リンク例: 貸倒引当金繰入→貸倒引当金、売掛金→買掛金、前払費用→前受収益
+  - 仕訳ゲームの難易度調整: 選択肢を6個から9個に増加
+
 - 2026-01: 分類ゲーム費用カテゴリ分割
   - 費用（expense）を原価（cost）と経費（operating_expense）に分割
   - categoryTypesを6要素に更新: asset, liability, equity, revenue, cost, operating_expense
