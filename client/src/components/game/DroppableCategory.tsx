@@ -35,7 +35,13 @@ const categoryColors: Record<CategoryType, { bg: string; border: string; text: s
     text: "text-green-700 dark:text-green-300",
     hoverBg: "bg-green-100 dark:bg-green-900/50",
   },
-  expense: {
+  cost: {
+    bg: "bg-orange-50 dark:bg-orange-950/30",
+    border: "border-orange-300 dark:border-orange-700",
+    text: "text-orange-700 dark:text-orange-300",
+    hoverBg: "bg-orange-100 dark:bg-orange-900/50",
+  },
+  operating_expense: {
     bg: "bg-orange-50 dark:bg-orange-950/30",
     border: "border-orange-300 dark:border-orange-700",
     text: "text-orange-700 dark:text-orange-300",

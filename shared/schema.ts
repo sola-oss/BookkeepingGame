@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const categoryTypes = ["asset", "liability", "equity", "revenue", "expense"] as const;
+export const categoryTypes = ["asset", "liability", "equity", "revenue", "cost", "operating_expense"] as const;
 export type CategoryType = typeof categoryTypes[number];
 
 export const category5Types = ["asset", "liability", "equity", "revenue", "expense", "other"] as const;
@@ -11,7 +11,8 @@ export const categoryLabels: Record<CategoryType, string> = {
   liability: "負債",
   equity: "純資産",
   revenue: "収益",
-  expense: "費用",
+  cost: "原価",
+  operating_expense: "経費",
 };
 
 export const accountSchema = z.object({

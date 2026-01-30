@@ -164,7 +164,7 @@ export const accounts: Account[] = [
   {
     id: "purchases",
     name_ja: "仕入",
-    category: "expense",
+    category: "cost",
     explanation_ja: "販売目的で商品を購入した費用",
     examples_ja: "仕入 500 / 現金 500",
     synonyms_ja: ["しいれ", "仕入高", "商品仕入"],
@@ -172,7 +172,7 @@ export const accounts: Account[] = [
   {
     id: "salary",
     name_ja: "給料",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "従業員に支払う賃金",
     examples_ja: "給料 300 / 現金 300",
     synonyms_ja: ["きゅうりょう", "給与", "賃金", "人件費"],
@@ -180,7 +180,7 @@ export const accounts: Account[] = [
   {
     id: "rent",
     name_ja: "支払家賃",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "店舗や事務所の家賃",
     examples_ja: "支払家賃 100 / 現金 100",
     synonyms_ja: ["しはらいやちん", "家賃", "賃借料", "地代家賃"],
@@ -188,7 +188,7 @@ export const accounts: Account[] = [
   {
     id: "utilities",
     name_ja: "水道光熱費",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "電気・ガス・水道などの料金",
     examples_ja: "水道光熱費 30 / 現金 30",
     synonyms_ja: ["すいどうこうねつひ", "光熱費", "電気代", "ガス代", "水道代"],
@@ -196,7 +196,7 @@ export const accounts: Account[] = [
   {
     id: "communication",
     name_ja: "通信費",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "電話やインターネットの料金",
     examples_ja: "通信費 20 / 現金 20",
     synonyms_ja: ["つうしんひ", "電話代", "インターネット代"],
@@ -204,7 +204,7 @@ export const accounts: Account[] = [
   {
     id: "travel",
     name_ja: "旅費交通費",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "出張や通勤にかかる交通費",
     examples_ja: "旅費交通費 15 / 現金 15",
     synonyms_ja: ["りょひこうつうひ", "交通費", "出張費", "旅費"],
@@ -212,7 +212,7 @@ export const accounts: Account[] = [
   {
     id: "advertising",
     name_ja: "広告宣伝費",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "広告や宣伝にかかる費用",
     examples_ja: "広告宣伝費 80 / 現金 80",
     synonyms_ja: ["こうこくせんでんひ", "広告費", "宣伝費"],
@@ -220,7 +220,7 @@ export const accounts: Account[] = [
   {
     id: "interest_expense",
     name_ja: "支払利息",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "借入金などに対して支払う利息",
     examples_ja: "支払利息 25 / 現金 25",
     synonyms_ja: ["しはらいりそく", "利息", "借入利息"],
@@ -228,7 +228,7 @@ export const accounts: Account[] = [
   {
     id: "depreciation",
     name_ja: "減価償却費",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "固定資産の価値減少を費用計上したもの",
     examples_ja: "減価償却費 100 / 備品 100",
     synonyms_ja: ["げんかしょうきゃくひ", "償却費"],
@@ -236,7 +236,7 @@ export const accounts: Account[] = [
   {
     id: "supplies_expense",
     name_ja: "消耗品費",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "消耗品を使用した際の費用",
     examples_ja: "消耗品費 30 / 消耗品 30",
     synonyms_ja: ["しょうもうひんひ", "事務用品費"],
@@ -364,7 +364,7 @@ export const advancedAccounts: Account[] = [
   {
     id: "bad_debt_expense",
     name_ja: "貸倒引当金繰入",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "貸倒引当金を設定する際の費用",
     examples_ja: "貸倒引当金繰入 20 / 貸倒引当金 20",
     synonyms_ja: ["かしだおれひきあてきんくりいれ", "貸倒繰入"],
@@ -396,7 +396,7 @@ export const advancedAccounts: Account[] = [
   {
     id: "insurance_expense",
     name_ja: "保険料",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "火災保険や自動車保険などの支払い",
     examples_ja: "保険料 60 / 現金 60",
     synonyms_ja: ["ほけんりょう", "支払保険料"],
@@ -404,7 +404,7 @@ export const advancedAccounts: Account[] = [
   {
     id: "repair_expense",
     name_ja: "修繕費",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "建物や設備の修理費用",
     examples_ja: "修繕費 100 / 現金 100",
     synonyms_ja: ["しゅうぜんひ", "修理費"],
@@ -412,7 +412,7 @@ export const advancedAccounts: Account[] = [
   {
     id: "tax_expense",
     name_ja: "租税公課",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "固定資産税や印紙税などの税金・公課",
     examples_ja: "租税公課 40 / 現金 40",
     synonyms_ja: ["そぜいこうか", "税金", "公租公課"],
@@ -420,7 +420,7 @@ export const advancedAccounts: Account[] = [
   {
     id: "entertainment_expense",
     name_ja: "接待交際費",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "取引先への接待や贈答品の費用",
     examples_ja: "接待交際費 30 / 現金 30",
     synonyms_ja: ["せったいこうさいひ", "交際費", "接待費"],
@@ -428,7 +428,7 @@ export const advancedAccounts: Account[] = [
   {
     id: "miscellaneous_expense",
     name_ja: "雑費",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "他の費用に分類できない少額の支出",
     examples_ja: "雑費 10 / 現金 10",
     synonyms_ja: ["ざっぴ", "雑損"],
@@ -436,7 +436,7 @@ export const advancedAccounts: Account[] = [
   {
     id: "loss_on_sale",
     name_ja: "固定資産売却損",
-    category: "expense",
+    category: "operating_expense",
     explanation_ja: "固定資産を帳簿価額より安く売却した損失",
     examples_ja: "現金 800 / 備品 1000 / 固定資産売却損 200",
     synonyms_ja: ["こていしさんばいきゃくそん", "売却損"],
