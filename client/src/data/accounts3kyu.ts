@@ -53,7 +53,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "売掛金",
     synonyms_ja: ["うりかけきん", "売掛"],
     category5: "asset",
-    definition_ja: "商品を掛けで販売したときの代金を受け取る権利",
+    definition_ja: "商品を掛け（後払い）で販売したときに、代金を受け取る権利。掛け取引の売り手側で発生する債権。仕入側では[[accounts_payable|買掛金]]が計上される。決算時には[[bad_debt_allowance|貸倒引当金]]を設定することがある。",
     example_entry_ja: "売掛金 30,000 / 売上 30,000"
   },
   {
@@ -71,7 +71,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "受取手形",
     synonyms_ja: ["うけとりてがた"],
     category5: "asset",
-    definition_ja: "約束手形を受け取った場合の債権",
+    definition_ja: "約束手形を受け取った場合の債権。手形を振り出した側では[[notes_payable|支払手形]]が計上される。[[accounts_receivable|売掛金]]の支払いを手形で受け取る場合などに使用する。",
     example_entry_ja: "受取手形 50,000 / 売掛金 50,000"
   },
   {
@@ -89,7 +89,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "繰越商品",
     synonyms_ja: ["くりこししょうひん", "商品"],
     category5: "asset",
-    definition_ja: "期末に売れ残った商品の在庫",
+    definition_ja: "期末に売れ残った商品の在庫。決算整理仕訳で[[purchases|仕入]]から振り替える。三分法では「しーくりくりしー」（仕入/繰越商品、繰越商品/仕入）の仕訳で期首・期末在庫を処理する。",
     example_entry_ja: "繰越商品 20,000 / 仕入 20,000"
   },
   {
@@ -116,7 +116,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "前払費用",
     synonyms_ja: ["まえばらいひよう"],
     category5: "asset",
-    definition_ja: "翌期に費用となる保険料や家賃などの前払い",
+    definition_ja: "翌期に費用となる保険料や家賃などの前払い分を繰り延べる経過勘定。決算整理で当期の費用から翌期分を除く。収益側では[[unearned_revenue|前受収益]]が対応する。翌期首には再振替仕訳を行う。",
     example_entry_ja: "前払費用 6,000 / 支払保険料 6,000"
   },
   {
@@ -143,7 +143,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "未収収益",
     synonyms_ja: ["みしゅうしゅうえき"],
     category5: "asset",
-    definition_ja: "当期に発生したがまだ受け取っていない収益",
+    definition_ja: "当期に発生したがまだ受け取っていない収益を見越す経過勘定。決算整理で当期分の収益を計上する。費用側では[[accrued_expense|未払費用]]が対応する。翌期首には再振替仕訳を行う。",
     example_entry_ja: "未収収益 3,000 / 受取利息 3,000"
   },
   {
@@ -233,7 +233,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "建物減価償却累計額",
     synonyms_ja: ["たてものげんかしょうきゃくるいけいがく"],
     category5: "asset",
-    definition_ja: "建物の減価償却費の累計（資産のマイナス）",
+    definition_ja: "[[buildings|建物]]の[[depreciation|減価償却費]]の累計額。間接法で記帳する場合に使用する資産のマイナス勘定（評価勘定）。貸借対照表では建物から控除して表示する。",
     example_entry_ja: "減価償却費 100,000 / 建物減価償却累計額 100,000"
   },
   {
@@ -242,7 +242,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "備品減価償却累計額",
     synonyms_ja: ["びひんげんかしょうきゃくるいけいがく"],
     category5: "asset",
-    definition_ja: "備品の減価償却費の累計（資産のマイナス）",
+    definition_ja: "[[equipment|備品]]の[[depreciation|減価償却費]]の累計額。間接法で記帳する場合に使用する資産のマイナス勘定（評価勘定）。貸借対照表では備品から控除して表示する。",
     example_entry_ja: "減価償却費 30,000 / 備品減価償却累計額 30,000"
   },
   {
@@ -262,7 +262,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "買掛金",
     synonyms_ja: ["かいかけきん", "買掛"],
     category5: "liability",
-    definition_ja: "商品を掛けで仕入れたときの代金を支払う義務",
+    definition_ja: "商品を掛け（後払い）で仕入れたときに、代金を支払う義務。掛け取引の仕入側で発生する債務。販売側では[[accounts_receivable|売掛金]]が計上される。[[purchases|仕入]]時に使用する代表的な負債科目。",
     example_entry_ja: "仕入 50,000 / 買掛金 50,000"
   },
   {
@@ -271,7 +271,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "支払手形",
     synonyms_ja: ["しはらいてがた"],
     category5: "liability",
-    definition_ja: "約束手形を振り出した場合の債務",
+    definition_ja: "約束手形を振り出した場合の債務。手形を受け取った側では[[notes_receivable|受取手形]]が計上される。[[accounts_payable|買掛金]]の支払いを手形で行う場合などに使用する。",
     example_entry_ja: "買掛金 100,000 / 支払手形 100,000"
   },
   {
@@ -298,7 +298,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "前受収益",
     synonyms_ja: ["まえうけしゅうえき"],
     category5: "liability",
-    definition_ja: "翌期の収益となる受取家賃などの前受け",
+    definition_ja: "翌期の収益となる受取家賃などの前受け分を繰り延べる経過勘定。決算整理で当期の収益から翌期分を除く。費用側では[[prepaid_expense|前払費用]]が対応する。翌期首には再振替仕訳を行う。",
     example_entry_ja: "受取家賃 12,000 / 前受収益 12,000"
   },
   {
@@ -325,7 +325,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "未払費用",
     synonyms_ja: ["みばらいひよう"],
     category5: "liability",
-    definition_ja: "当期に発生したがまだ支払っていない費用",
+    definition_ja: "当期に発生したがまだ支払っていない費用を見越す経過勘定。決算整理で当期分の費用を計上する。収益側では[[accrued_revenue|未収収益]]が対応する。翌期首には再振替仕訳を行う。",
     example_entry_ja: "支払利息 5,000 / 未払費用 5,000"
   },
   {
@@ -437,7 +437,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "売上",
     synonyms_ja: ["うりあげ", "売上高"],
     category5: "revenue",
-    definition_ja: "商品を販売して得た収益",
+    definition_ja: "商品を販売して得た収益。現金売上の他、掛け売上では[[accounts_receivable|売掛金]]を使用する。三分法では[[purchases|仕入]]と対になる収益科目。",
     example_entry_ja: "現金 10,000 / 売上 10,000"
   },
   {
@@ -511,7 +511,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "仕入",
     synonyms_ja: ["しいれ", "仕入高"],
     category5: "expense",
-    definition_ja: "販売する商品を購入した費用",
+    definition_ja: "販売する商品を購入した費用（売上原価）。三分法では[[merchandise|繰越商品]]と組み合わせて決算整理を行う。掛け仕入では[[accounts_payable|買掛金]]を使用する。",
     example_entry_ja: "仕入 30,000 / 現金 30,000"
   },
   {
@@ -655,7 +655,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "減価償却費",
     synonyms_ja: ["げんかしょうきゃくひ"],
     category5: "expense",
-    definition_ja: "固定資産の価値減少を費用化したもの",
+    definition_ja: "建物・備品・車両などの固定資産の価値減少を費用化したもの。間接法では[[accumulated_depreciation_buildings|減価償却累計額]]を使って資産の帳簿価額を減少させる。定額法・定率法などの計算方法がある。",
     example_entry_ja: "減価償却費 100,000 / 建物減価償却累計額 100,000"
   },
   {
@@ -673,7 +673,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "貸倒引当金繰入",
     synonyms_ja: ["かしだおれひきあてきんくりいれ"],
     category5: "expense",
-    definition_ja: "貸倒引当金を設定する費用",
+    definition_ja: "[[bad_debt_allowance|貸倒引当金]]を設定・追加する際に計上する費用。決算時に[[accounts_receivable|売掛金]]や[[notes_receivable|受取手形]]などの債権に対して、回収不能リスクを見積もって計上する。差額補充法では前期末残高との差額を繰り入れる。",
     example_entry_ja: "貸倒引当金繰入 5,000 / 貸倒引当金 5,000"
   },
   {
@@ -700,7 +700,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "法人税等",
     synonyms_ja: ["ほうじんぜいとう", "法人税住民税及び事業税"],
     category5: "expense",
-    definition_ja: "法人税・住民税・事業税の総称",
+    definition_ja: "法人税・住民税・事業税の総称。決算時に当期の税額を見積もり、[[unpaid_corporate_tax|未払法人税等]]と組み合わせて計上する。中間納付がある場合は仮払法人税等を使用する。",
     example_entry_ja: "法人税等 100,000 / 未払法人税等 100,000"
   },
 
@@ -720,7 +720,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "貸倒引当金",
     synonyms_ja: ["かしだおれひきあてきん"],
     category5: "other",
-    definition_ja: "将来の貸倒れに備えた引当金（資産のマイナス）",
+    definition_ja: "将来の貸倒れ（回収不能）に備えた引当金で、資産のマイナス（評価勘定）として貸借対照表に表示される。決算時に[[bad_debt_allowance_expense|貸倒引当金繰入]]を使って設定する。対象は[[accounts_receivable|売掛金]]や[[notes_receivable|受取手形]]などの債権。",
     example_entry_ja: "貸倒引当金繰入 5,000 / 貸倒引当金 5,000"
   },
   {
@@ -738,7 +738,7 @@ export const accounts3kyu: Account3Kyu[] = [
     canonical_name_ja: "未払法人税等",
     synonyms_ja: ["みばらいほうじんぜいとう"],
     category5: "liability",
-    definition_ja: "納付すべき法人税等の未払い額",
+    definition_ja: "決算時に計上した[[income_tax|法人税等]]のうち、まだ納付していない金額。翌期に税務署へ納付すると消滅する。中間納付額との差額を精算する場合もある。",
     example_entry_ja: "法人税等 100,000 / 未払法人税等 100,000"
   }
 ];

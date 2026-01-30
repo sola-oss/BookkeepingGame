@@ -21,6 +21,57 @@ import {
 } from "@/data/accounts3kyu";
 import { useGame } from "@/context/GameContext";
 import type { Account3Kyu } from "@shared/schema";
+import { accounts3kyu } from "@/data/accounts3kyu";
+
+function LinkedDescription({ 
+  text, 
+  onLinkClick 
+}: { 
+  text: string; 
+  onLinkClick: (accountId: string) => void;
+}) {
+  const linkRegex = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
+  const parts: (string | { id: string; label: string })[] = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    const accountId = match[1];
+    const label = match[2] || accounts3kyu.find(a => a.id === accountId)?.canonical_name_ja || accountId;
+    parts.push({ id: accountId, label });
+    lastIndex = linkRegex.lastIndex;
+  }
+  
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return (
+    <>
+      {parts.map((part, index) => {
+        if (typeof part === "string") {
+          return <span key={index}>{part}</span>;
+        }
+        return (
+          <button
+            key={index}
+            onClick={(e) => {
+              e.stopPropagation();
+              onLinkClick(part.id);
+            }}
+            className="text-primary underline underline-offset-2 hover:text-primary/80 font-medium"
+            data-testid={`link-account-${part.id}`}
+          >
+            {part.label}
+          </button>
+        );
+      })}
+    </>
+  );
+}
 
 type SortMode = "kana" | "category";
 type CategoryFilter = "all" | "asset" | "liability" | "equity" | "revenue" | "expense" | "other";
@@ -58,6 +109,13 @@ export default function AccountList() {
 
   const handleCloseModal = () => {
     setSelectedAccount(null);
+  };
+
+  const handleLinkClick = (accountId: string) => {
+    const linkedAccount = accounts3kyu.find(a => a.id === accountId);
+    if (linkedAccount) {
+      setSelectedAccount(linkedAccount);
+    }
   };
 
   const mistakeCount = selectedAccount ? (weakAccounts[selectedAccount.id] || 0) : 0;
@@ -216,7 +274,12 @@ export default function AccountList() {
                     <FileText className="w-4 h-4" />
                     <span className="text-sm font-medium">説明</span>
                   </div>
-                  <p className="text-foreground">{selectedAccount.definition_ja}</p>
+                  <p className="text-foreground leading-relaxed">
+                    <LinkedDescription 
+                      text={selectedAccount.definition_ja} 
+                      onLinkClick={handleLinkClick}
+                    />
+                  </p>
                 </div>
 
                 {selectedAccount.synonyms_ja && selectedAccount.synonyms_ja.length > 0 && (
