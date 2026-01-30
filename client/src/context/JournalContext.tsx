@@ -68,7 +68,7 @@ function generateChoices(question: JournalQuestion, allAccounts: Account[]): Acc
   
   const correctIds = [debitAccount.id, creditAccount.id];
   const otherAccounts = allAccounts.filter(a => !correctIds.includes(a.id));
-  const dummies = shuffleArray(otherAccounts).slice(0, 4);
+  const dummies = shuffleArray(otherAccounts).slice(0, 7);
   
   return shuffleArray([debitAccount, creditAccount, ...dummies]);
 }
