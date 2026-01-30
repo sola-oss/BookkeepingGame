@@ -5,11 +5,21 @@ import { loadUserData, saveUserData, updateStreak, addGameResult } from "@/lib/s
 import { accounts3kyu } from "@/data/accounts3kyu";
 
 function convert3KyuToAccount(a: Account3Kyu): Account {
-  const category = a.category5 === "other" ? "asset" : a.category5;
+  let category: CategoryType;
+  
+  if (a.category5 === "expense") {
+    // 仕入（purchases）は原価（cost）、その他の費用は経費（operating_expense）
+    category = a.id === "purchases" ? "cost" : "operating_expense";
+  } else if (a.category5 === "other") {
+    category = "asset";
+  } else {
+    category = a.category5 as CategoryType;
+  }
+  
   return {
     id: a.id,
     name_ja: a.canonical_name_ja,
-    category: category as CategoryType,
+    category,
     explanation_ja: a.definition_ja,
     examples_ja: a.example_entry_ja,
     synonyms_ja: a.synonyms_ja,

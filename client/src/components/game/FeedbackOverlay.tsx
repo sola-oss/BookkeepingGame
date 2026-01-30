@@ -20,16 +20,6 @@ export function FeedbackOverlay({
   scoreChange,
   onComplete,
 }: FeedbackOverlayProps) {
-  // Debug logging
-  if (show && account && !isCorrect) {
-    console.log("FeedbackOverlay Debug:", {
-      selectedCategory,
-      accountCategory: account.category,
-      selectedLabel: selectedCategory ? categoryLabels[selectedCategory] : "N/A",
-      correctLabel: categoryLabels[account.category],
-    });
-  }
-  
   return (
     <AnimatePresence>
       {show && account && (
