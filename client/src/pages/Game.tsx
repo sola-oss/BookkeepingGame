@@ -250,17 +250,18 @@ export default function Game() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur border-b border-border">
-        <div className="max-w-2xl mx-auto px-4 py-3">
-          <div className="flex items-center gap-3 mb-3">
+        <div className="max-w-2xl mx-auto px-2 sm:px-4 py-2 sm:py-3">
+          <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
             <Button
               variant="ghost"
               size="icon"
               onClick={handleBack}
               data-testid="button-back"
+              className="h-8 w-8 sm:h-9 sm:w-9"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             </Button>
-            <h1 className="text-lg font-bold text-foreground">分類ゲーム</h1>
+            <h1 className="text-base sm:text-lg font-bold text-foreground">分類ゲーム</h1>
           </div>
           <ScoreDisplay
             score={score}
