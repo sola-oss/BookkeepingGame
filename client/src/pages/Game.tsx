@@ -14,9 +14,11 @@ import { categoryTypes, type CategoryType, type Account } from "@shared/schema";
 function CostDropZone({
   isOver,
   feedbackState,
+  className = "",
 }: {
   isOver: boolean;
   feedbackState: "correct" | "wrong" | null;
+  className?: string;
 }) {
   const { setNodeRef } = useDroppable({
     id: "cost",
@@ -33,6 +35,7 @@ function CostDropZone({
         ${isOver ? "border-solid border-orange-400 dark:border-orange-500 bg-orange-200/70 dark:bg-orange-800/50" : "border-dashed border-orange-300 dark:border-orange-600 bg-orange-100/50 dark:bg-orange-900/30"}
         ${feedbackState === "correct" ? "ring-2 ring-green-500 bg-green-100 dark:bg-green-900/50" : ""}
         ${feedbackState === "wrong" ? "ring-2 ring-red-500 bg-red-100 dark:bg-red-900/50" : ""}
+        ${className}
       `}
       animate={{
         scale: feedbackState === "correct" ? [1, 1.05, 0.98, 1] : 
@@ -53,9 +56,11 @@ function CostDropZone({
 function OperatingExpenseDropZone({
   isOver,
   feedbackState,
+  className = "",
 }: {
   isOver: boolean;
   feedbackState: "correct" | "wrong" | null;
+  className?: string;
 }) {
   const { setNodeRef } = useDroppable({
     id: "operating_expense",
@@ -72,6 +77,7 @@ function OperatingExpenseDropZone({
         ${isOver ? "border-solid border-orange-400 dark:border-orange-500 bg-orange-200/70 dark:bg-orange-800/50" : "border-dashed border-orange-300 dark:border-orange-600 bg-orange-100/50 dark:bg-orange-900/30"}
         ${feedbackState === "correct" ? "ring-2 ring-green-500 bg-green-100 dark:bg-green-900/50" : ""}
         ${feedbackState === "wrong" ? "ring-2 ring-red-500 bg-red-100 dark:bg-red-900/50" : ""}
+        ${className}
       `}
       animate={{
         scale: feedbackState === "correct" ? [1, 1.05, 0.98, 1] : 
@@ -102,7 +108,7 @@ function ExpenseDropZone({
 }) {
   return (
     <div
-      className="relative flex flex-col rounded sm:rounded-lg border-2 border-dashed border-orange-300 dark:border-orange-700 bg-orange-50/30 dark:bg-orange-950/20"
+      className="relative flex flex-col rounded sm:rounded-lg border-2 border-dashed border-orange-300 dark:border-orange-700 bg-orange-50/30 dark:bg-orange-950/20 h-full"
       data-testid="drop-zone-expense-wrapper"
     >
       <div className="absolute -top-2 sm:-top-2.5 left-1/2 -translate-x-1/2 px-1.5 sm:px-2 bg-background z-10">
@@ -111,14 +117,16 @@ function ExpenseDropZone({
         </span>
       </div>
       
-      <div className="flex flex-col gap-1 sm:gap-1.5 p-1.5 sm:p-2 pt-3 sm:pt-4">
+      <div className="flex flex-col gap-1 sm:gap-1.5 p-1.5 sm:p-2 pt-3 sm:pt-4 flex-1">
         <CostDropZone
           isOver={costIsOver}
           feedbackState={costFeedbackState}
+          className="flex-1"
         />
         <OperatingExpenseDropZone
           isOver={operatingExpenseIsOver}
           feedbackState={operatingExpenseFeedbackState}
+          className="flex-1"
         />
       </div>
     </div>
@@ -291,7 +299,7 @@ export default function Game() {
                   <span>貸方</span>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-1 sm:gap-2 flex-1">
+              <div className="grid grid-cols-2 gap-1 sm:gap-2 flex-1 items-stretch">
                 {/* 費用（借方・左）- 原価と経費のサブボックス */}
                 <ExpenseDropZone
                   costIsOver={overId === "cost"}
