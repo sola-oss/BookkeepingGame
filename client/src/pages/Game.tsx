@@ -111,7 +111,7 @@ function ExpenseDropZone({
       className="relative flex flex-col rounded sm:rounded-lg border-2 border-dashed border-orange-300 dark:border-orange-700 bg-orange-50/30 dark:bg-orange-950/20 h-full"
       data-testid="drop-zone-expense-wrapper"
     >
-      <div className="absolute -top-2 sm:-top-2.5 left-1/2 -translate-x-1/2 px-1.5 sm:px-2 bg-background z-10">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-1 sm:px-1.5 bg-purple-50 dark:bg-purple-950 z-10">
         <span className="text-[10px] sm:text-xs font-bold text-orange-700 dark:text-orange-300 whitespace-nowrap">
           費用
         </span>
