@@ -300,9 +300,9 @@ export default function Game() {
                   <span>貸方</span>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-1 sm:gap-2 flex-1 items-stretch">
+              <div className="grid grid-cols-2 gap-1 sm:gap-2 flex-1 items-start">
                 {/* 費用（借方・左）- 原価と経費のサブボックス（収益の2/3の高さ） */}
-                <div className="flex items-center">
+                <div className="flex items-start h-full">
                   <ExpenseDropZone
                     costIsOver={overId === "cost"}
                     operatingExpenseIsOver={overId === "operating_expense"}
