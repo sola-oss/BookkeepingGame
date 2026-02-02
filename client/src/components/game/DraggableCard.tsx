@@ -43,13 +43,13 @@ export const DraggableCard = forwardRef<HTMLDivElement, DraggableCardProps>(
       >
         <Card
           className={`
-            px-4 py-3 cursor-grab select-none
+            px-2.5 sm:px-4 py-2 sm:py-3 cursor-grab select-none
             bg-card border-card-border
             transition-shadow duration-150
             ${dragging ? "cursor-grabbing" : "hover-elevate"}
           `}
         >
-          <span className="text-base font-medium text-foreground whitespace-nowrap">
+          <span className="text-sm sm:text-base font-medium text-foreground whitespace-nowrap">
             {account.name_ja}
           </span>
         </Card>
@@ -72,12 +72,12 @@ export function DragOverlayCard({ account }: DragOverlayCardProps) {
     >
       <Card
         className="
-          px-4 py-3 cursor-grabbing select-none
+          px-2.5 sm:px-4 py-2 sm:py-3 cursor-grabbing select-none
           bg-card border-card-border
           shadow-xl ring-2 ring-primary/30
         "
       >
-        <span className="text-base font-medium text-foreground whitespace-nowrap">
+        <span className="text-sm sm:text-base font-medium text-foreground whitespace-nowrap">
           {account.name_ja}
         </span>
       </Card>

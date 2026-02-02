@@ -62,11 +62,11 @@ export function DroppableCategory({ category, isOver, feedbackState, className =
       data-testid={`drop-zone-${category}`}
       className={`
         flex flex-col items-center justify-center
-        min-h-[80px] p-3 rounded-lg
+        min-h-[50px] sm:min-h-[80px] p-2 sm:p-3 rounded sm:rounded-lg
         border-2 transition-colors duration-150
         ${isOver ? `border-solid ${colors.hoverBg} ${colors.border}` : `border-dashed ${colors.bg} ${colors.border}`}
-        ${feedbackState === "correct" ? "ring-4 ring-green-500 bg-green-100 dark:bg-green-900/50" : ""}
-        ${feedbackState === "wrong" ? "ring-4 ring-red-500 bg-red-100 dark:bg-red-900/50" : ""}
+        ${feedbackState === "correct" ? "ring-2 sm:ring-4 ring-green-500 bg-green-100 dark:bg-green-900/50" : ""}
+        ${feedbackState === "wrong" ? "ring-2 sm:ring-4 ring-red-500 bg-red-100 dark:bg-red-900/50" : ""}
         ${className}
       `}
       animate={{
@@ -80,7 +80,7 @@ export function DroppableCategory({ category, isOver, feedbackState, className =
         boxShadow: { duration: 0.15 },
       }}
     >
-      <span className={`text-sm font-bold ${colors.text}`}>
+      <span className={`text-[10px] sm:text-sm font-bold ${colors.text}`}>
         {categoryLabels[category]}
       </span>
     </motion.div>

@@ -28,7 +28,7 @@ function CostDropZone({
       data-testid="drop-zone-cost"
       className={`
         flex items-center justify-center
-        min-h-[32px] px-2 py-1.5 rounded
+        min-h-[28px] sm:min-h-[32px] px-1.5 sm:px-2 py-1 sm:py-1.5 rounded
         border-2 transition-colors duration-150
         ${isOver ? "border-solid border-orange-400 dark:border-orange-500 bg-orange-200/70 dark:bg-orange-800/50" : "border-dashed border-orange-300 dark:border-orange-600 bg-orange-100/50 dark:bg-orange-900/30"}
         ${feedbackState === "correct" ? "ring-2 ring-green-500 bg-green-100 dark:bg-green-900/50" : ""}
@@ -43,7 +43,7 @@ function CostDropZone({
         scale: feedbackState ? { duration: 0.3, times: [0, 0.3, 0.6, 1] } : { type: "spring", stiffness: 400, damping: 25 },
       }}
     >
-      <span className="text-xs font-medium text-orange-600 dark:text-orange-400">
+      <span className="text-[10px] sm:text-xs font-medium text-orange-600 dark:text-orange-400">
         原価
       </span>
     </motion.div>
@@ -67,7 +67,7 @@ function OperatingExpenseDropZone({
       data-testid="drop-zone-operating-expense"
       className={`
         flex items-center justify-center
-        min-h-[32px] px-2 py-1.5 rounded
+        min-h-[28px] sm:min-h-[32px] px-1.5 sm:px-2 py-1 sm:py-1.5 rounded
         border-2 transition-colors duration-150
         ${isOver ? "border-solid border-orange-400 dark:border-orange-500 bg-orange-200/70 dark:bg-orange-800/50" : "border-dashed border-orange-300 dark:border-orange-600 bg-orange-100/50 dark:bg-orange-900/30"}
         ${feedbackState === "correct" ? "ring-2 ring-green-500 bg-green-100 dark:bg-green-900/50" : ""}
@@ -82,7 +82,7 @@ function OperatingExpenseDropZone({
         scale: feedbackState ? { duration: 0.3, times: [0, 0.3, 0.6, 1] } : { type: "spring", stiffness: 400, damping: 25 },
       }}
     >
-      <span className="text-xs font-medium text-orange-600 dark:text-orange-400">
+      <span className="text-[10px] sm:text-xs font-medium text-orange-600 dark:text-orange-400">
         経費
       </span>
     </motion.div>
@@ -102,16 +102,16 @@ function ExpenseDropZone({
 }) {
   return (
     <div
-      className="relative flex flex-col rounded-lg border-2 border-dashed border-orange-300 dark:border-orange-700 bg-orange-50/30 dark:bg-orange-950/20"
+      className="relative flex flex-col rounded sm:rounded-lg border-2 border-dashed border-orange-300 dark:border-orange-700 bg-orange-50/30 dark:bg-orange-950/20"
       data-testid="drop-zone-expense-wrapper"
     >
-      <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2 bg-background">
-        <span className="text-xs font-bold text-orange-700 dark:text-orange-300">
+      <div className="absolute -top-2 sm:-top-2.5 left-1/2 -translate-x-1/2 px-1.5 sm:px-2 bg-background">
+        <span className="text-[10px] sm:text-xs font-bold text-orange-700 dark:text-orange-300">
           費用
         </span>
       </div>
       
-      <div className="flex flex-col gap-1.5 p-2 pt-3">
+      <div className="flex flex-col gap-1 sm:gap-1.5 p-1.5 sm:p-2 pt-2.5 sm:pt-3">
         <CostDropZone
           isOver={costIsOver}
           feedbackState={costFeedbackState}
@@ -263,9 +263,9 @@ export default function Game() {
         </div>
       </header>
 
-      <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-4 flex flex-col gap-4">
-        <section className="text-center py-2">
-          <p className="text-base font-medium text-foreground">
+      <main className="flex-1 max-w-2xl mx-auto w-full px-2 sm:px-4 py-2 sm:py-4 flex flex-col gap-2 sm:gap-4">
+        <section className="text-center py-1 sm:py-2">
+          <p className="text-sm sm:text-base font-medium text-foreground">
             次の科目を5要素に分類せよ
           </p>
         </section>
@@ -278,19 +278,19 @@ export default function Game() {
           onDragEnd={handleDragEnd}
         >
           {/* P/L と B/S の2カラムレイアウト */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-2 sm:gap-4">
             {/* P/L カラム（左） */}
-            <div className="border-2 border-dashed border-purple-300 dark:border-purple-700 rounded-xl p-3 bg-purple-50/30 dark:bg-purple-950/20">
-              <div className="text-center mb-3">
-                <span className="text-sm font-bold text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-900/50 px-3 py-1 rounded-full">
+            <div className="border-2 border-dashed border-purple-300 dark:border-purple-700 rounded-lg sm:rounded-xl p-2 sm:p-3 bg-purple-50/30 dark:bg-purple-950/20">
+              <div className="text-center mb-2 sm:mb-3">
+                <span className="text-[10px] sm:text-sm font-bold text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-900/50 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
                   P/L（損益計算書）
                 </span>
-                <div className="flex justify-between text-[10px] text-muted-foreground mt-2 px-1">
+                <div className="flex justify-between text-[8px] sm:text-[10px] text-muted-foreground mt-1 sm:mt-2 px-1">
                   <span>借方</span>
                   <span>貸方</span>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-1 sm:gap-2">
                 {/* 費用（借方・左）- 原価と経費のサブボックス */}
                 <ExpenseDropZone
                   costIsOver={overId === "cost"}
@@ -308,17 +308,17 @@ export default function Game() {
             </div>
 
             {/* B/S カラム（右） */}
-            <div className="border-2 border-dashed border-blue-300 dark:border-blue-700 rounded-xl p-3 bg-blue-50/30 dark:bg-blue-950/20">
-              <div className="text-center mb-3">
-                <span className="text-sm font-bold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/50 px-3 py-1 rounded-full">
+            <div className="border-2 border-dashed border-blue-300 dark:border-blue-700 rounded-lg sm:rounded-xl p-2 sm:p-3 bg-blue-50/30 dark:bg-blue-950/20">
+              <div className="text-center mb-2 sm:mb-3">
+                <span className="text-[10px] sm:text-sm font-bold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/50 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
                   B/S（貸借対照表）
                 </span>
-                <div className="flex justify-between text-[10px] text-muted-foreground mt-2 px-1">
+                <div className="flex justify-between text-[8px] sm:text-[10px] text-muted-foreground mt-1 sm:mt-2 px-1">
                   <span>借方</span>
                   <span>貸方</span>
                 </div>
               </div>
-              <div className="grid grid-cols-2 grid-rows-2 gap-2">
+              <div className="grid grid-cols-2 grid-rows-2 gap-1 sm:gap-2">
                 {/* 資産（借方・左）- 縦に2行分を占める */}
                 <div className="row-span-2">
                   <DroppableCategory
@@ -344,11 +344,11 @@ export default function Game() {
             </div>
           </div>
 
-          <section className="mt-auto pt-4 border-t border-border">
-            <p className="text-sm text-muted-foreground mb-3 text-center">
+          <section className="mt-auto pt-2 sm:pt-4 border-t border-border">
+            <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3 text-center">
               カードをドラッグして分類枠にドロップ
             </p>
-            <div className="flex flex-wrap gap-2 justify-center">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center">
               <AnimatePresence mode="popLayout">
                 {remainingCards.map((account) => (
                   <DraggableCard
