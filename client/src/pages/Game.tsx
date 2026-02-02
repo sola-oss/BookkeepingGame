@@ -27,8 +27,8 @@ function CostDropZone({
       ref={setNodeRef}
       data-testid="drop-zone-cost"
       className={`
-        flex items-center justify-center
-        min-h-[28px] sm:min-h-[32px] px-1.5 sm:px-2 py-1 sm:py-1.5 rounded
+        flex items-center justify-center h-full
+        px-1.5 sm:px-2 py-1 sm:py-1.5 rounded
         border-2 transition-colors duration-150
         ${isOver ? "border-solid border-orange-400 dark:border-orange-500 bg-orange-200/70 dark:bg-orange-800/50" : "border-dashed border-orange-300 dark:border-orange-600 bg-orange-100/50 dark:bg-orange-900/30"}
         ${feedbackState === "correct" ? "ring-2 ring-green-500 bg-green-100 dark:bg-green-900/50" : ""}
@@ -66,8 +66,8 @@ function OperatingExpenseDropZone({
       ref={setNodeRef}
       data-testid="drop-zone-operating-expense"
       className={`
-        flex items-center justify-center
-        min-h-[28px] sm:min-h-[32px] px-1.5 sm:px-2 py-1 sm:py-1.5 rounded
+        flex items-center justify-center h-full
+        px-1.5 sm:px-2 py-1 sm:py-1.5 rounded
         border-2 transition-colors duration-150
         ${isOver ? "border-solid border-orange-400 dark:border-orange-500 bg-orange-200/70 dark:bg-orange-800/50" : "border-dashed border-orange-300 dark:border-orange-600 bg-orange-100/50 dark:bg-orange-900/30"}
         ${feedbackState === "correct" ? "ring-2 ring-green-500 bg-green-100 dark:bg-green-900/50" : ""}
@@ -111,7 +111,7 @@ function ExpenseDropZone({
         </span>
       </div>
       
-      <div className="flex flex-col gap-1 sm:gap-1.5 p-1.5 sm:p-2 pt-2.5 sm:pt-3 flex-1 justify-center">
+      <div className="grid grid-rows-2 gap-1 sm:gap-1.5 p-1.5 sm:p-2 pt-2.5 sm:pt-3 flex-1">
         <CostDropZone
           isOver={costIsOver}
           feedbackState={costFeedbackState}
@@ -290,21 +290,25 @@ export default function Game() {
                   <span>貸方</span>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-1 sm:gap-2 flex-1">
-                {/* 費用（借方・左）- 原価と経費のサブボックス */}
-                <ExpenseDropZone
-                  costIsOver={overId === "cost"}
-                  operatingExpenseIsOver={overId === "operating_expense"}
-                  costFeedbackState={categoryFeedback.cost}
-                  operatingExpenseFeedbackState={categoryFeedback.operating_expense}
-                />
-                {/* 収益（貸方・右） */}
-                <DroppableCategory
-                  category="revenue"
-                  isOver={overId === "revenue"}
-                  feedbackState={categoryFeedback.revenue}
-                  className="h-full"
-                />
+              <div className="grid grid-cols-5 gap-1 sm:gap-2 flex-1">
+                {/* 費用（借方・左）- 原価と経費のサブボックス - 2/5幅 */}
+                <div className="col-span-2">
+                  <ExpenseDropZone
+                    costIsOver={overId === "cost"}
+                    operatingExpenseIsOver={overId === "operating_expense"}
+                    costFeedbackState={categoryFeedback.cost}
+                    operatingExpenseFeedbackState={categoryFeedback.operating_expense}
+                  />
+                </div>
+                {/* 収益（貸方・右）- 3/5幅 */}
+                <div className="col-span-3">
+                  <DroppableCategory
+                    category="revenue"
+                    isOver={overId === "revenue"}
+                    feedbackState={categoryFeedback.revenue}
+                    className="h-full"
+                  />
+                </div>
               </div>
             </div>
 
