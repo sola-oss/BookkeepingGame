@@ -100,15 +100,17 @@ function ExpenseDropZone({
   operatingExpenseIsOver,
   costFeedbackState,
   operatingExpenseFeedbackState,
+  className = "",
 }: {
   costIsOver: boolean;
   operatingExpenseIsOver: boolean;
   costFeedbackState: "correct" | "wrong" | null;
   operatingExpenseFeedbackState: "correct" | "wrong" | null;
+  className?: string;
 }) {
   return (
     <div
-      className="relative flex flex-col rounded sm:rounded-lg border-2 border-dashed border-orange-300 dark:border-orange-700 bg-orange-50/30 dark:bg-orange-950/20 h-full"
+      className={`relative flex flex-col rounded sm:rounded-lg border-2 border-dashed border-orange-300 dark:border-orange-700 bg-orange-50/30 dark:bg-orange-950/20 w-full ${className}`}
       data-testid="drop-zone-expense-wrapper"
     >
       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[60%] px-1 sm:px-1.5 z-10">
@@ -299,19 +301,23 @@ export default function Game() {
                   <span>貸方</span>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-1 sm:gap-2 flex-1 items-stretch">
-                {/* 費用（借方・左）- 原価と経費のサブボックス */}
-                <ExpenseDropZone
-                  costIsOver={overId === "cost"}
-                  operatingExpenseIsOver={overId === "operating_expense"}
-                  costFeedbackState={categoryFeedback.cost}
-                  operatingExpenseFeedbackState={categoryFeedback.operating_expense}
-                />
+              <div className="grid grid-cols-2 gap-1 sm:gap-2 flex-1 items-start">
+                {/* 費用（借方・左）- 原価と経費のサブボックス（収益の2/3の高さ） */}
+                <div className="h-full flex items-start">
+                  <ExpenseDropZone
+                    costIsOver={overId === "cost"}
+                    operatingExpenseIsOver={overId === "operating_expense"}
+                    costFeedbackState={categoryFeedback.cost}
+                    operatingExpenseFeedbackState={categoryFeedback.operating_expense}
+                    className="h-2/3"
+                  />
+                </div>
                 {/* 収益（貸方・右） */}
                 <DroppableCategory
                   category="revenue"
                   isOver={overId === "revenue"}
                   feedbackState={categoryFeedback.revenue}
+                  className="h-full"
                 />
               </div>
             </div>
