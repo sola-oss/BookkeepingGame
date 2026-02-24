@@ -1,66 +1,170 @@
-import { useState, useMemo, useEffect } from "react";
-import { useLocation, useSearch } from "wouter";
-import { motion } from "framer-motion";
+import { useState, useMemo } from "react";
+import { useLocation } from "wouter";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowLeft, 
   Search, 
   BookOpen, 
-  Info,
-  HelpCircle,
-  Tag,
-  CheckCircle2
+  ChevronDown,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogHeader, 
-  DialogTitle, 
-  DialogDescription,
-} from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { FlowDiagram } from "@/components/game/FlowDiagram";
-import { NetIncomeBridgeCard } from "@/components/game/NetIncomeBridgeCard";
-import { NetIncomeModal } from "@/components/game/NetIncomeModal";
-import { textbookPages, searchTextbookPages, getTextbookPageByTopicTag } from "@/data/textbookPages";
-import type { TextbookPage } from "@shared/schema";
+import { textbookChapters, searchTextbookChapters } from "@/data/textbookPages";
+import type { TextbookChapter, TextbookSection } from "@shared/schema";
+
+import BookkeepingFlowDiagram from "@/components/textbook/BookkeepingFlowDiagram";
+import BSPLRelationDiagram from "@/components/textbook/BSPLRelationDiagram";
+import FiveElementsDiagram from "@/components/textbook/FiveElementsDiagram";
+import TAccountDiagram from "@/components/textbook/TAccountDiagram";
+import RydeenFinancialDiagram from "@/components/textbook/RydeenFinancialDiagram";
+import Rydea2Diagram from "@/components/textbook/Rydea2Diagram";
+import BusinessFlowDiagram from "@/components/textbook/BusinessFlowDiagram";
+
+const diagramComponents: Record<string, () => JSX.Element> = {
+  "bookkeeping-flow": BookkeepingFlowDiagram,
+  "bs-pl-relation": BSPLRelationDiagram,
+  "five-elements": FiveElementsDiagram,
+  "t-account": TAccountDiagram,
+  "rydeen-financial": RydeenFinancialDiagram,
+  "rydea2": Rydea2Diagram,
+  "business-flow": BusinessFlowDiagram,
+};
+
+const chapterColors: Record<string, { bg: string; border: string; text: string; accent: string }> = {
+  "ch1": { bg: "bg-blue-50 dark:bg-blue-950/30", border: "border-blue-200 dark:border-blue-800", text: "text-blue-700 dark:text-blue-300", accent: "bg-blue-500" },
+  "ch2": { bg: "bg-emerald-50 dark:bg-emerald-950/30", border: "border-emerald-200 dark:border-emerald-800", text: "text-emerald-700 dark:text-emerald-300", accent: "bg-emerald-500" },
+  "ch3": { bg: "bg-purple-50 dark:bg-purple-950/30", border: "border-purple-200 dark:border-purple-800", text: "text-purple-700 dark:text-purple-300", accent: "bg-purple-500" },
+  "ch_special": { bg: "bg-amber-50 dark:bg-amber-950/30", border: "border-amber-200 dark:border-amber-800", text: "text-amber-700 dark:text-amber-300", accent: "bg-amber-500" },
+};
+
+function SectionContent({ section }: { section: TextbookSection }) {
+  const DiagramComponent = section.diagramId ? diagramComponents[section.diagramId] : null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.3 }}
+      className="overflow-hidden"
+    >
+      <div className="pl-4 sm:pl-6 pr-2 sm:pr-4 pb-4 space-y-3">
+        <div className="space-y-2">
+          {section.content.map((line, i) => (
+            <p key={i} className="text-sm text-muted-foreground leading-relaxed">
+              {line}
+            </p>
+          ))}
+        </div>
+
+        {DiagramComponent && (
+          <Card className="border-dashed overflow-hidden">
+            <CardContent className="p-0">
+              <DiagramComponent />
+            </CardContent>
+          </Card>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
+function ChapterCard({ chapter }: { chapter: TextbookChapter }) {
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
+
+  const toggleSection = (sectionId: string) => {
+    setExpandedSections(prev => {
+      const next = new Set(prev);
+      if (next.has(sectionId)) {
+        next.delete(sectionId);
+      } else {
+        next.add(sectionId);
+      }
+      return next;
+    });
+  };
+
+  const expandAll = () => {
+    setExpandedSections(new Set(chapter.sections.map(s => s.id)));
+  };
+
+  const collapseAll = () => {
+    setExpandedSections(new Set());
+  };
+
+  const allExpanded = chapter.sections.every(s => expandedSections.has(s.id));
+  const colors = chapterColors[chapter.id] || chapterColors["ch1"];
+
+  return (
+    <Card className={`border ${colors.border} overflow-hidden`} data-testid={`chapter-${chapter.id}`}>
+      <div className={`${colors.bg} px-4 sm:px-6 py-4 border-b ${colors.border}`}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className={`w-8 h-8 rounded-full ${colors.accent} flex items-center justify-center`}>
+              <span className="text-white font-bold text-sm">{chapter.number}</span>
+            </div>
+            <h2 className={`text-lg font-bold ${colors.text}`}>{chapter.title}</h2>
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-xs text-muted-foreground"
+            onClick={allExpanded ? collapseAll : expandAll}
+            data-testid={`toggle-all-${chapter.id}`}
+          >
+            {allExpanded ? "すべて閉じる" : "すべて開く"}
+          </Button>
+        </div>
+      </div>
+
+      <div className="divide-y divide-border">
+        {chapter.sections.map((section, idx) => {
+          const isExpanded = expandedSections.has(section.id);
+          return (
+            <div key={section.id} data-testid={`section-${section.id}`}>
+              <button
+                className="w-full flex items-center gap-3 px-4 sm:px-6 py-3 hover:bg-muted/50 transition-colors text-left"
+                onClick={() => toggleSection(section.id)}
+                data-testid={`section-toggle-${section.id}`}
+              >
+                <span className="text-xs text-muted-foreground font-mono w-5 flex-shrink-0">
+                  {idx + 1}.
+                </span>
+                {isExpanded ? (
+                  <ChevronDown className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                ) : (
+                  <ChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                )}
+                <span className="text-sm font-medium text-foreground">{section.title}</span>
+                {section.diagramId && (
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground flex-shrink-0">
+                    図あり
+                  </span>
+                )}
+              </button>
+              <AnimatePresence>
+                {isExpanded && <SectionContent section={section} />}
+              </AnimatePresence>
+            </div>
+          );
+        })}
+      </div>
+    </Card>
+  );
+}
 
 export default function TextbookList() {
   const [, navigate] = useLocation();
-  const search = useSearch();
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedPage, setSelectedPage] = useState<TextbookPage | null>(null);
-  const [showQuizAnswer, setShowQuizAnswer] = useState(false);
-  const [isNetIncomeModalOpen, setIsNetIncomeModalOpen] = useState(false);
 
-  const filteredPages = useMemo(() => searchTextbookPages(searchQuery), [searchQuery]);
-
-  useEffect(() => {
-    const params = new URLSearchParams(search);
-    const id = params.get("id");
-    const topic = params.get("topic");
-    if (id) {
-      const page = textbookPages.find(p => p.id === id);
-      if (page) setSelectedPage(page);
-    } else if (topic) {
-      const page = getTextbookPageByTopicTag(topic);
-      if (page) setSelectedPage(page);
-    }
-  }, [search]);
-
-  const handlePageClick = (page: TextbookPage) => {
-    setSelectedPage(page);
-    setShowQuizAnswer(false);
-  };
+  const filteredChapters = useMemo(() => searchTextbookChapters(searchQuery), [searchQuery]);
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
-        <div className="max-w-2xl mx-auto px-4 py-4">
+        <div className="max-w-3xl mx-auto px-4 py-4">
           <div className="flex items-center gap-3 mb-4">
             <Button
               variant="ghost"
@@ -72,7 +176,7 @@ export default function TextbookList() {
             </Button>
             <div className="flex items-center gap-2">
               <BookOpen className="w-5 h-5 text-primary" />
-              <h1 className="text-xl font-bold text-foreground">簿記教科書</h1>
+              <h1 className="text-xl font-bold text-foreground">カイケイと簿記の教科書</h1>
             </div>
           </div>
           <div className="relative">
@@ -82,218 +186,30 @@ export default function TextbookList() {
               className="pl-10"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              data-testid="input-search"
             />
           </div>
         </div>
       </header>
 
-      <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-6 space-y-8 pb-20">
-        <section className="space-y-4">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="h-6 w-1 bg-primary rounded-full" />
-            <h2 className="text-lg font-bold">簿記の一連の流れ</h2>
+      <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-6 space-y-6 pb-20">
+        {filteredChapters.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">該当するトピックが見つかりませんでした。</p>
           </div>
-          
-          <FlowDiagram onNavigate={navigate} />
-          
-          <NetIncomeBridgeCard onClick={() => setIsNetIncomeModalOpen(true)} />
-          
-          <NetIncomeModal 
-            isOpen={isNetIncomeModalOpen} 
-            onClose={() => setIsNetIncomeModalOpen(false)}
-            onAction={() => {
-              setIsNetIncomeModalOpen(false);
-              navigate("/journal");
-            }}
-          />
-        </section>
-
-        <section className="space-y-4">
-          <div className="flex items-center justify-between gap-2 mb-2">
-            <div className="flex items-center gap-2">
-              <div className="h-6 w-1 bg-primary rounded-full" />
-              <h2 className="text-lg font-bold">主要トピック解説</h2>
-            </div>
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="text-xs text-primary underline-offset-4 hover:underline"
-              onClick={() => navigate("/weakpoints")}
+        ) : (
+          filteredChapters.map((chapter, index) => (
+            <motion.div
+              key={chapter.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * index }}
             >
-              間違えやすい仕訳は弱点帳へ ➔
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {filteredPages.map((page, index) => (
-              <motion.div
-                key={page.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.05 * index }}
-              >
-                <Card 
-                  className="hover-elevate cursor-pointer h-full border-card-border"
-                  onClick={() => handlePageClick(page)}
-                >
-                  <CardHeader className="p-4 pb-2">
-                    <CardTitle className="text-base text-foreground">{page.title}</CardTitle>
-                    <p className="text-xs text-muted-foreground">{page.subtitle}</p>
-                  </CardHeader>
-                  <CardContent className="p-4 pt-0">
-                    <div className="flex flex-wrap gap-1 mt-2">
-                      {page.keywords.slice(0, 3).map(kw => (
-                        <Badge key={kw} variant="secondary" className="text-[10px] px-1 py-0 h-4">
-                          {kw}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </section>
+              <ChapterCard chapter={chapter} />
+            </motion.div>
+          ))
+        )}
       </main>
-
-      <Dialog open={!!selectedPage} onOpenChange={(open) => !open && setSelectedPage(null)}>
-        <DialogContent className="max-w-lg max-h-[90vh] p-0 flex flex-col">
-          {selectedPage && (
-            <>
-              <DialogHeader className="p-6 pb-2 border-b">
-                <DialogTitle className="text-xl">{selectedPage.title}</DialogTitle>
-                <DialogDescription>{selectedPage.subtitle}</DialogDescription>
-              </DialogHeader>
-              
-              <ScrollArea className="flex-1 p-6">
-                <div className="space-y-6">
-                  <section>
-                    <h3 className="font-bold text-sm mb-2 flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                      ポイントまとめ
-                    </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed bg-muted/30 p-3 rounded-md border border-border">
-                      {selectedPage.summary}
-                    </p>
-                  </section>
-
-                  <Separator />
-
-                  <section>
-                    <h3 className="font-bold text-sm mb-3 flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                      よくある取引パターン
-                    </h3>
-                    <div className="space-y-3">
-                      {selectedPage.transactionPatterns.map((ptn, idx) => (
-                        <div key={idx} className="border rounded-md p-3 space-y-2 bg-card">
-                          <p className="text-xs font-bold text-foreground">【{ptn.scenario}】</p>
-                          <p className="text-sm font-mono font-bold text-primary p-2 bg-primary/5 rounded">
-                            {ptn.journalEntry}
-                          </p>
-                          <p className="text-[11px] text-muted-foreground italic">
-                            💡 {ptn.explanation}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-
-                  <Separator />
-
-                  <section>
-                    <div className="flex items-center gap-2 mb-3">
-                      <CheckCircle2 className="w-4 h-4 text-green-500" />
-                      <h3 className="font-semibold text-foreground text-sm">見分けチェック</h3>
-                    </div>
-                    <div className="space-y-2">
-                      {selectedPage.checklist.map((item, idx) => (
-                        <div key={idx} className="flex items-center justify-between gap-2 py-2 px-3 bg-muted/30 rounded-md">
-                          <span className="text-sm text-foreground">{item.question}</span>
-                          <Badge variant={item.answer === "yes" ? "default" : "secondary"}>
-                            {item.answer === "yes" ? "Yes" : "No"}
-                          </Badge>
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-
-                  <Separator />
-
-                  <section className="bg-amber-50 dark:bg-amber-950/20 p-4 rounded-lg border border-amber-200 dark:border-amber-900">
-                    <h3 className="font-bold text-sm mb-2 text-amber-800 dark:text-amber-400 flex items-center gap-2">
-                      <div className="w-4 h-4 flex items-center justify-center">
-                        <Info className="w-4 h-4" />
-                      </div>
-                      見分け・注意ポイント
-                    </h3>
-                    <p className="text-xs text-amber-700 dark:text-amber-500 mb-3 leading-relaxed">
-                      この論点の「間違えやすいポイント」は弱点帳の「間違えやすい仕訳」タブでも詳しく確認できます。
-                    </p>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="w-full text-xs bg-background"
-                      onClick={() => {
-                        setSelectedPage(null);
-                        navigate("/weakpoints");
-                      }}
-                    >
-                      弱点帳の注意点を見る ➔
-                    </Button>
-                  </section>
-
-                  <Separator />
-
-                  <section>
-                    <div className="flex items-center gap-2 mb-3">
-                      <HelpCircle className="w-4 h-4 text-primary" />
-                      <h3 className="font-semibold text-foreground text-sm">ミニ問題</h3>
-                    </div>
-                    <Card className="bg-primary/5 border-primary/20">
-                      <CardContent className="py-4 space-y-3">
-                        <p className="text-sm text-foreground font-medium">
-                          Q: {selectedPage.miniQuiz.question}
-                        </p>
-                        
-                        {!showQuizAnswer ? (
-                          <Button 
-                            size="sm" 
-                            onClick={() => setShowQuizAnswer(true)}
-                          >
-                            答えを見る
-                          </Button>
-                        ) : (
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="space-y-2"
-                          >
-                            <div className="flex items-center gap-2">
-                              <Badge variant="default">A</Badge>
-                              <span className="font-bold text-foreground">{selectedPage.miniQuiz.answer}</span>
-                            </div>
-                            <p className="text-xs text-muted-foreground">{selectedPage.miniQuiz.explanation}</p>
-                          </motion.div>
-                        )}
-                      </CardContent>
-                    </Card>
-                  </section>
-
-                  <div className="flex flex-wrap gap-1 pt-2">
-                    {selectedPage.keywords.map((keyword, idx) => (
-                      <Badge key={idx} variant="outline" className="text-xs">
-                        <Tag className="w-3 h-3 mr-1" />
-                        {keyword}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </ScrollArea>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

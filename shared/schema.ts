@@ -164,6 +164,25 @@ export const miniQuizSchema = z.object({
 
 export type MiniQuiz = z.infer<typeof miniQuizSchema>;
 
+export const textbookSectionSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  content: z.array(z.string()),
+  diagramId: z.string().optional(),
+  topicTags: z.array(z.string()).optional(),
+});
+
+export type TextbookSection = z.infer<typeof textbookSectionSchema>;
+
+export const textbookChapterSchema = z.object({
+  id: z.string(),
+  number: z.string(),
+  title: z.string(),
+  sections: z.array(textbookSectionSchema),
+});
+
+export type TextbookChapter = z.infer<typeof textbookChapterSchema>;
+
 export const textbookPageSchema = z.object({
   id: z.string(),
   title: z.string(),
