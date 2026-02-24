@@ -12,10 +12,8 @@ interface TAccountData {
 }
 
 function TAccount({ account }: { account: TAccountData }) {
-  const isLarge = account.large;
-
   return (
-    <div className={`${isLarge ? "col-span-full md:col-span-1" : ""}`}>
+    <div className={account.large ? "col-span-full md:col-span-1" : ""}>
       <div className="border-2 border-slate-400 dark:border-slate-500 rounded-md overflow-hidden">
         <div className="bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-400 dark:border-slate-500 py-1.5 text-center">
           <span className="font-bold text-sm text-foreground">{account.name}</span>
@@ -51,34 +49,34 @@ export default function TAccountDiagram() {
     {
       name: "現金",
       debit: [
-        { label: "\u2460資本金", amount: "10,000" },
-        { label: "\u2461借入金", amount: "20,000" },
-        { label: "\u2464売上", amount: "24,000" },
+        { label: "①資本金", amount: "10,000" },
+        { label: "②借入金", amount: "20,000" },
+        { label: "⑤売上", amount: "24,000" },
       ],
       credit: [
-        { label: "\u2462備品", amount: "6,000" },
-        { label: "\u2463仕入", amount: "18,000" },
-        { label: "\u2465借入金", amount: "7,000" },
-        { label: "\u2466給料", amount: "3,000" },
+        { label: "③備品", amount: "6,000" },
+        { label: "④仕入", amount: "18,000" },
+        { label: "⑥借入金", amount: "7,000" },
+        { label: "⑦給料", amount: "3,000" },
       ],
-      summary: "54,000円増えて、34,000円減った \u2192 残高 20,000円",
+      summary: "現金が・54,000円増えて・34,000円減った →残高 20,000円",
       large: true,
     },
     {
       name: "借入金",
       debit: [
-        { label: "\u2465現金", amount: "7,000" },
+        { label: "⑥現金", amount: "7,000" },
       ],
       credit: [
-        { label: "\u2461現金", amount: "20,000" },
+        { label: "②現金", amount: "20,000" },
       ],
-      summary: "20,000円増えて、7,000円減った \u2192 残高 13,000円",
+      summary: "借金が・20,000円増えて・7,000円減った →残高 13,000円",
       large: true,
     },
     {
       name: "備品",
       debit: [
-        { label: "\u2462現金", amount: "6,000" },
+        { label: "③現金", amount: "6,000" },
       ],
       credit: [],
     },
@@ -86,13 +84,13 @@ export default function TAccountDiagram() {
       name: "資本金",
       debit: [],
       credit: [
-        { label: "\u2460現金", amount: "10,000" },
+        { label: "①現金", amount: "10,000" },
       ],
     },
     {
       name: "仕入",
       debit: [
-        { label: "\u2463現金", amount: "18,000" },
+        { label: "④現金", amount: "18,000" },
       ],
       credit: [],
     },
@@ -100,13 +98,13 @@ export default function TAccountDiagram() {
       name: "売上",
       debit: [],
       credit: [
-        { label: "\u2464現金", amount: "24,000" },
+        { label: "⑤現金", amount: "24,000" },
       ],
     },
     {
       name: "給料",
       debit: [
-        { label: "\u2466現金", amount: "3,000" },
+        { label: "⑦現金", amount: "3,000" },
       ],
       credit: [],
     },
@@ -114,7 +112,8 @@ export default function TAccountDiagram() {
 
   return (
     <div className="w-full p-4 md:p-6 space-y-4" data-testid="t-account-diagram">
-      <h3 className="text-lg font-bold text-foreground text-center">T字勘定（勘定記入）</h3>
+      <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-t-account-title">元帳に転記される例</h3>
+      <p className="text-xs text-muted-foreground text-center">勘定科目ごとに転記してゆく（T字勘定）</p>
 
       <div className="bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-lg p-3 text-center">
         <p className="text-xs md:text-sm text-amber-800 dark:text-amber-200">

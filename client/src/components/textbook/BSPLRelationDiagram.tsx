@@ -1,71 +1,61 @@
 export default function BSPLRelationDiagram() {
-  const plValues = [
-    { value: "+5", color: "bg-emerald-400 dark:bg-emerald-600" },
-    { value: "-3", color: "bg-red-400 dark:bg-red-600" },
-    { value: "+1", color: "bg-emerald-400 dark:bg-emerald-600" },
-  ];
-
+  const plValues = ["+5", "-3", "+1"];
   const bsValues = [5, 10, 7, 9];
   const maxBS = 12;
   const periods = ["期首", "第1期末", "第2期末", "第3期末"];
 
   return (
-    <div className="w-full p-4 md:p-6 space-y-6" data-testid="bspl-relation-diagram">
-      <h3 className="text-lg font-bold text-foreground text-center">BS（貸借対照表）とPL（損益計算書）の関係</h3>
-      <p className="text-sm text-muted-foreground text-center">PLで出た当期純利益は、最終的にBSの純資産（利益剰余金）に累積されていく</p>
+    <div className="w-full p-4 md:p-6 space-y-4" data-testid="bspl-relation-diagram">
+      <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-bspl-title">BS（貸借対照表）とPL（損益計算書）の関係</h3>
+      <p className="text-sm text-muted-foreground text-center">
+        PLで出た当期純利益は、最終的にBSの純資産（利益剰余金）に累積されていく
+      </p>
 
       <div className="overflow-x-auto">
-        <div className="min-w-[400px] space-y-2 px-2">
-          <div className="flex items-end justify-center gap-4 md:gap-8">
-            <div className="flex flex-col items-center gap-1 w-16">
-              <span className="text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900 px-2 py-0.5 rounded">フロー</span>
-              <span className="text-[10px] text-muted-foreground">PL</span>
-            </div>
-
-            {plValues.map((pl, i) => (
-              <div key={i} className="flex flex-col items-center gap-1">
-                <span className={`text-sm font-bold px-2 py-1 rounded text-white ${pl.color}`}>
-                  {pl.value}
-                </span>
-                <div className="flex items-center gap-1">
-                  <div className="w-8 h-0.5 bg-emerald-400 dark:bg-emerald-600" />
-                  <span className="text-[10px] text-muted-foreground">PL</span>
-                </div>
+        <div className="min-w-[440px] px-4">
+          <div className="flex items-end gap-0">
+            <div className="flex flex-col items-end gap-1 mr-2 pb-6">
+              <div className="flex items-center gap-1 mb-1">
+                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900 px-2 py-0.5 rounded whitespace-nowrap">フロー</span>
               </div>
-            ))}
-          </div>
-
-          <div className="flex items-end justify-center gap-4 md:gap-8 pt-2">
-            <div className="flex flex-col items-center gap-1 w-16">
-              <span className="text-xs font-bold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900 px-2 py-0.5 rounded">ストック</span>
-              <span className="text-[10px] text-muted-foreground">BS</span>
+              <div className="h-[1px]" />
+              <div className="flex items-center gap-1">
+                <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900 px-2 py-0.5 rounded whitespace-nowrap">ストック</span>
+              </div>
             </div>
 
-            {bsValues.map((val, i) => {
-              const height = (val / maxBS) * 100;
+            {bsValues.map((bsVal, i) => {
+              const barHeight = (bsVal / maxBS) * 120;
+              const showPL = i > 0;
+              const plVal = showPL ? plValues[i - 1] : null;
+              const isPositive = plVal ? plVal.startsWith("+") : false;
+
               return (
-                <div key={i} className="flex flex-col items-center gap-1">
-                  <span className="text-xs font-bold text-blue-800 dark:text-blue-200">{val}</span>
-                  <div className="w-14 md:w-16 relative" style={{ height: `${Math.max(height, 20)}px` }}>
+                <div key={i} className="flex flex-col items-center flex-1">
+                  {showPL && (
+                    <div className="mb-1">
+                      <div className={`px-2 py-1 rounded text-xs font-bold text-white ${isPositive ? "bg-emerald-500" : "bg-red-500"}`}>
+                        {plVal}
+                      </div>
+                      <div className="text-center text-[9px] text-muted-foreground mt-0.5">PL</div>
+                    </div>
+                  )}
+                  {!showPL && <div className="h-[42px]" />}
+
+                  <div className="w-14 md:w-16 flex flex-col items-center">
+                    <span className="text-xs font-bold text-blue-800 dark:text-blue-200 mb-1">{bsVal}</span>
                     <div
-                      className="absolute bottom-0 w-full bg-blue-200 dark:bg-blue-800 border border-blue-300 dark:border-blue-700 rounded-t-md flex items-center justify-center"
-                      style={{ height: "100%" }}
+                      className="w-full bg-blue-200 dark:bg-blue-800 border border-blue-300 dark:border-blue-700 rounded-t-md flex items-center justify-center"
+                      style={{ height: `${barHeight}px` }}
                     >
                       <span className="text-[10px] font-medium text-blue-700 dark:text-blue-300">BS</span>
                     </div>
                   </div>
+
                   <span className="text-[10px] text-muted-foreground mt-1">{periods[i]}</span>
                 </div>
               );
             })}
-          </div>
-
-          <div className="flex justify-center pt-2">
-            <div className="flex items-center gap-1 text-muted-foreground">
-              {["→", "→", "→"].map((arrow, i) => (
-                <span key={i} className="text-lg mx-4 md:mx-8">{arrow}</span>
-              ))}
-            </div>
           </div>
         </div>
       </div>

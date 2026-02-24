@@ -1,34 +1,28 @@
 export default function FiveElementsDiagram() {
   return (
     <div className="w-full p-4 md:p-6 space-y-4" data-testid="five-elements-diagram">
-      <h3 className="text-lg font-bold text-foreground text-center">簿記の５要素・・・勘定科目の本籍</h3>
+      <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-five-elements-title">簿記の５要素・・・勘定科目の本籍</h3>
 
       <div className="overflow-x-auto">
-        <div className="min-w-[360px] flex flex-col md:flex-row gap-4 md:gap-6 justify-center items-stretch">
+        <div className="min-w-[380px] flex flex-col md:flex-row gap-4 md:gap-6 justify-center items-stretch">
           <div className="flex-1 max-w-[280px] mx-auto md:mx-0">
             <div className="text-center mb-2">
               <span className="text-sm font-bold text-foreground bg-muted px-3 py-1 rounded">貸借対照表</span>
             </div>
             <div className="border-2 border-slate-300 dark:border-slate-600 rounded-lg overflow-hidden">
               <div className="flex text-center text-[10px] font-bold text-muted-foreground border-b border-slate-300 dark:border-slate-600">
-                <div className="flex-1 py-1 border-r border-slate-300 dark:border-slate-600">借方</div>
-                <div className="flex-1 py-1">貸方</div>
+                <div className="flex-1 py-1 border-r border-slate-300 dark:border-slate-600">（借方）</div>
+                <div className="flex-1 py-1">（貸方）</div>
               </div>
               <div className="flex min-h-[160px]">
                 <div className="flex-1 border-r border-slate-300 dark:border-slate-600 flex items-stretch">
                   <div className="w-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center p-4">
-                    <div className="text-center">
-                      <span className="text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-200">資産</span>
-                      <div className="text-[10px] text-gray-600 dark:text-gray-400 mt-1">Assets</div>
-                    </div>
+                    <span className="text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-200">資産</span>
                   </div>
                 </div>
                 <div className="flex-1 flex flex-col">
                   <div className="flex-1 bg-rose-200 dark:bg-rose-800 flex items-center justify-center p-3 border-b border-slate-300 dark:border-slate-600">
-                    <div className="text-center">
-                      <span className="text-lg md:text-xl font-bold text-rose-800 dark:text-rose-200">負債</span>
-                      <div className="text-[10px] text-rose-600 dark:text-rose-400 mt-0.5">Liabilities</div>
-                    </div>
+                    <span className="text-lg md:text-xl font-bold text-rose-800 dark:text-rose-200">負債</span>
                   </div>
                   <div className="flex-1 bg-blue-200 dark:bg-blue-800 flex items-center justify-center p-3">
                     <div className="text-center">
@@ -47,30 +41,21 @@ export default function FiveElementsDiagram() {
             </div>
             <div className="border-2 border-slate-300 dark:border-slate-600 rounded-lg overflow-hidden">
               <div className="flex text-center text-[10px] font-bold text-muted-foreground border-b border-slate-300 dark:border-slate-600">
-                <div className="flex-1 py-1 border-r border-slate-300 dark:border-slate-600">借方</div>
-                <div className="flex-1 py-1">貸方</div>
+                <div className="flex-1 py-1 border-r border-slate-300 dark:border-slate-600">（借方）</div>
+                <div className="flex-1 py-1">（貸方）</div>
               </div>
               <div className="flex min-h-[160px]">
                 <div className="flex-1 border-r border-slate-300 dark:border-slate-600 flex flex-col">
                   <div className="flex-[2] bg-orange-200 dark:bg-orange-800 flex items-center justify-center p-3 border-b border-slate-300 dark:border-slate-600">
-                    <div className="text-center">
-                      <span className="text-lg md:text-xl font-bold text-orange-800 dark:text-orange-200">費用</span>
-                      <div className="text-[10px] text-orange-600 dark:text-orange-400 mt-0.5">Expenses</div>
-                    </div>
+                    <span className="text-lg md:text-xl font-bold text-orange-800 dark:text-orange-200">費用</span>
                   </div>
                   <div className="flex-1 bg-yellow-200 dark:bg-yellow-800 flex items-center justify-center p-2">
-                    <div className="text-center">
-                      <span className="text-base font-bold text-yellow-800 dark:text-yellow-200">利益</span>
-                      <div className="text-[10px] text-yellow-600 dark:text-yellow-400 mt-0.5">Profit</div>
-                    </div>
+                    <span className="text-base font-bold text-yellow-800 dark:text-yellow-200">利益</span>
                   </div>
                 </div>
                 <div className="flex-1 flex items-stretch">
                   <div className="w-full bg-green-200 dark:bg-green-800 flex items-center justify-center p-4">
-                    <div className="text-center">
-                      <span className="text-xl md:text-2xl font-bold text-green-800 dark:text-green-200">収益</span>
-                      <div className="text-[10px] text-green-600 dark:text-green-400 mt-1">Revenue</div>
-                    </div>
+                    <span className="text-xl md:text-2xl font-bold text-green-800 dark:text-green-200">収益</span>
                   </div>
                 </div>
               </div>

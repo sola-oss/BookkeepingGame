@@ -1,107 +1,438 @@
-export default function RydeenFinancialDiagram() {
+import { useState } from "react";
+
+type ViewMode = "standard" | "rydeen" | "graph";
+
+function ViewTabs({ active, onChange, labels }: { active: ViewMode; onChange: (v: ViewMode) => void; labels: Record<ViewMode, string> }) {
   return (
-    <div className="w-full p-4 md:p-6 space-y-6" data-testid="rydeen-financial-diagram">
-      <h3 className="text-lg font-bold text-foreground text-center">RYDEEN式決算書</h3>
+    <div className="flex border-b border-slate-200 dark:border-slate-700 mb-3">
+      {(["standard", "rydeen", "graph"] as ViewMode[]).map((id) => (
+        <button
+          key={id}
+          onClick={() => onChange(id)}
+          className={`flex-1 px-2 py-1.5 text-[11px] md:text-xs font-bold transition-colors ${
+            active === id
+              ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-950/50"
+              : "text-muted-foreground"
+          }`}
+          data-testid={`tab-${id}`}
+          aria-selected={active === id}
+        >
+          {labels[id]}
+        </button>
+      ))}
+    </div>
+  );
+}
 
-      <div className="space-y-6">
-        <div>
-          <h4 className="text-sm font-bold text-foreground mb-3 text-center">貸借対照表（BS）</h4>
-          <div className="overflow-x-auto">
-            <div className="min-w-[360px] flex gap-1">
-              <div className="flex-1 space-y-1">
-                <div className="text-[10px] text-center text-muted-foreground font-bold mb-1">資産</div>
-                <div className="bg-sky-100 dark:bg-sky-900 border border-sky-300 dark:border-sky-700 rounded-md p-3 text-center">
-                  <span className="text-xs font-bold text-sky-800 dark:text-sky-200">運転資金資産</span>
-                  <div className="text-[10px] text-sky-600 dark:text-sky-400 mt-0.5">受取手形・売掛金</div>
-                </div>
-                <div className="bg-cyan-100 dark:bg-cyan-900 border border-cyan-300 dark:border-cyan-700 rounded-md p-3 text-center">
-                  <span className="text-xs font-bold text-cyan-800 dark:text-cyan-200">バッファー</span>
-                  <div className="text-[10px] text-cyan-600 dark:text-cyan-400 mt-0.5">現金・預金</div>
-                </div>
-                <div className="bg-indigo-100 dark:bg-indigo-900 border border-indigo-300 dark:border-indigo-700 rounded-md p-3 text-center">
-                  <span className="text-xs font-bold text-indigo-800 dark:text-indigo-200">生産手段資産</span>
-                  <div className="text-[10px] text-indigo-600 dark:text-indigo-400 mt-0.5">建物・土地・設備</div>
+function Row({ label, amount, indent = 0, bold = false, borderTop = false, negative = false }: {
+  label: string; amount: number | string; indent?: number; bold?: boolean; borderTop?: boolean; negative?: boolean;
+}) {
+  const formatted = typeof amount === "number"
+    ? (negative ? `△${amount.toLocaleString()}` : amount.toLocaleString())
+    : amount;
+  return (
+    <div className={`flex justify-between gap-2 text-[10px] md:text-[11px] py-[2px] ${bold ? "font-bold" : ""} ${borderTop ? "border-t border-slate-200 dark:border-slate-700 pt-1 mt-1" : ""}`}>
+      <span className="text-foreground" style={{ paddingLeft: `${indent * 10}px` }}>{label}</span>
+      <span className="text-foreground font-mono whitespace-nowrap text-right">{formatted}</span>
+    </div>
+  );
+}
+
+function SectionHeader({ children, color }: { children: string; color: string }) {
+  return (
+    <div className={`text-[10px] md:text-[11px] font-bold py-1 px-2 rounded ${color} mb-1`}>
+      {children}
+    </div>
+  );
+}
+
+function BSStandard() {
+  return (
+    <div className="overflow-x-auto">
+      <div className="min-w-[500px] flex gap-[1px] bg-slate-300 dark:bg-slate-600 border border-slate-300 dark:border-slate-600 rounded text-[10px]">
+        <div className="flex-1 bg-background p-2 space-y-0.5">
+          <div className="font-bold text-center text-muted-foreground mb-1 text-[9px]">（借方）</div>
+          <SectionHeader color="bg-slate-100 dark:bg-slate-800">(資産の部)</SectionHeader>
+          <Row label="流動資産" amount={61642919} bold />
+          <Row label="現金及び預金" amount={19370146} indent={1} />
+          <Row label="受取手形" amount={8696971} indent={1} />
+          <Row label="電子記録債権" amount={2875527} indent={1} />
+          <Row label="売掛金" amount={24092541} indent={1} />
+          <Row label="たな卸資産" amount={6433888} indent={1} />
+          <Row label="前払費用" amount={814150} indent={1} />
+          <Row label="貸倒引当金" amount={640304} indent={1} negative />
+          <Row label="固定資産" amount={116515659} bold borderTop />
+          <Row label="有形固定資産" amount={106797432} indent={1} />
+          <Row label="建物" amount={19744500} indent={2} />
+          <Row label="構築物" amount={11552875} indent={2} />
+          <Row label="機械及び装置" amount={10812757} indent={2} />
+          <Row label="車両及び運搬具" amount={15042238} indent={2} />
+          <Row label="器具及び備品" amount={2305062} indent={2} />
+          <Row label="土地" amount={45900000} indent={2} />
+          <Row label="リース資産" amount={1440000} indent={2} />
+          <Row label="無形固定資産" amount={492584} indent={1} />
+          <Row label="投資その他の資産" amount={9225643} indent={1} />
+          <Row label="資産合計" amount={178158578} bold borderTop />
+        </div>
+        <div className="flex-1 bg-background p-2 space-y-0.5">
+          <div className="font-bold text-center text-muted-foreground mb-1 text-[9px]">（貸方）</div>
+          <SectionHeader color="bg-rose-50 dark:bg-rose-950">(負債の部)</SectionHeader>
+          <Row label="流動負債" amount={44582343} bold />
+          <Row label="支払手形" amount={5039988} indent={1} />
+          <Row label="電子記録債権" amount={1514925} indent={1} />
+          <Row label="買掛金" amount={17794554} indent={1} />
+          <Row label="短期借入金" amount={12226231} indent={1} />
+          <Row label="未払金" amount={798843} indent={1} />
+          <Row label="未払費用" amount={432468} indent={1} />
+          <Row label="未払法人税等" amount={1655000} indent={1} />
+          <Row label="未払消費税等" amount={3341200} indent={1} />
+          <Row label="預り金" amount={1779134} indent={1} />
+          <Row label="固定負債" amount={73875490} bold borderTop />
+          <Row label="長期借入金" amount={71962275} indent={1} />
+          <Row label="長期未払金" amount={1913215} indent={1} />
+          <Row label="負債合計" amount={140457833} bold borderTop />
+          <SectionHeader color="bg-blue-50 dark:bg-blue-950">(純資産の部)</SectionHeader>
+          <Row label="資本金" amount={10000000} indent={1} />
+          <Row label="利益剰余金" amount={49700745} indent={1} />
+          <Row label="純資産合計" amount={59700745} bold borderTop />
+          <Row label="負債・純資産合計" amount={178158578} bold borderTop />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BSRydeen() {
+  return (
+    <div className="overflow-x-auto">
+      <div className="min-w-[460px] flex gap-[1px] bg-slate-300 dark:bg-slate-600 border border-slate-300 dark:border-slate-600 rounded text-[10px]">
+        <div className="flex-1 bg-background p-2 space-y-0.5">
+          <div className="font-bold text-center text-muted-foreground mb-1 text-[9px]">（資産の部）</div>
+          <SectionHeader color="bg-sky-100 dark:bg-sky-900 text-sky-800 dark:text-sky-200">運転資金資産</SectionHeader>
+          <Row label="受取手形" amount={8696971} indent={1} />
+          <Row label="電子記録債権" amount={2875527} indent={1} />
+          <Row label="売掛金" amount={24092541} indent={1} />
+          <Row label="" amount={35665039} bold />
+          <SectionHeader color="bg-cyan-100 dark:bg-cyan-900 text-cyan-800 dark:text-cyan-200">バッファー</SectionHeader>
+          <Row label="現金及び預金" amount={19370146} indent={1} />
+          <Row label="" amount={19370146} bold />
+          <SectionHeader color="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200">生産手段資産</SectionHeader>
+          <Row label="たな卸資産" amount={6433888} indent={1} />
+          <Row label="前払費用" amount={814150} indent={1} />
+          <Row label="貸倒引当金" amount={640304} indent={1} negative />
+          <Row label="建物" amount={19744500} indent={1} />
+          <Row label="構築物" amount={11552875} indent={1} />
+          <Row label="機械及び装置" amount={10812757} indent={1} />
+          <Row label="車両及び運搬具" amount={15042238} indent={1} />
+          <Row label="器具及び備品" amount={2305062} indent={1} />
+          <Row label="土地" amount={45900000} indent={1} />
+          <Row label="リース資産" amount={1440000} indent={1} />
+          <Row label="ソフトウェア" amount={417600} indent={1} />
+          <Row label="電話加入権" amount={74984} indent={1} />
+          <Row label="出資金" amount={155260} indent={1} />
+          <Row label="長期前払費用" amount={9070383} indent={1} />
+          <Row label="" amount={123123393} bold />
+          <Row label="資産合計" amount={178158578} bold borderTop />
+        </div>
+        <div className="flex-1 bg-background p-2 space-y-0.5">
+          <div className="font-bold text-center text-muted-foreground mb-1 text-[9px]">（負債・純資産の部）</div>
+          <SectionHeader color="bg-rose-100 dark:bg-rose-900 text-rose-800 dark:text-rose-200">運転資金負債</SectionHeader>
+          <Row label="支払手形" amount={5039988} indent={1} />
+          <Row label="電子記録債権" amount={1514925} indent={1} />
+          <Row label="買掛金" amount={17794554} indent={1} />
+          <Row label="" amount={24349467} bold />
+          <SectionHeader color="bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200">その他負債</SectionHeader>
+          <Row label="未払金" amount={798843} indent={1} />
+          <Row label="未払費用" amount={432468} indent={1} />
+          <Row label="未払法人税等" amount={1655000} indent={1} />
+          <Row label="未払消費税等" amount={3341200} indent={1} />
+          <Row label="預り金" amount={1779134} indent={1} />
+          <Row label="" amount={8006645} bold />
+          <SectionHeader color="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200">年間返済額</SectionHeader>
+          <Row label="短期借入金" amount={12226231} indent={1} />
+          <Row label="長期借入金（年間返済分）" amount={6000000} indent={1} />
+          <Row label="" amount={18226231} bold />
+          <SectionHeader color="bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200">借入金</SectionHeader>
+          <Row label="長期借入金" amount={65962275} indent={1} />
+          <Row label="長期未払金" amount={1913215} indent={1} />
+          <Row label="" amount={67875490} bold />
+          <SectionHeader color="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">資本金</SectionHeader>
+          <Row label="資本金" amount={10000000} indent={1} />
+          <Row label="利益剰余金" amount={49700745} indent={1} />
+          <Row label="" amount={59700745} bold />
+          <Row label="負債・純資産合計" amount={178158578} bold borderTop />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BSGraph() {
+  const total = 178158578;
+  const assetItems = [
+    { label: "運転資金資産", value: 35665039, color: "bg-sky-300 dark:bg-sky-700" },
+    { label: "バッファー", value: 19370146, color: "bg-cyan-300 dark:bg-cyan-700" },
+    { label: "生産手段資産", value: 123123393, color: "bg-indigo-300 dark:bg-indigo-700" },
+  ];
+  const liabItems = [
+    { label: "運転資金負債", value: 24349467, color: "bg-rose-300 dark:bg-rose-700" },
+    { label: "その他負債", value: 8006645, color: "bg-pink-300 dark:bg-pink-700" },
+    { label: "年間返済額", value: 18226231, color: "bg-red-300 dark:bg-red-700" },
+    { label: "借入金", value: 67875490, color: "bg-orange-300 dark:bg-orange-700" },
+    { label: "資本金", value: 59700745, color: "bg-blue-300 dark:bg-blue-700" },
+  ];
+
+  return (
+    <div className="space-y-3">
+      <div className="flex gap-4 justify-center">
+        <div className="text-center">
+          <div className="text-[10px] font-bold text-muted-foreground mb-1">資産</div>
+          <div className="w-20 md:w-24 border border-slate-300 dark:border-slate-600 rounded overflow-hidden" style={{ height: "280px" }}>
+            {assetItems.map((item) => (
+              <div
+                key={item.label}
+                className={`${item.color} flex items-center justify-center border-b border-white/30`}
+                style={{ height: `${(item.value / total) * 100}%` }}
+              >
+                <div className="text-center px-0.5">
+                  <div className="text-[8px] md:text-[9px] font-bold text-foreground leading-tight">{item.label}</div>
+                  <div className="text-[7px] md:text-[8px] text-foreground/70">{(item.value / 1000000).toFixed(0)}百万</div>
                 </div>
               </div>
-
-              <div className="flex items-center px-1">
-                <div className="w-px h-full bg-slate-300 dark:bg-slate-600" />
-              </div>
-
-              <div className="flex-1 space-y-1">
-                <div className="text-[10px] text-center text-muted-foreground font-bold mb-1">負債・純資産</div>
-                <div className="bg-rose-100 dark:bg-rose-900 border border-rose-300 dark:border-rose-700 rounded-md p-2 text-center">
-                  <span className="text-xs font-bold text-rose-800 dark:text-rose-200">運転資金負債</span>
-                  <div className="text-[10px] text-rose-600 dark:text-rose-400">支払手形・買掛金</div>
-                </div>
-                <div className="bg-pink-100 dark:bg-pink-900 border border-pink-300 dark:border-pink-700 rounded-md p-1.5 text-center">
-                  <span className="text-[11px] font-bold text-pink-800 dark:text-pink-200">その他負債</span>
-                </div>
-                <div className="bg-red-100 dark:bg-red-900 border border-red-300 dark:border-red-700 rounded-md p-1.5 text-center">
-                  <span className="text-[11px] font-bold text-red-800 dark:text-red-200">年間返済額</span>
-                </div>
-                <div className="bg-orange-100 dark:bg-orange-900 border border-orange-300 dark:border-orange-700 rounded-md p-1.5 text-center">
-                  <span className="text-[11px] font-bold text-orange-800 dark:text-orange-200">借入金</span>
-                </div>
-                <div className="bg-blue-100 dark:bg-blue-900 border border-blue-300 dark:border-blue-700 rounded-md p-2 text-center">
-                  <span className="text-xs font-bold text-blue-800 dark:text-blue-200">資本金</span>
-                  <div className="text-[10px] text-blue-600 dark:text-blue-400">資本金 + 利益剰余金</div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
-
-        <div className="border-t border-slate-200 dark:border-slate-700 pt-4">
-          <h4 className="text-sm font-bold text-foreground mb-3 text-center">損益計算書（PL） - UGK表</h4>
-          <div className="overflow-x-auto">
-            <div className="min-w-[300px] max-w-[400px] mx-auto space-y-1">
-              <div className="bg-emerald-100 dark:bg-emerald-900 border border-emerald-300 dark:border-emerald-700 rounded-md p-3 text-center">
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-xs font-bold bg-emerald-600 text-white px-2 py-0.5 rounded">U</span>
-                  <span className="text-sm font-bold text-emerald-800 dark:text-emerald-200">売上高</span>
+        <div className="text-center">
+          <div className="text-[10px] font-bold text-muted-foreground mb-1">負債・純資産</div>
+          <div className="w-20 md:w-24 border border-slate-300 dark:border-slate-600 rounded overflow-hidden" style={{ height: "280px" }}>
+            {liabItems.map((item) => (
+              <div
+                key={item.label}
+                className={`${item.color} flex items-center justify-center border-b border-white/30`}
+                style={{ height: `${(item.value / total) * 100}%` }}
+              >
+                <div className="text-center px-0.5">
+                  <div className="text-[8px] md:text-[9px] font-bold text-foreground leading-tight">{item.label}</div>
+                  <div className="text-[7px] md:text-[8px] text-foreground/70">{(item.value / 1000000).toFixed(0)}百万</div>
                 </div>
               </div>
-
-              <div className="bg-amber-100 dark:bg-amber-900 border border-amber-300 dark:border-amber-700 rounded-md p-2">
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <span className="text-xs font-bold bg-amber-600 text-white px-2 py-0.5 rounded">G</span>
-                  <span className="text-sm font-bold text-amber-800 dark:text-amber-200">変動費</span>
-                </div>
-                <div className="flex gap-1 justify-center">
-                  {["ヒト（外注費）", "モノ（材料費）", "その他原価"].map((item) => (
-                    <div key={item} className="bg-amber-200 dark:bg-amber-800 rounded px-2 py-1 text-[10px] text-amber-900 dark:text-amber-100">
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-lime-100 dark:bg-lime-900 border-2 border-lime-400 dark:border-lime-600 rounded-md p-2 text-center">
-                <span className="text-sm font-bold text-lime-800 dark:text-lime-200">粗利</span>
-                <span className="text-[10px] text-lime-600 dark:text-lime-400 ml-2">（売上 - 変動費）</span>
-              </div>
-
-              <div className="bg-violet-100 dark:bg-violet-900 border border-violet-300 dark:border-violet-700 rounded-md p-2">
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <span className="text-xs font-bold bg-violet-600 text-white px-2 py-0.5 rounded">K</span>
-                  <span className="text-sm font-bold text-violet-800 dark:text-violet-200">固定費</span>
-                </div>
-                <div className="flex gap-1 justify-center">
-                  {["人件費用", "投資費用", "その他費用"].map((item) => (
-                    <div key={item} className="bg-violet-200 dark:bg-violet-800 rounded px-2 py-1 text-[10px] text-violet-900 dark:text-violet-100">
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-teal-100 dark:bg-teal-900 border-2 border-teal-400 dark:border-teal-600 rounded-md p-2 text-center">
-                <span className="text-sm font-bold text-teal-800 dark:text-teal-200">営業利益</span>
-                <span className="text-[10px] text-teal-600 dark:text-teal-400 ml-2">（粗利 - 固定費）</span>
-              </div>
-            </div>
+            ))}
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PLStandard() {
+  return (
+    <div className="overflow-x-auto">
+      <div className="min-w-[320px] p-2 border border-slate-300 dark:border-slate-600 rounded space-y-0.5 text-[10px]">
+        <Row label="売上高" amount={230980493} bold />
+        <Row label="売上原価" amount="" />
+        <Row label="労務費" amount={84216571} indent={1} />
+        <Row label="外注費" amount={46872159} indent={1} />
+        <Row label="材料費" amount={18458621} indent={1} />
+        <Row label="その他原価" amount={15142079} indent={1} />
+        <Row label="" amount={164689430} indent={2} />
+        <Row label="売上総利益" amount={66291063} bold borderTop />
+        <Row label="販売費及び一般管理費" amount="" />
+        <Row label="役員報酬" amount={10564330} indent={1} />
+        <Row label="給与手当" amount={16854626} indent={1} />
+        <Row label="法定福利費" amount={2309106} indent={1} />
+        <Row label="福利厚生費" amount={792995} indent={1} />
+        <Row label="接待交際費" amount={326593} indent={1} />
+        <Row label="販売促進費" amount={10617972} indent={1} />
+        <Row label="旅費交通費" amount={1877761} indent={1} />
+        <Row label="研究開発費" amount={1154524} indent={1} />
+        <Row label="修繕費" amount={80486} indent={1} />
+        <Row label="減価償却費" amount={2806700} indent={1} />
+        <Row label="地代家賃" amount={134655} indent={1} />
+        <Row label="租税公課" amount={2556486} indent={1} />
+        <Row label="消耗品費" amount={1781455} indent={1} />
+        <Row label="保険料" amount={3436249} indent={1} />
+        <Row label="雑費" amount={3504101} indent={1} />
+        <Row label="" amount={58798039} indent={2} />
+        <Row label="営業利益" amount={7493024} bold borderTop />
+        <Row label="営業外収益" amount="" />
+        <Row label="受取利息" amount={2019} indent={1} />
+        <Row label="受取配当金" amount={4320} indent={1} />
+        <Row label="雑収入" amount={529937} indent={1} />
+        <Row label="" amount={536276} indent={2} />
+        <Row label="営業外費用" amount="" />
+        <Row label="支払利息" amount={1355525} indent={1} />
+        <Row label="" amount={1355525} indent={2} />
+        <Row label="経常利益" amount={6673775} bold borderTop />
+        <Row label="特別利益" amount={0} />
+        <Row label="特別損失" amount={0} />
+        <Row label="税引前当期純利益" amount={6673775} bold borderTop />
+        <Row label="法人税、住民税及び事業税" amount={1655000} />
+        <Row label="当期純利益" amount={5018775} bold borderTop />
+      </div>
+    </div>
+  );
+}
+
+function PLRydeen() {
+  return (
+    <div className="overflow-x-auto">
+      <div className="min-w-[360px] p-2 border border-slate-300 dark:border-slate-600 rounded space-y-1 text-[10px]">
+        <SectionHeader color="bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200">U 売上高</SectionHeader>
+        <Row label="売上高" amount={230980493} bold />
+
+        <SectionHeader color="bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200">G 変動費　34.8%</SectionHeader>
+        <div className="pl-2 space-y-0.5">
+          <div className="text-[10px] font-bold text-amber-700 dark:text-amber-300 py-0.5">ヒト</div>
+          <Row label="外注費" amount={46872159} indent={2} />
+          <Row label="" amount={46872159} indent={3} bold />
+          <div className="text-[10px] font-bold text-amber-700 dark:text-amber-300 py-0.5">モノ</div>
+          <Row label="材料費" amount={18458621} indent={2} />
+          <Row label="" amount={18458621} indent={3} bold />
+          <div className="text-[10px] font-bold text-amber-700 dark:text-amber-300 py-0.5">その他原価</div>
+          <Row label="その他原価" amount={15142079} indent={2} />
+          <Row label="" amount={15142079} indent={3} bold />
+        </div>
+        <Row label="変動費合計" amount={80472859} bold borderTop />
+
+        <div className="border-2 border-lime-400 dark:border-lime-600 rounded p-1.5 my-1">
+          <Row label="粗利" amount={150507634} bold />
+        </div>
+
+        <SectionHeader color="bg-violet-100 dark:bg-violet-900 text-violet-800 dark:text-violet-200">K 固定費</SectionHeader>
+        <div className="pl-2 space-y-0.5">
+          <div className="text-[10px] font-bold text-violet-700 dark:text-violet-300 py-0.5">人件費用</div>
+          <Row label="労務費" amount={84216571} indent={2} />
+          <Row label="給与手当" amount={16854626} indent={2} />
+          <Row label="法定福利費" amount={2309106} indent={2} />
+          <Row label="福利厚生費" amount={792995} indent={2} />
+          <Row label="" amount={104173298} indent={3} bold />
+          <div className="text-[10px] font-bold text-violet-700 dark:text-violet-300 py-0.5">投資費用</div>
+          <Row label="接待交際費" amount={326593} indent={2} />
+          <Row label="販売促進費" amount={10617972} indent={2} />
+          <Row label="旅費交通費" amount={1877761} indent={2} />
+          <Row label="研究開発費" amount={1154524} indent={2} />
+          <Row label="" amount={13976850} indent={3} bold />
+          <div className="text-[10px] font-bold text-violet-700 dark:text-violet-300 py-0.5">その他費用</div>
+          <Row label="修繕費" amount={80486} indent={2} />
+          <Row label="地代家賃" amount={134655} indent={2} />
+          <Row label="租税公課" amount={2556486} indent={2} />
+          <Row label="消耗品費" amount={1781455} indent={2} />
+          <Row label="保険料" amount={3436249} indent={2} />
+          <Row label="支払利息" amount={1355525} indent={2} />
+          <Row label="雑費" amount={3504101} indent={2} />
+          <Row label="" amount={12848957} indent={3} bold />
+        </div>
+        <Row label="固定費合計" amount={130999105} bold borderTop />
+
+        <div className="border-2 border-teal-400 dark:border-teal-600 rounded p-1.5 my-1">
+          <Row label="営業利益" amount={19508529} bold />
+        </div>
+
+        <Row label="営業外収益" amount="" />
+        <Row label="受取利息" amount={2019} indent={1} />
+        <Row label="受取配当金" amount={4320} indent={1} />
+        <Row label="雑収入" amount={529937} indent={1} />
+        <Row label="" amount={536276} indent={2} />
+        <Row label="経常利益" amount={20044805} bold borderTop />
+        <Row label="特別利益" amount={0} />
+        <Row label="特別損失" amount={0} />
+        <Row label="税引前当期純利益" amount={20044805} bold borderTop />
+
+        <div className="bg-slate-100 dark:bg-slate-800 rounded p-2 mt-2 space-y-0.5">
+          <div className="text-[10px] font-bold text-muted-foreground mb-1">使えるおカネの配分</div>
+          <Row label="返済" amount={6000000} indent={1} />
+          <Row label="税金" amount={1655000} indent={1} />
+          <Row label="役員報酬" amount={10564330} indent={1} />
+          <Row label="余剰金" amount={1825475} bold borderTop />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PLGraph() {
+  const total = 230980493;
+  const costItems = [
+    { label: "変動費", value: 80472859, color: "bg-amber-300 dark:bg-amber-700", pct: "34.8%" },
+    { label: "固定費", value: 130999105, color: "bg-violet-300 dark:bg-violet-700", pct: "56.7%" },
+    { label: "税引前利益", value: 20044805, color: "bg-teal-300 dark:bg-teal-700", pct: "8.7%" },
+  ];
+  const revItems = [
+    { label: "粗利", value: 150507634, color: "bg-lime-300 dark:bg-lime-700", pct: "65.2%" },
+    { label: "変動費", value: 80472859, color: "bg-amber-300 dark:bg-amber-700", pct: "34.8%" },
+  ];
+
+  return (
+    <div className="space-y-3">
+      <div className="flex gap-6 justify-center">
+        <div className="text-center">
+          <div className="text-[10px] font-bold text-muted-foreground mb-1">費用</div>
+          <div className="w-20 md:w-24 border border-slate-300 dark:border-slate-600 rounded overflow-hidden" style={{ height: "280px" }}>
+            {costItems.map((item) => (
+              <div
+                key={item.label}
+                className={`${item.color} flex items-center justify-center border-b border-white/30`}
+                style={{ height: `${(item.value / total) * 100}%` }}
+              >
+                <div className="text-center px-0.5">
+                  <div className="text-[8px] md:text-[9px] font-bold text-foreground leading-tight">{item.label}</div>
+                  <div className="text-[7px] md:text-[8px] text-foreground/70">{item.pct}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="text-center">
+          <div className="text-[10px] font-bold text-muted-foreground mb-1">収入</div>
+          <div className="w-20 md:w-24 border border-slate-300 dark:border-slate-600 rounded overflow-hidden" style={{ height: "280px" }}>
+            {revItems.map((item) => (
+              <div
+                key={item.label + "-rev"}
+                className={`${item.color} flex items-center justify-center border-b border-white/30`}
+                style={{ height: `${(item.value / total) * 100}%` }}
+              >
+                <div className="text-center px-0.5">
+                  <div className="text-[8px] md:text-[9px] font-bold text-foreground leading-tight">{item.label}</div>
+                  <div className="text-[7px] md:text-[8px] text-foreground/70">{item.pct}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="text-center text-[10px] text-muted-foreground">
+        売上高: {total.toLocaleString()}円
+      </div>
+    </div>
+  );
+}
+
+export default function RydeenFinancialDiagram() {
+  const [bsView, setBsView] = useState<ViewMode>("rydeen");
+  const [plView, setPlView] = useState<ViewMode>("rydeen");
+
+  const bsLabels: Record<ViewMode, string> = { standard: "勘定式", rydeen: "RYDEEN式", graph: "グラフ" };
+  const plLabels: Record<ViewMode, string> = { standard: "報告式", rydeen: "RYDEEN式", graph: "グラフ" };
+
+  return (
+    <div className="w-full p-4 md:p-6 space-y-6" data-testid="rydeen-financial-diagram">
+      <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-rydeen-title">RYDEEN式決算書（例）</h3>
+
+      <div className="space-y-6">
+        <div data-testid="section-bs">
+          <h4 className="text-sm font-bold text-foreground mb-2 text-center" data-testid="text-bs-title">貸借対照表（BS）</h4>
+          <ViewTabs active={bsView} onChange={setBsView} labels={bsLabels} />
+          {bsView === "standard" && <BSStandard />}
+          {bsView === "rydeen" && <BSRydeen />}
+          {bsView === "graph" && <BSGraph />}
+        </div>
+
+        <div className="border-t border-slate-200 dark:border-slate-700 pt-4" data-testid="section-pl">
+          <h4 className="text-sm font-bold text-foreground mb-2 text-center" data-testid="text-pl-title">損益計算書（PL）</h4>
+          <ViewTabs active={plView} onChange={setPlView} labels={plLabels} />
+          {plView === "standard" && <PLStandard />}
+          {plView === "rydeen" && <PLRydeen />}
+          {plView === "graph" && <PLGraph />}
         </div>
       </div>
     </div>
