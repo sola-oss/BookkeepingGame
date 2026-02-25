@@ -11,7 +11,7 @@ export default function BSPLRelationDiagram() {
   const arcStartY = 55;
   const bodyTop = 60;
   const bodyBottom = bodyTop + cylinderH;
-  const timelineY = (arcStartY + bodyTop) / 2;
+  const timelineY = (arcStartY + bodyTop) / 2 + 4;
 
   const positions = bsValues.map((_, i) => cylinderW / 2 + 4 + i * (cylinderW + gap));
   const svgW = positions[positions.length - 1] + cylinderW / 2 + 30;
