@@ -25,10 +25,9 @@ export default function BSPLRelationDiagram() {
       <p className="text-sm text-muted-foreground text-center">
         PLで出た当期純利益は、最終的にBSの純資産（利益剰余金）に累積されていく
       </p>
-
       <div className="overflow-x-auto">
         <div className="min-w-[480px] px-2">
-          <div className="flex items-start">
+          <div className="flex items-start text-[10px]">
             <div className="flex flex-col items-end mr-2 flex-shrink-0" style={{ paddingTop: `${arcStartY - 14}px` }}>
               <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950 px-1.5 py-0.5 rounded whitespace-nowrap" data-testid="label-flow">フロー</span>
               <div style={{ height: "6px" }} />
