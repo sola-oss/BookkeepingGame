@@ -11,10 +11,10 @@ export default function BSPLRelationDiagram() {
   const arcStartY = 55;
   const bodyTop = 60;
   const bodyBottom = bodyTop + cylinderH;
-  const timelineY = bodyTop + cylinderH * 0.5;
+  const timelineY = (arcStartY + bodyTop) / 2;
 
   const positions = bsValues.map((_, i) => cylinderW / 2 + 4 + i * (cylinderW + gap));
-  const svgW = positions[positions.length - 1] + cylinderW / 2 + 4;
+  const svgW = positions[positions.length - 1] + cylinderW / 2 + 30;
   const svgH = bodyBottom + ovalRy + 28;
 
   return (
@@ -29,9 +29,9 @@ export default function BSPLRelationDiagram() {
       <div className="overflow-x-auto">
         <div className="min-w-[480px] px-2">
           <div className="flex items-start">
-            <div className="flex flex-col items-end mr-2 flex-shrink-0" style={{ paddingTop: `${arcStartY - 8}px` }}>
+            <div className="flex flex-col items-end mr-2 flex-shrink-0" style={{ paddingTop: `${arcStartY - 14}px` }}>
               <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950 px-1.5 py-0.5 rounded whitespace-nowrap" data-testid="label-flow">フロー</span>
-              <div style={{ height: `${timelineY - arcStartY + 2}px` }} />
+              <div style={{ height: "6px" }} />
               <span className="text-[10px] font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950 px-1.5 py-0.5 rounded whitespace-nowrap" data-testid="label-stock">ストック</span>
             </div>
 
@@ -48,6 +48,9 @@ export default function BSPLRelationDiagram() {
                   </marker>
                   <marker id="arrow-neg" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
                     <polygon points="0 0, 8 3, 0 6" className="fill-red-500 dark:fill-red-400" />
+                  </marker>
+                  <marker id="arrow-timeline" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                    <polygon points="0 0, 10 4, 0 8" className="fill-sky-300 dark:fill-sky-600" />
                   </marker>
                 </defs>
 
@@ -90,10 +93,11 @@ export default function BSPLRelationDiagram() {
                 <line
                   x1="0"
                   y1={timelineY}
-                  x2={svgW}
+                  x2={svgW - 2}
                   y2={timelineY}
                   className="stroke-sky-300 dark:stroke-sky-600"
                   strokeWidth="2"
+                  markerEnd="url(#arrow-timeline)"
                 />
 
                 {bsValues.map((val, i) => {
