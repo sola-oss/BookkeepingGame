@@ -41,13 +41,6 @@ export default function BokiKaikeiDiagram() {
               </div>
             </div>
 
-            <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-slate-300 dark:text-slate-600 flex-shrink-0" />
-
-            <div className="border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50/60 dark:bg-slate-900/40 p-2 md:p-3 flex-shrink-0 w-[80px] md:w-[100px] flex flex-col items-center justify-center" data-testid="section-kaikei">
-              <p className="font-semibold dark:text-slate-400 text-center text-[16px] text-[#5fb298]" data-testid="text-kaikei-label">会計</p>
-              <p className="text-[9px] md:text-[10px] text-slate-400 dark:text-slate-500 text-center mt-1" data-testid="text-kaikei-caption">（理論）</p>
-              <p className="text-[9px] md:text-[10px] text-slate-400 dark:text-slate-500 text-center mt-1" data-testid="text-kaikei-def">読み解き経営に活かす</p>
-            </div>
           </div>
         </div>
       </div>
