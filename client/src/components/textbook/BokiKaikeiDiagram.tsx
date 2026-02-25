@@ -27,7 +27,7 @@ export default function BokiKaikeiDiagram() {
                   </div>
                 ))}
               </div>
-              <p className="text-[9px] md:text-[10px] text-slate-400 dark:text-slate-500 text-center mt-1.5" data-testid="text-boki-def">決算書を作るまで</p>
+              <p className="text-[9px] md:text-[10px] text-slate-400 dark:text-slate-500 text-center mt-1.5" data-testid="text-boki-def">決算書ができるまで</p>
             </div>
 
             <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-slate-300 dark:text-slate-600 flex-shrink-0" />
