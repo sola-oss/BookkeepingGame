@@ -6,12 +6,11 @@ export default function BokiKaikeiDiagram() {
       <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-boki-kaikei-title">
         簿記と会計の関係
       </h3>
-
       <div className="overflow-x-auto">
         <div className="min-w-[460px] px-2">
           <div className="flex items-center justify-center gap-2 md:gap-3">
             <div className="border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50/60 dark:bg-slate-900/40 p-2 md:p-3 flex-shrink-0" data-testid="section-boki">
-              <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 text-center mb-1.5" data-testid="text-boki-label">簿記</p>
+              <p className="font-semibold dark:text-slate-400 text-center mb-1.5 text-[16px] text-[#5fb298]" data-testid="text-boki-label">簿記</p>
               <div className="flex items-center gap-1.5">
                 {[
                   { label: "取引", id: "torihiki" },
