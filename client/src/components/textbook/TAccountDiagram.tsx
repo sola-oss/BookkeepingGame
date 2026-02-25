@@ -170,19 +170,16 @@ export default function TAccountDiagram() {
   return (
     <div className="w-full p-4 md:p-6 space-y-4" data-testid="t-account-diagram">
       <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-t-account-title">取引事例と元帳への転記</h3>
-      <p className="text-xs text-muted-foreground text-center">仕訳には4つの要素がある：日付・借方科目/金額・貸方科目/金額</p>
-
+      <p className="text-xs text-muted-foreground text-center">仕訳には4つの要素がある：日付・勘定科目・金額・適用</p>
       <div className="space-y-1">
         <p className="text-xs font-bold text-foreground" data-testid="text-journal-heading">仕訳帳（4月の取引）</p>
         <JournalTable entries={journalEntries} />
       </div>
-
       <div className="flex items-center justify-center gap-2 py-2">
         <div className="h-[1px] flex-1 bg-slate-200 dark:bg-slate-700" />
         <span className="text-xs font-bold text-amber-600 dark:text-amber-400 px-2 whitespace-nowrap" data-testid="text-transfer-label">↓ 勘定科目ごとに転記 ↓</span>
         <div className="h-[1px] flex-1 bg-slate-200 dark:bg-slate-700" />
       </div>
-
       <div className="space-y-1">
         <p className="text-xs font-bold text-foreground" data-testid="text-ledger-heading">総勘定元帳（T字勘定）</p>
 
