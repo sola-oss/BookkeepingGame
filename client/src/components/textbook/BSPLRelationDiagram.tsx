@@ -176,15 +176,6 @@ export default function BSPLRelationDiagram() {
           </div>
         </div>
       </div>
-
-      <div className="bg-muted/50 rounded-lg p-3 text-center">
-        <p className="text-xs md:text-sm text-muted-foreground">
-          <span className="font-bold text-blue-600 dark:text-blue-400">PL（フロー）</span>
-          で算出された当期純利益が、
-          <span className="font-bold text-red-600 dark:text-red-400">BS（ストック）</span>
-          の純資産に加算されていく
-        </p>
-      </div>
     </div>
   );
 }
