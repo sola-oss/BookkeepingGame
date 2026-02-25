@@ -21,6 +21,7 @@ import TAccountDiagram from "@/components/textbook/TAccountDiagram";
 import RydeenFinancialDiagram from "@/components/textbook/RydeenFinancialDiagram";
 import Rydea2Diagram from "@/components/textbook/Rydea2Diagram";
 import BusinessFlowDiagram from "@/components/textbook/BusinessFlowDiagram";
+import BokiKaikeiDiagram from "@/components/textbook/BokiKaikeiDiagram";
 
 const diagramComponents: Record<string, () => JSX.Element> = {
   "bookkeeping-flow": BookkeepingFlowDiagram,
@@ -30,6 +31,7 @@ const diagramComponents: Record<string, () => JSX.Element> = {
   "rydeen-financial": RydeenFinancialDiagram,
   "rydea2": Rydea2Diagram,
   "business-flow": BusinessFlowDiagram,
+  "boki-kaikei": BokiKaikeiDiagram,
 };
 
 const chapterColors: Record<string, { bg: string; border: string; text: string; accent: string }> = {

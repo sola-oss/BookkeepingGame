@@ -25,7 +25,7 @@
 client/src/
 ├── components/game/    # ゲーム専用コンポーネント
 ├── context/            # React Context（GameContext, JournalContext, ExamContext, AccountingFlowContext）
-├── components/textbook/ # 教科書用図解コンポーネント（7つ）
+├── components/textbook/ # 教科書用図解コンポーネント（8つ）
 ├── data/               # 勘定科目マスタデータ（50科目）、仕訳問題（15問）、試験問題（40問）、教科書（4章21セクション）
 ├── lib/                # ユーティリティ、ストレージ操作
 ├── pages/              # 各画面コンポーネント
@@ -126,13 +126,14 @@ localStorageを使用してブラウザに保存:
 - 社長の会計、管理会計の3要素、税務会計との比較
 
 図解コンポーネント（client/src/components/textbook/）:
-1. BookkeepingFlowDiagram - 簿記の流れ（取引→仕訳→勘定記入→決算書）
-2. BSPLRelationDiagram - BSとPLの関係（フロー＆ストック）
-3. FiveElementsDiagram - 5要素の本籍図（色分け）
-4. TAccountDiagram - T字勘定（元帳転記例）
-5. RydeenFinancialDiagram - RYDEEN式決算書
-6. Rydea2Diagram - Rydea2.0（稼ぐ力と残る力）
-7. BusinessFlowDiagram - 商流図
+1. BokiKaikeiDiagram - 簿記と会計の関係（簿記→決算書→会計の横フロー図）
+2. BookkeepingFlowDiagram - 簿記の流れ（取引→仕訳→勘定記入→決算書）
+3. BSPLRelationDiagram - BSとPLの関係（フロー＆ストック）
+4. FiveElementsDiagram - 5要素の本籍図（色分け）
+5. TAccountDiagram - T字勘定（元帳転記例）
+6. RydeenFinancialDiagram - RYDEEN式決算書
+7. Rydea2Diagram - Rydea2.0（稼ぐ力と残る力）
+8. BusinessFlowDiagram - 商流図
 
 型定義: TextbookChapter（章）> TextbookSection（セクション）
 データ構造: textbookChapters配列（4章、計21セクション）
@@ -142,7 +143,7 @@ localStorageを使用してブラウザに保存:
 - 2026-02: 教科書モード全面リニューアル
   - 旧10トピック構成 → 新4章構成（I簿記・II会計・III仕訳実務・特別章管理会計）に完全置換
   - TextbookChapter/TextbookSection型定義を新規追加（shared/schema.ts）
-  - 7つのHTML/CSS図解コンポーネント新規作成（components/textbook/）
+  - 8つのHTML/CSS図解コンポーネント新規作成（components/textbook/）
   - TextbookList.tsx: 章ベースのアコーディオンUI（展開/折りたたみ、検索、図解埋め込み）
   - WeakPoints.tsx: 旧教科書連携タブ削除（苦手科目タブのみに簡素化）
   - 後方互換: textbookPages空配列、getTextbookPageByTopicTag=undefinedを維持

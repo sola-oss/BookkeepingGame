@@ -9,6 +9,7 @@ export const textbookChapters: TextbookChapter[] = [
       {
         id: "boki_kaikei",
         title: "簿記と会計の関係",
+        diagramId: "boki-kaikei",
         content: [
           "簿記は「技術」、会計はそれを体系化した「理論」です。",
           "簿記は帳簿記入の略。日々の取引を帳簿に記録する技術のことです。",
