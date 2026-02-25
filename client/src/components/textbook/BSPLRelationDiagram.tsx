@@ -7,9 +7,9 @@ export default function BSPLRelationDiagram() {
   const cylinderH = 90;
   const ovalRy = 8;
   const gap = 80;
-  const arcPeakY = 10;
-  const arcStartY = 55;
-  const bodyTop = 60;
+  const arcPeakY = 22;
+  const arcStartY = 67;
+  const bodyTop = 72;
   const bodyBottom = bodyTop + cylinderH;
   const timelineY = (arcStartY + bodyTop) / 2 + 4;
 
