@@ -4,15 +4,14 @@ export default function BSPLRelationDiagram() {
   const maxBS = 12;
 
   const cylinderW = 52;
-  const cylinderH = 72;
+  const cylinderH = 90;
   const ovalRy = 8;
   const gap = 80;
-
-  const arcPeakY = 12;
-  const arcStartY = 52;
-  const timelineY = 64;
-  const bodyTop = 76;
+  const arcPeakY = 10;
+  const arcStartY = 55;
+  const bodyTop = 60;
   const bodyBottom = bodyTop + cylinderH;
+  const timelineY = (arcStartY + bodyTop) / 2;
 
   const positions = bsValues.map((_, i) => cylinderW / 2 + 4 + i * (cylinderW + gap));
   const svgW = positions[positions.length - 1] + cylinderW / 2 + 30;
@@ -26,13 +25,12 @@ export default function BSPLRelationDiagram() {
       <p className="text-sm text-muted-foreground text-center">
         PLで出た当期純利益は、最終的にBSの純資産（利益剰余金）に累積されていく
       </p>
-
       <div className="overflow-x-auto">
         <div className="min-w-[480px] px-2">
-          <div className="flex items-start">
-            <div className="flex flex-col items-end mr-2 flex-shrink-0" style={{ paddingTop: `${arcStartY - 6}px` }}>
+          <div className="flex items-start text-[10px]">
+            <div className="flex flex-col items-end mr-2 flex-shrink-0" style={{ paddingTop: `${arcStartY - 14}px` }}>
               <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950 px-1.5 py-0.5 rounded whitespace-nowrap" data-testid="label-flow">フロー</span>
-              <div style={{ height: `${timelineY - arcStartY + 2}px` }} />
+              <div style={{ height: "6px" }} />
               <span className="text-[10px] font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950 px-1.5 py-0.5 rounded whitespace-nowrap" data-testid="label-stock">ストック</span>
             </div>
 
@@ -72,7 +70,7 @@ export default function BSPLRelationDiagram() {
                       />
                       <text
                         x={midX}
-                        y={arcPeakY + ((arcStartY - arcPeakY) / 2) - 10}
+                        y={arcPeakY + ((arcStartY - arcPeakY) / 2) - 12}
                         textAnchor="middle"
                         className={`text-[13px] font-bold ${isNeg ? "fill-red-600 dark:fill-red-400" : "fill-blue-600 dark:fill-blue-400"}`}
                         data-testid={`text-pl-${i}`}
@@ -81,7 +79,7 @@ export default function BSPLRelationDiagram() {
                       </text>
                       <text
                         x={midX}
-                        y={arcPeakY + ((arcStartY - arcPeakY) / 2) + 4}
+                        y={arcPeakY + ((arcStartY - arcPeakY) / 2) + 2}
                         textAnchor="middle"
                         className="text-[10px] fill-slate-400 dark:fill-slate-500"
                       >
