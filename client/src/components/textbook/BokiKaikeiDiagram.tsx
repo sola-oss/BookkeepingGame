@@ -15,7 +15,7 @@ export default function BokiKaikeiDiagram() {
                 {[
                   { label: "取引", id: "torihiki" },
                   { label: "仕訳", id: "shiwake" },
-                  { label: "転記", id: "tenki" },
+                  { label: "元帳", id: "tenki" },
                 ].map((step, i, arr) => (
                   <div key={step.id} className="flex items-center gap-1.5">
                     <div className="px-1.5 py-1 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" data-testid={`box-${step.id}`}>
