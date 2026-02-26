@@ -1,7 +1,7 @@
 export default function FiveElementsDiagram() {
   return (
     <div className="w-full p-4 md:p-6 space-y-4" data-testid="five-elements-diagram">
-      <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-five-elements-title">簿記の５要素・・・勘定科目の本籍</h3>
+      <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-five-elements-title">簿記の6要素・・・勘定科目の本籍</h3>
       <div className="overflow-x-auto">
         <div className="min-w-[380px] flex flex-col md:flex-row gap-4 md:gap-6 justify-center items-stretch">
           <div className="flex-1 max-w-[280px] mx-auto md:mx-0">
