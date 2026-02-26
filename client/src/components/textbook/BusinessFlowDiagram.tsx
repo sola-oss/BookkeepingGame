@@ -5,7 +5,8 @@ export default function BusinessFlowDiagram() {
       <p className="text-xs text-muted-foreground text-center">会社名: RYDEENストアー</p>
       <div className="overflow-x-auto">
         <div className="min-w-[520px] px-2">
-          <div className="grid grid-cols-[1fr_auto_1fr] gap-0">
+          <div className="grid grid-cols-[1fr_auto_1fr] gap-0 relative">
+            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-slate-300 dark:bg-slate-600 -translate-x-1/2" />
 
             <div className="p-2 text-left ml-[40px] mr-[40px] mt-[0px] mb-[0px] pt-[0px] pb-[0px] pl-[15px] pr-[15px]">
               <div className="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2">G</div>
