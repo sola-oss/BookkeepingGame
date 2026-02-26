@@ -107,7 +107,7 @@ function PLSection() {
                       <span className="text-[9px] font-bold bg-green-500 text-white px-1 rounded">G</span>
                       <span className="text-[9px] font-bold text-[#2f5e28]">原価</span>
                     </div>
-                    <div className="text-[8px] text-foreground/70 mt-0.5">変動費</div>
+                    <div className="text-[8px] text-foreground/70 mt-0.5 font-medium">変動費</div>
                   </div>
                 </div>
                 <div className="bg-blue-200 dark:bg-blue-800 flex items-center justify-center border-b-2 border-slate-300 dark:border-slate-500" style={{ height: "52%" }}>
