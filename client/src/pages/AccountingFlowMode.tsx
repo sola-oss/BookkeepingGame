@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { AccountingFlowProvider, useAccountingFlow } from "@/context/AccountingFlowContext";
 import { accountChoices, getCategoryLabel, getCategoryColor, type JournalLine } from "@/data/accountingFlowQuestions";
-import type { CategoryType } from "@shared/schema";
+import type { CategoryType } from "@/data/accountingFlowQuestions";
 
 function MiniFinancialStatements({
   targetRefs,

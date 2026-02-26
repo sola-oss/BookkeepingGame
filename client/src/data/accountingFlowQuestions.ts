@@ -1,4 +1,4 @@
-import type { CategoryType } from "@shared/schema";
+export type CategoryType = "asset" | "liability" | "equity" | "revenue" | "expense";
 
 export interface JournalLine {
   account: string;

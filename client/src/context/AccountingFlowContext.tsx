@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer, type ReactNode } from "react";
 import { flowQuestions, type FlowJournalEntry, type FlowTotals, type JournalLine } from "@/data/accountingFlowQuestions";
-import type { CategoryType } from "@shared/schema";
+import type { CategoryType } from "@/data/accountingFlowQuestions";
 
 type FlowPhase = "playing" | "checking" | "showingAnswer" | "animating" | "completed";
 

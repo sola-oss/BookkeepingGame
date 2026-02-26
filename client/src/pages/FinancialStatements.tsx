@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGame } from "@/context/GameContext";
 import { getAllAccounts } from "@/data/accounts";
-import { categoryLabels, type CategoryType } from "@shared/schema";
+import { categoryLabels } from "@shared/schema";
 
 const sampleAmounts: Record<string, number> = {
   cash: 500000,
@@ -34,10 +34,13 @@ export default function FinancialStatements() {
     sampleAmounts[a.id] !== undefined
   );
 
-  const getAccountsByCategory = (category: CategoryType) => 
-    usedAccounts.filter(a => a.category === category);
+  const getAccountsByCategory = (category: string) => 
+    usedAccounts.filter(a => {
+      if (category === "expense") return a.category === "cost" || a.category === "operating_expense";
+      return a.category === category;
+    });
 
-  const getCategoryTotal = (category: CategoryType) =>
+  const getCategoryTotal = (category: string) =>
     getAccountsByCategory(category).reduce((sum, a) => sum + (sampleAmounts[a.id] || 0), 0);
 
   const totalAssets = getCategoryTotal("asset");
