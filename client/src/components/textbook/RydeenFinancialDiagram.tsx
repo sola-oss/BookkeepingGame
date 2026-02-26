@@ -115,8 +115,8 @@ function BSRydeen() {
             <Row label="売掛金" amount={24092541} indent={1} />
             <Row label="" amount={35665039} bold />
           </div>
-          <div className="rounded p-1.5 bg-yellow-100 dark:bg-yellow-900/60 space-y-0.5">
-            <SectionHeader color="bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200">バッファー</SectionHeader>
+          <div className="rounded p-1.5 bg-green-100 dark:bg-green-900/60 space-y-0.5">
+            <SectionHeader color="bg-green-200 dark:bg-green-800 text-green-800 dark:text-green-200">バッファー</SectionHeader>
             <Row label="現金及び預金" amount={19370146} indent={1} />
             <Row label="" amount={19370146} bold />
           </div>
@@ -149,8 +149,8 @@ function BSRydeen() {
             <Row label="買掛金" amount={17794554} indent={1} />
             <Row label="" amount={24349467} bold />
           </div>
-          <div className="rounded p-1.5 bg-pink-100 dark:bg-pink-900/60 space-y-0.5">
-            <SectionHeader color="bg-pink-200 dark:bg-pink-800 text-pink-800 dark:text-pink-200">その他負債</SectionHeader>
+          <div className="rounded p-1.5 bg-yellow-100 dark:bg-yellow-900/60 space-y-0.5">
+            <SectionHeader color="bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200">その他負債</SectionHeader>
             <Row label="未払金" amount={798843} indent={1} />
             <Row label="未払費用" amount={432468} indent={1} />
             <Row label="未払法人税等" amount={1655000} indent={1} />
@@ -181,12 +181,12 @@ function BSGraph() {
   const total = 178158578;
   const assetItems = [
     { label: "運転資金資産", value: 35665039, color: "bg-sky-300 dark:bg-sky-700" },
-    { label: "バッファー", value: 19370146, color: "bg-yellow-300 dark:bg-yellow-700" },
+    { label: "バッファー", value: 19370146, color: "bg-green-300 dark:bg-green-700" },
     { label: "生産手段資産", value: 123123393, color: "bg-pink-300 dark:bg-pink-700" },
   ];
   const liabItems = [
     { label: "運転資金負債", value: 24349467, color: "bg-sky-300 dark:bg-sky-700" },
-    { label: "その他負債", value: 8006645, color: "bg-pink-300 dark:bg-pink-700" },
+    { label: "その他負債", value: 8006645, color: "bg-yellow-300 dark:bg-yellow-700" },
     { label: "借入金", value: 86101721, color: "bg-pink-300 dark:bg-pink-700" },
     { label: "資本金", value: 59700745, color: "bg-slate-300 dark:bg-slate-600" },
   ];
