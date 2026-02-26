@@ -66,7 +66,7 @@ export default function FiveElementsDiagram() {
         {[
           { label: "資産", color: "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200" },
           { label: "負債", color: "bg-rose-200 dark:bg-rose-800 text-rose-800 dark:text-rose-200" },
-          { label: "純資産", color: "bg-blue-200 dark:bg-blue-800 text-blue-800 dark:text-blue-200" },
+          { label: "資本", color: "bg-blue-200 dark:bg-blue-800 text-blue-800 dark:text-blue-200" },
           { label: "原価", color: "bg-orange-200 dark:bg-orange-800 text-orange-800 dark:text-orange-200" },
           { label: "経費", color: "bg-amber-200 dark:bg-amber-800 text-amber-800 dark:text-amber-200" },
           { label: "収益", color: "bg-green-200 dark:bg-green-800 text-green-800 dark:text-green-200" },
