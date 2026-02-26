@@ -162,10 +162,192 @@ function TAccount({ account }: { account: TAccountData }) {
   );
 }
 
+type AccountCategory = "asset" | "liability" | "equity" | "cost" | "expense" | "revenue";
+
+const accountCategoryMap: Record<string, AccountCategory> = {
+  "現金": "asset", "売掛金": "asset", "備品": "asset",
+  "買掛金": "liability", "借入金": "liability",
+  "資本金": "equity",
+  "仕入": "cost",
+  "家賃": "expense", "給料": "expense", "通信費": "expense", "水道光熱費": "expense",
+  "売上": "revenue", "受取利息": "revenue",
+};
+
+interface BalanceItem {
+  name: string;
+  amount: number;
+}
+
+interface FinancialSummary {
+  assets: BalanceItem[];
+  liabilities: BalanceItem[];
+  equity: BalanceItem[];
+  costs: BalanceItem[];
+  expenses: BalanceItem[];
+  revenues: BalanceItem[];
+  netIncome: number;
+}
+
+function buildFinancialSummary(tAccounts: TAccountData[]): FinancialSummary {
+  const summary: FinancialSummary = {
+    assets: [], liabilities: [], equity: [],
+    costs: [], expenses: [], revenues: [],
+    netIncome: 0,
+  };
+
+  for (const account of tAccounts) {
+    const cat = accountCategoryMap[account.name];
+    if (!cat) continue;
+    const debitTotal = account.debit.reduce((s, e) => s + e.amount, 0);
+    const creditTotal = account.credit.reduce((s, e) => s + e.amount, 0);
+    const balance = cat === "asset" || cat === "cost" || cat === "expense"
+      ? debitTotal - creditTotal
+      : creditTotal - debitTotal;
+    if (balance === 0) continue;
+    const item: BalanceItem = { name: account.name, amount: balance };
+    switch (cat) {
+      case "asset": summary.assets.push(item); break;
+      case "liability": summary.liabilities.push(item); break;
+      case "equity": summary.equity.push(item); break;
+      case "cost": summary.costs.push(item); break;
+      case "expense": summary.expenses.push(item); break;
+      case "revenue": summary.revenues.push(item); break;
+    }
+  }
+
+  const totalRevenue = summary.revenues.reduce((s, i) => s + i.amount, 0);
+  const totalCost = summary.costs.reduce((s, i) => s + i.amount, 0);
+  const totalExpense = summary.expenses.reduce((s, i) => s + i.amount, 0);
+  summary.netIncome = totalRevenue - totalCost - totalExpense;
+
+  return summary;
+}
+
+function StatementRow({ name, amount, colorClass }: { name: string; amount: number; colorClass: string }) {
+  return (
+    <div className={`flex justify-between items-center px-2 py-1 ${colorClass}`} data-testid={`statement-row-${name}`}>
+      <span className="text-xs font-medium">{name}</span>
+      <span className="text-xs font-mono font-bold">{amount.toLocaleString()}</span>
+    </div>
+  );
+}
+
+function StatementTotalRow({ label, amount }: { label: string; amount: number }) {
+  return (
+    <div className="flex justify-between items-center px-2 py-1.5 border-t-2 border-slate-400 dark:border-slate-500 bg-slate-100 dark:bg-slate-800">
+      <span className="text-xs font-bold text-foreground">{label}</span>
+      <span className="text-xs font-mono font-bold text-foreground">{amount.toLocaleString()}</span>
+    </div>
+  );
+}
+
+function MiniBS({ summary }: { summary: FinancialSummary }) {
+  const totalAssets = summary.assets.reduce((s, i) => s + i.amount, 0);
+  const totalLiabilities = summary.liabilities.reduce((s, i) => s + i.amount, 0);
+  const totalEquity = summary.equity.reduce((s, i) => s + i.amount, 0);
+  const totalRight = totalLiabilities + totalEquity + summary.netIncome;
+
+  return (
+    <div className="border-2 border-slate-400 dark:border-slate-500 rounded-md overflow-hidden" data-testid="mini-bs">
+      <div className="bg-blue-100 dark:bg-blue-900/50 border-b-2 border-slate-400 dark:border-slate-500 py-1.5 text-center">
+        <span className="font-bold text-sm text-foreground">貸借対照表（B/S）</span>
+      </div>
+      <div className="flex min-h-[80px]">
+        <div className="flex-1 border-r border-slate-400 dark:border-slate-500 flex flex-col">
+          <div className="px-2 py-1 border-b border-slate-200 dark:border-slate-700">
+            <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400">借方（資産）</span>
+          </div>
+          <div className="flex-1">
+            {summary.assets.map((item) => (
+              <StatementRow key={item.name} name={item.name} amount={item.amount} colorClass="bg-gray-50 dark:bg-gray-800/50 text-gray-800 dark:text-gray-200" />
+            ))}
+          </div>
+          <StatementTotalRow label="資産合計" amount={totalAssets} />
+        </div>
+        <div className="flex-1 flex flex-col">
+          <div className="px-2 py-1 border-b border-slate-200 dark:border-slate-700">
+            <span className="text-[10px] font-bold text-red-600 dark:text-red-400">貸方（負債・資本）</span>
+          </div>
+          <div className="flex-1">
+            {summary.liabilities.map((item) => (
+              <StatementRow key={item.name} name={item.name} amount={item.amount} colorClass="bg-rose-50 dark:bg-rose-900/30 text-rose-800 dark:text-rose-200" />
+            ))}
+            {summary.equity.map((item) => (
+              <StatementRow key={item.name} name={item.name} amount={item.amount} colorClass="bg-blue-50 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200" />
+            ))}
+            <div className="flex justify-between items-center px-2 py-1 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-200" data-testid="bs-net-income">
+              <span className="text-xs font-medium">当期純利益 ↑</span>
+              <span className="text-xs font-mono font-bold">{summary.netIncome.toLocaleString()}</span>
+            </div>
+          </div>
+          <StatementTotalRow label="負債・資本合計" amount={totalRight} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MiniPL({ summary }: { summary: FinancialSummary }) {
+  const totalCost = summary.costs.reduce((s, i) => s + i.amount, 0);
+  const totalExpense = summary.expenses.reduce((s, i) => s + i.amount, 0);
+  const totalRevenue = summary.revenues.reduce((s, i) => s + i.amount, 0);
+  const totalLeft = totalCost + totalExpense + summary.netIncome;
+
+  return (
+    <div className="border-2 border-slate-400 dark:border-slate-500 rounded-md overflow-hidden" data-testid="mini-pl">
+      <div className="bg-green-100 dark:bg-green-900/50 border-b-2 border-slate-400 dark:border-slate-500 py-1.5 text-center">
+        <span className="font-bold text-sm text-foreground">損益計算書（P/L）</span>
+      </div>
+      <div className="flex min-h-[80px]">
+        <div className="flex-1 border-r border-slate-400 dark:border-slate-500 flex flex-col">
+          <div className="px-2 py-1 border-b border-slate-200 dark:border-slate-700">
+            <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400">借方（原価・経費）</span>
+          </div>
+          <div className="flex-1">
+            {summary.costs.map((item) => (
+              <StatementRow key={item.name} name={item.name} amount={item.amount} colorClass="bg-orange-50 dark:bg-orange-900/30 text-orange-800 dark:text-orange-200" />
+            ))}
+            {summary.expenses.map((item) => (
+              <StatementRow key={item.name} name={item.name} amount={item.amount} colorClass="bg-amber-50 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200" />
+            ))}
+            <div className="flex justify-between items-center px-2 py-1 bg-slate-50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300" data-testid="pl-net-income">
+              <span className="text-xs font-medium">当期純利益</span>
+              <span className="text-xs font-mono font-bold">{summary.netIncome.toLocaleString()}</span>
+            </div>
+          </div>
+          <StatementTotalRow label="借方合計" amount={totalLeft} />
+        </div>
+        <div className="flex-1 flex flex-col">
+          <div className="px-2 py-1 border-b border-slate-200 dark:border-slate-700">
+            <span className="text-[10px] font-bold text-red-600 dark:text-red-400">貸方（収益）</span>
+          </div>
+          <div className="flex-1">
+            {summary.revenues.map((item) => (
+              <StatementRow key={item.name} name={item.name} amount={item.amount} colorClass="bg-green-50 dark:bg-green-900/30 text-green-800 dark:text-green-200" />
+            ))}
+          </div>
+          <StatementTotalRow label="貸方合計" amount={totalRevenue} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function NetIncomeArrow() {
+  return (
+    <div className="flex items-center justify-center py-1" data-testid="net-income-arrow">
+      <div className="flex items-center gap-2 px-4 py-1.5 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-300 dark:border-emerald-700 rounded-full">
+        <span className="text-[10px] md:text-xs font-bold text-emerald-700 dark:text-emerald-300">↓ P/Lの当期純利益をB/Sの純資産へ振替 ↓</span>
+      </div>
+    </div>
+  );
+}
+
 export default function TAccountDiagram() {
   const tAccounts = buildTAccounts(journalEntries);
   const largeAccounts = tAccounts.filter((a) => a.large);
   const smallAccounts = tAccounts.filter((a) => !a.large);
+  const summary = buildFinancialSummary(tAccounts);
 
   return (
     <div className="w-full p-4 md:p-6 space-y-4" data-testid="t-account-diagram">
@@ -196,6 +378,18 @@ export default function TAccountDiagram() {
             <TAccount key={account.name} account={account} />
           ))}
         </div>
+      </div>
+
+      <div className="flex items-center justify-center gap-2 py-2">
+        <div className="h-[1px] flex-1 bg-slate-200 dark:bg-slate-700" />
+        <span className="text-xs font-bold text-amber-600 dark:text-amber-400 px-2 whitespace-nowrap" data-testid="text-aggregate-label">↓ 残高を集計 ↓</span>
+        <div className="h-[1px] flex-1 bg-slate-200 dark:bg-slate-700" />
+      </div>
+
+      <div className="space-y-3">
+        <MiniPL summary={summary} />
+        <NetIncomeArrow />
+        <MiniBS summary={summary} />
       </div>
     </div>
   );
