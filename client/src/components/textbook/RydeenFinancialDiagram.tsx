@@ -113,10 +113,10 @@ function BSRydeen() {
           <Row label="電子記録債権" amount={2875527} indent={1} />
           <Row label="売掛金" amount={24092541} indent={1} />
           <Row label="" amount={35665039} bold />
-          <SectionHeader color="bg-cyan-100 dark:bg-cyan-900 text-cyan-800 dark:text-cyan-200">バッファー</SectionHeader>
+          <SectionHeader color="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">バッファー</SectionHeader>
           <Row label="現金及び預金" amount={19370146} indent={1} />
           <Row label="" amount={19370146} bold />
-          <SectionHeader color="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200">生産手段資産</SectionHeader>
+          <SectionHeader color="bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200">生産手段資産</SectionHeader>
           <Row label="たな卸資産" amount={6433888} indent={1} />
           <Row label="前払費用" amount={814150} indent={1} />
           <Row label="貸倒引当金" amount={640304} indent={1} negative />
@@ -148,7 +148,7 @@ function BSRydeen() {
           <Row label="未払消費税等" amount={3341200} indent={1} />
           <Row label="預り金" amount={1779134} indent={1} />
           <Row label="" amount={8006645} bold />
-          <SectionHeader color="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200">年間返済額</SectionHeader>
+          <SectionHeader color="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200">年間返済額</SectionHeader>
           <Row label="短期借入金" amount={12226231} indent={1} />
           <Row label="長期借入金（年間返済分）" amount={6000000} indent={1} />
           <Row label="" amount={18226231} bold />
@@ -156,7 +156,7 @@ function BSRydeen() {
           <Row label="長期借入金" amount={65962275} indent={1} />
           <Row label="長期未払金" amount={1913215} indent={1} />
           <Row label="" amount={67875490} bold />
-          <SectionHeader color="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">資本金</SectionHeader>
+          <SectionHeader color="bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200">資本金</SectionHeader>
           <Row label="資本金" amount={10000000} indent={1} />
           <Row label="利益剰余金" amount={49700745} indent={1} />
           <Row label="" amount={59700745} bold />
@@ -171,15 +171,15 @@ function BSGraph() {
   const total = 178158578;
   const assetItems = [
     { label: "運転資金資産", value: 35665039, color: "bg-sky-300 dark:bg-sky-700" },
-    { label: "バッファー", value: 19370146, color: "bg-cyan-300 dark:bg-cyan-700" },
-    { label: "生産手段資産", value: 123123393, color: "bg-indigo-300 dark:bg-indigo-700" },
+    { label: "バッファー", value: 19370146, color: "bg-yellow-300 dark:bg-yellow-700" },
+    { label: "生産手段資産", value: 123123393, color: "bg-pink-300 dark:bg-pink-700" },
   ];
   const liabItems = [
-    { label: "運転資金負債", value: 24349467, color: "bg-rose-300 dark:bg-rose-700" },
+    { label: "運転資金負債", value: 24349467, color: "bg-sky-300 dark:bg-sky-700" },
     { label: "その他負債", value: 8006645, color: "bg-pink-300 dark:bg-pink-700" },
-    { label: "年間返済額", value: 18226231, color: "bg-red-300 dark:bg-red-700" },
+    { label: "年間返済額", value: 18226231, color: "bg-purple-300 dark:bg-purple-700" },
     { label: "借入金", value: 67875490, color: "bg-orange-300 dark:bg-orange-700" },
-    { label: "資本金", value: 59700745, color: "bg-blue-300 dark:bg-blue-700" },
+    { label: "資本金", value: 59700745, color: "bg-slate-300 dark:bg-slate-600" },
   ];
 
   return (
