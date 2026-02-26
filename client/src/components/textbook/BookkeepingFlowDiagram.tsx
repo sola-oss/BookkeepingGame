@@ -76,10 +76,6 @@ export default function BookkeepingFlowDiagram() {
             </div>
             <div style={{ width: "98px" }} />
             <div className="flex flex-col items-center">
-              <div className="px-4 py-1.5 border border-slate-300 dark:border-slate-600 rounded text-center bg-white dark:bg-slate-900">
-                <div className="text-[11px] text-foreground">PL/損益計算書</div>
-                <div className="text-[11px] text-foreground">BS/貸借対照表</div>
-              </div>
             </div>
           </div>
 
