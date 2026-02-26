@@ -106,60 +106,76 @@ function BSRydeen() {
   return (
     <div className="overflow-x-auto">
       <div className="min-w-[460px] flex gap-[1px] bg-slate-300 dark:bg-slate-600 border border-slate-300 dark:border-slate-600 rounded text-[10px]">
-        <div className="flex-1 bg-background p-2 space-y-0.5">
+        <div className="flex-1 bg-background p-2 space-y-1">
           <div className="font-bold text-center text-muted-foreground mb-1 text-[9px]">（資産の部）</div>
-          <SectionHeader color="bg-sky-100 dark:bg-sky-900 text-sky-800 dark:text-sky-200">運転資金資産</SectionHeader>
-          <Row label="受取手形" amount={8696971} indent={1} />
-          <Row label="電子記録債権" amount={2875527} indent={1} />
-          <Row label="売掛金" amount={24092541} indent={1} />
-          <Row label="" amount={35665039} bold />
-          <SectionHeader color="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">バッファー</SectionHeader>
-          <Row label="現金及び預金" amount={19370146} indent={1} />
-          <Row label="" amount={19370146} bold />
-          <SectionHeader color="bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200">生産手段資産</SectionHeader>
-          <Row label="たな卸資産" amount={6433888} indent={1} />
-          <Row label="前払費用" amount={814150} indent={1} />
-          <Row label="貸倒引当金" amount={640304} indent={1} negative />
-          <Row label="建物" amount={19744500} indent={1} />
-          <Row label="構築物" amount={11552875} indent={1} />
-          <Row label="機械及び装置" amount={10812757} indent={1} />
-          <Row label="車両及び運搬具" amount={15042238} indent={1} />
-          <Row label="器具及び備品" amount={2305062} indent={1} />
-          <Row label="土地" amount={45900000} indent={1} />
-          <Row label="リース資産" amount={1440000} indent={1} />
-          <Row label="ソフトウェア" amount={417600} indent={1} />
-          <Row label="電話加入権" amount={74984} indent={1} />
-          <Row label="出資金" amount={155260} indent={1} />
-          <Row label="長期前払費用" amount={9070383} indent={1} />
-          <Row label="" amount={123123393} bold />
+          <div className="rounded p-1.5 bg-sky-100 dark:bg-sky-900/60 space-y-0.5">
+            <SectionHeader color="bg-sky-200 dark:bg-sky-800 text-sky-800 dark:text-sky-200">運転資金資産</SectionHeader>
+            <Row label="受取手形" amount={8696971} indent={1} />
+            <Row label="電子記録債権" amount={2875527} indent={1} />
+            <Row label="売掛金" amount={24092541} indent={1} />
+            <Row label="" amount={35665039} bold />
+          </div>
+          <div className="rounded p-1.5 bg-yellow-100 dark:bg-yellow-900/60 space-y-0.5">
+            <SectionHeader color="bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200">バッファー</SectionHeader>
+            <Row label="現金及び預金" amount={19370146} indent={1} />
+            <Row label="" amount={19370146} bold />
+          </div>
+          <div className="rounded p-1.5 bg-pink-100 dark:bg-pink-900/60 space-y-0.5">
+            <SectionHeader color="bg-pink-200 dark:bg-pink-800 text-pink-800 dark:text-pink-200">生産手段資産</SectionHeader>
+            <Row label="たな卸資産" amount={6433888} indent={1} />
+            <Row label="前払費用" amount={814150} indent={1} />
+            <Row label="貸倒引当金" amount={640304} indent={1} negative />
+            <Row label="建物" amount={19744500} indent={1} />
+            <Row label="構築物" amount={11552875} indent={1} />
+            <Row label="機械及び装置" amount={10812757} indent={1} />
+            <Row label="車両及び運搬具" amount={15042238} indent={1} />
+            <Row label="器具及び備品" amount={2305062} indent={1} />
+            <Row label="土地" amount={45900000} indent={1} />
+            <Row label="リース資産" amount={1440000} indent={1} />
+            <Row label="ソフトウェア" amount={417600} indent={1} />
+            <Row label="電話加入権" amount={74984} indent={1} />
+            <Row label="出資金" amount={155260} indent={1} />
+            <Row label="長期前払費用" amount={9070383} indent={1} />
+            <Row label="" amount={123123393} bold />
+          </div>
           <Row label="資産合計" amount={178158578} bold borderTop />
         </div>
-        <div className="flex-1 bg-background p-2 space-y-0.5">
+        <div className="flex-1 bg-background p-2 space-y-1">
           <div className="font-bold text-center text-muted-foreground mb-1 text-[9px]">（負債・純資産の部）</div>
-          <SectionHeader color="bg-rose-100 dark:bg-rose-900 text-rose-800 dark:text-rose-200">運転資金負債</SectionHeader>
-          <Row label="支払手形" amount={5039988} indent={1} />
-          <Row label="電子記録債権" amount={1514925} indent={1} />
-          <Row label="買掛金" amount={17794554} indent={1} />
-          <Row label="" amount={24349467} bold />
-          <SectionHeader color="bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200">その他負債</SectionHeader>
-          <Row label="未払金" amount={798843} indent={1} />
-          <Row label="未払費用" amount={432468} indent={1} />
-          <Row label="未払法人税等" amount={1655000} indent={1} />
-          <Row label="未払消費税等" amount={3341200} indent={1} />
-          <Row label="預り金" amount={1779134} indent={1} />
-          <Row label="" amount={8006645} bold />
-          <SectionHeader color="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200">年間返済額</SectionHeader>
-          <Row label="短期借入金" amount={12226231} indent={1} />
-          <Row label="長期借入金（年間返済分）" amount={6000000} indent={1} />
-          <Row label="" amount={18226231} bold />
-          <SectionHeader color="bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200">借入金</SectionHeader>
-          <Row label="長期借入金" amount={65962275} indent={1} />
-          <Row label="長期未払金" amount={1913215} indent={1} />
-          <Row label="" amount={67875490} bold />
-          <SectionHeader color="bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200">資本金</SectionHeader>
-          <Row label="資本金" amount={10000000} indent={1} />
-          <Row label="利益剰余金" amount={49700745} indent={1} />
-          <Row label="" amount={59700745} bold />
+          <div className="rounded p-1.5 bg-sky-100 dark:bg-sky-900/60 space-y-0.5">
+            <SectionHeader color="bg-sky-200 dark:bg-sky-800 text-sky-800 dark:text-sky-200">運転資金負債</SectionHeader>
+            <Row label="支払手形" amount={5039988} indent={1} />
+            <Row label="電子記録債権" amount={1514925} indent={1} />
+            <Row label="買掛金" amount={17794554} indent={1} />
+            <Row label="" amount={24349467} bold />
+          </div>
+          <div className="rounded p-1.5 bg-pink-100 dark:bg-pink-900/60 space-y-0.5">
+            <SectionHeader color="bg-pink-200 dark:bg-pink-800 text-pink-800 dark:text-pink-200">その他負債</SectionHeader>
+            <Row label="未払金" amount={798843} indent={1} />
+            <Row label="未払費用" amount={432468} indent={1} />
+            <Row label="未払法人税等" amount={1655000} indent={1} />
+            <Row label="未払消費税等" amount={3341200} indent={1} />
+            <Row label="預り金" amount={1779134} indent={1} />
+            <Row label="" amount={8006645} bold />
+          </div>
+          <div className="rounded p-1.5 bg-purple-100 dark:bg-purple-900/60 space-y-0.5">
+            <SectionHeader color="bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200">年間返済額</SectionHeader>
+            <Row label="短期借入金" amount={12226231} indent={1} />
+            <Row label="長期借入金（年間返済分）" amount={6000000} indent={1} />
+            <Row label="" amount={18226231} bold />
+          </div>
+          <div className="rounded p-1.5 bg-orange-100 dark:bg-orange-900/60 space-y-0.5">
+            <SectionHeader color="bg-orange-200 dark:bg-orange-800 text-orange-800 dark:text-orange-200">借入金</SectionHeader>
+            <Row label="長期借入金" amount={65962275} indent={1} />
+            <Row label="長期未払金" amount={1913215} indent={1} />
+            <Row label="" amount={67875490} bold />
+          </div>
+          <div className="rounded p-1.5 bg-slate-100 dark:bg-slate-700/60 space-y-0.5">
+            <SectionHeader color="bg-slate-200 dark:bg-slate-600 text-slate-800 dark:text-slate-200">資本金</SectionHeader>
+            <Row label="資本金" amount={10000000} indent={1} />
+            <Row label="利益剰余金" amount={49700745} indent={1} />
+            <Row label="" amount={59700745} bold />
+          </div>
           <Row label="負債・純資産合計" amount={178158578} bold borderTop />
         </div>
       </div>
