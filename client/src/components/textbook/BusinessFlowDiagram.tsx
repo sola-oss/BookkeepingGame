@@ -1,5 +1,3 @@
-import { ArrowRight, ArrowDown } from "lucide-react";
-
 export default function BusinessFlowDiagram() {
   return (
     <div className="w-full p-4 md:p-6 space-y-4" data-testid="business-flow-diagram">
@@ -7,88 +5,80 @@ export default function BusinessFlowDiagram() {
       <p className="text-xs text-muted-foreground text-center">会社名: RYDEENストアー</p>
 
       <div className="overflow-x-auto">
-        <div className="min-w-[520px] space-y-3 px-2">
-          <div className="flex items-stretch gap-3">
-            <div className="flex-1 space-y-2">
-              <div className="bg-amber-100 dark:bg-amber-900 border border-amber-300 dark:border-amber-700 rounded-lg p-2 text-center">
-                <span className="text-sm font-bold text-amber-800 dark:text-amber-200">Ｇ</span>
-              </div>
-              <div className="space-y-1.5">
-                <div className="bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-md p-2">
-                  <div className="text-[11px] font-bold text-amber-800 dark:text-amber-200">食品メーカー</div>
-                  <div className="text-[10px] text-amber-700 dark:text-amber-300">（株）RYDDEENヌードル</div>
-                  <div className="text-[9px] text-muted-foreground mt-0.5">→銀行振り込み</div>
-                </div>
-                <div className="bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-md p-2">
-                  <div className="text-[11px] font-bold text-amber-800 dark:text-amber-200">卸売メーカー</div>
-                  <div className="text-[10px] text-amber-700 dark:text-amber-300">（株）RYDDEEN商店</div>
-                  <div className="text-[9px] text-muted-foreground mt-0.5">→銀行振り込み</div>
-                </div>
+        <div className="min-w-[520px] px-2">
+          <div className="grid grid-cols-[1fr_auto_1fr] gap-0" style={{ gridTemplateRows: "auto auto" }}>
+
+            <div className="p-2">
+              <div className="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2">G</div>
+              <div className="space-y-1 text-[10px] text-foreground">
+                <div>食品メーカー</div>
+                <div className="text-muted-foreground ml-2">（株）RYDDEENヌードル</div>
+                <div className="text-muted-foreground ml-2">→銀行振り込み</div>
+                <div className="mt-1">卸売メーカー</div>
+                <div className="text-muted-foreground ml-2">（株）RYDDEEN商店</div>
+                <div className="text-muted-foreground ml-2">→銀行振り込み</div>
               </div>
             </div>
 
-            <div className="flex flex-col items-center justify-center gap-2 px-1">
-              <div className="flex flex-col items-center gap-1">
-                <ArrowRight className="w-4 h-4 text-amber-500" />
-                <span className="text-[10px] text-amber-700 dark:text-amber-300 font-bold">原価</span>
-              </div>
+            <div />
 
-              <div className="bg-slate-200 dark:bg-slate-700 border-2 border-slate-400 dark:border-slate-500 rounded-lg px-4 py-5 text-center relative">
-                <span className="text-base font-bold text-foreground">会社</span>
-                <span className="text-[10px] text-muted-foreground ml-1">A</span>
-              </div>
-
-              <div className="flex flex-col items-center gap-1">
-                <span className="text-[10px] text-emerald-700 dark:text-emerald-300 font-bold">売上</span>
-                <ArrowRight className="w-4 h-4 text-emerald-500" />
+            <div className="p-2">
+              <div className="text-sm font-bold text-orange-600 dark:text-orange-400 mb-2">U</div>
+              <div className="space-y-1 text-[10px] text-foreground">
+                <div>一般顧客</div>
+                <div className="text-muted-foreground ml-2">→現金orクレジット</div>
+                <div className="mt-1">店舗販売　３店舗</div>
+                <div className="mt-1">移動販売　３店舗</div>
               </div>
             </div>
 
-            <div className="flex-1 space-y-2">
-              <div className="bg-emerald-100 dark:bg-emerald-900 border border-emerald-300 dark:border-emerald-700 rounded-lg p-2 text-center">
-                <span className="text-sm font-bold text-emerald-800 dark:text-emerald-200">Ｕ</span>
+            <div className="flex items-start justify-end pr-1 pt-2">
+              <div className="flex items-center gap-1">
+                <div className="bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded-sm">原価</div>
+                <svg width="24" height="20" viewBox="0 0 24 20" className="shrink-0">
+                  <polygon points="0,4 16,4 16,0 24,10 16,20 16,16 0,16" fill="#3b82f6" />
+                </svg>
               </div>
-              <div className="space-y-1.5">
-                <div className="bg-emerald-50 dark:bg-emerald-950 border border-emerald-200 dark:border-emerald-800 rounded-md p-2">
-                  <div className="text-[11px] font-bold text-emerald-800 dark:text-emerald-200">一般顧客</div>
-                  <div className="text-[9px] text-muted-foreground">→現金orクレジット</div>
+              <span className="text-[9px] font-bold text-blue-600 dark:text-blue-400 ml-1 mt-0.5">B</span>
+            </div>
+
+            <div className="flex items-center justify-center py-4">
+              <div className="w-20 h-20 rounded-full border-2 border-slate-400 dark:border-slate-500 bg-slate-50 dark:bg-slate-800 flex items-center justify-center">
+                <span className="text-sm font-bold text-foreground">会社</span>
+              </div>
+            </div>
+
+            <div className="flex items-start justify-start pl-1 pt-2">
+              <span className="text-[9px] font-bold text-orange-600 dark:text-orange-400 mr-1 mt-0.5">A</span>
+              <div className="flex items-center gap-1">
+                <svg width="24" height="20" viewBox="0 0 24 20" className="shrink-0">
+                  <polygon points="0,4 16,4 16,0 24,10 16,20 16,16 0,16" fill="#f59e0b" />
+                </svg>
+                <div className="bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded-sm">売上</div>
+              </div>
+            </div>
+
+            <div className="p-2">
+              <div className="text-sm font-bold text-blue-600 dark:text-blue-400 mb-1">K</div>
+              <div className="flex items-start gap-2">
+                <div className="flex items-center gap-1 mt-1">
+                  <div className="bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded-sm">経費</div>
+                  <svg width="20" height="24" viewBox="0 0 20 24" className="shrink-0">
+                    <polygon points="4,24 4,8 0,8 10,0 20,8 16,8 16,24" fill="#22c55e" />
+                  </svg>
+                  <span className="text-[9px] font-bold text-green-600 dark:text-green-400">C</span>
                 </div>
-                <div className="bg-emerald-50 dark:bg-emerald-950 border border-emerald-200 dark:border-emerald-800 rounded-md p-2">
-                  <div className="text-[11px] font-bold text-emerald-800 dark:text-emerald-200">店舗販売</div>
-                  <div className="text-[9px] text-muted-foreground">３店舗</div>
-                </div>
-                <div className="bg-emerald-50 dark:bg-emerald-950 border border-emerald-200 dark:border-emerald-800 rounded-md p-2">
-                  <div className="text-[11px] font-bold text-emerald-800 dark:text-emerald-200">移動販売</div>
-                  <div className="text-[9px] text-muted-foreground">３店舗</div>
-                </div>
+              </div>
+              <div className="mt-2 space-y-0.5 text-[10px] text-foreground">
+                <div className="flex gap-4"><span>人件費</span><span className="text-muted-foreground">銀行振込</span></div>
+                <div className="flex gap-4"><span>広告宣伝費</span><span className="text-muted-foreground">銀行振込</span></div>
+                <div className="flex gap-4"><span>地代家賃</span><span className="text-muted-foreground">銀行振込</span></div>
+                <div className="flex gap-4"><span>車両費</span><span className="text-muted-foreground">クレジットカード</span></div>
               </div>
             </div>
-          </div>
 
-          <div className="flex justify-center relative">
-            <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
-              <ArrowDown className="w-5 h-5 text-violet-500" />
-              <span className="text-[10px] text-violet-700 dark:text-violet-300 font-bold">経費</span>
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <div className="bg-violet-100 dark:bg-violet-900 border border-violet-300 dark:border-violet-700 rounded-lg p-2 text-center mb-2">
-              <span className="text-sm font-bold text-violet-800 dark:text-violet-200">Ｋ</span>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5">
-              {[
-                { name: "人件費", method: "銀行振込" },
-                { name: "広告宣伝費", method: "銀行振込" },
-                { name: "地代家賃", method: "銀行振込" },
-                { name: "車両費", method: "クレジットカード" },
-              ].map((expense) => (
-                <div key={expense.name} className="bg-violet-50 dark:bg-violet-950 border border-violet-200 dark:border-violet-800 rounded-md p-2 text-center">
-                  <div className="text-[11px] font-bold text-violet-800 dark:text-violet-200">{expense.name}</div>
-                  <div className="text-[9px] text-muted-foreground">{expense.method}</div>
-                </div>
-              ))}
-            </div>
+            <div />
+            <div />
           </div>
         </div>
       </div>
