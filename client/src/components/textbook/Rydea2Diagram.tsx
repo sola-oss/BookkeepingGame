@@ -33,11 +33,10 @@ function BSSection() {
           （体力…いくら使えるか）
         </div>
       </div>
-
       <div className="flex-1 border-2 border-blue-300 dark:border-blue-600 rounded-lg overflow-hidden">
         <div className="grid grid-cols-[90px_1fr_1fr] gap-0 text-center">
           <div className="p-1.5">
-            <div className="border border-red-400 rounded px-1.5 py-0.5 text-[10px] font-bold text-red-600 dark:text-red-400 inline-block">簡易資金繰り表</div>
+            <div className="border border-red-400 rounded px-1.5 py-0.5 text-[10px] font-bold text-red-600 dark:text-red-400 inline-block">残</div>
           </div>
           <div className="bg-slate-100 dark:bg-slate-800 border-b border-slate-300 dark:border-slate-600 p-1.5">
             <span className="text-[11px] font-bold text-foreground">出</span>
