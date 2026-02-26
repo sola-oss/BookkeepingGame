@@ -429,17 +429,7 @@ function PLGraph() {
           <span className="text-[10px] font-bold text-muted-foreground">収入</span>
         </div>
 
-        <svg className="absolute left-0 right-0 pointer-events-none" style={{ top: `${topH}px`, height: "40px", width: "100%" }}>
-          <defs>
-            <marker id="arrowhead-pl" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-              <polygon points="0 0, 8 3, 0 6" fill="#ef4444" />
-            </marker>
-          </defs>
-          <line x1="25%" y1="2" x2="35%" y2="34" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arrowhead-pl)" />
-          <line x1="75%" y1="2" x2="65%" y2="34" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arrowhead-pl)" />
-        </svg>
-
-        <div className="mt-8" />
+        <div className="mt-3" />
 
         <div className="flex" style={{ height: `${bottomH}px` }}>
           <div className="flex-1 border-2 border-slate-400 dark:border-slate-500 rounded-l overflow-hidden flex flex-col">
