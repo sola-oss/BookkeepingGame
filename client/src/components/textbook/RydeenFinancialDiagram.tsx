@@ -158,15 +158,11 @@ function BSRydeen() {
             <Row label="預り金" amount={1779134} indent={1} />
             <Row label="" amount={8006645} bold />
           </div>
-          <div className="rounded p-1.5 bg-purple-100 dark:bg-purple-900/60 space-y-0.5">
-            <SectionHeader color="bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200">年間返済額</SectionHeader>
-            <Row label="短期借入金" amount={18226231} indent={1} />
-            <Row label="" amount={18226231} bold />
-          </div>
           <div className="rounded p-1.5 bg-pink-100 dark:bg-pink-900/60 space-y-0.5">
             <SectionHeader color="bg-pink-200 dark:bg-pink-800 text-pink-800 dark:text-pink-200">借入金</SectionHeader>
+            <Row label="短期借入金" amount={18226231} indent={1} />
             <Row label="長期借入金" amount={67875490} indent={1} />
-            <Row label="" amount={67875490} bold />
+            <Row label="" amount={86101721} bold />
           </div>
           <div className="rounded p-1.5 bg-slate-100 dark:bg-slate-700/60 space-y-0.5">
             <SectionHeader color="bg-slate-200 dark:bg-slate-600 text-slate-800 dark:text-slate-200">資本金</SectionHeader>
@@ -191,8 +187,7 @@ function BSGraph() {
   const liabItems = [
     { label: "運転資金負債", value: 24349467, color: "bg-sky-300 dark:bg-sky-700" },
     { label: "その他負債", value: 8006645, color: "bg-pink-300 dark:bg-pink-700" },
-    { label: "年間返済額", value: 18226231, color: "bg-purple-300 dark:bg-purple-700" },
-    { label: "借入金", value: 67875490, color: "bg-pink-300 dark:bg-pink-700" },
+    { label: "借入金", value: 86101721, color: "bg-pink-300 dark:bg-pink-700" },
     { label: "資本金", value: 59700745, color: "bg-slate-300 dark:bg-slate-600" },
   ];
 
