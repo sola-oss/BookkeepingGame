@@ -96,13 +96,12 @@ function PLSection() {
           （スピード…どれだけ儲ける力があるか）
         </div>
       </div>
-
       <div className="flex-1 border-2 border-orange-300 dark:border-orange-600 rounded-lg overflow-hidden">
         <div className="p-3">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <div className="text-center mb-2">
-                <div className="border border-red-400 rounded px-2 py-0.5 text-[10px] font-bold text-red-600 dark:text-red-400 inline-block">UGK表</div>
+                <div className="border border-red-400 rounded px-2 py-0.5 text-[10px] font-bold text-red-600 dark:text-red-400 inline-block text-center">UGK表</div>
               </div>
 
               <div className="space-y-2">
