@@ -50,7 +50,7 @@ export const textbookChapters: TextbookChapter[] = [
       },
       {
         id: "five_elements",
-        title: "簿記の5要素 ― 勘定科目の本籍",
+        title: "簿記の6要素 ― 勘定科目の本籍",
         diagramId: "five-elements",
         content: [
           "すべての勘定科目は5つの要素のどれかに分類されます。",
