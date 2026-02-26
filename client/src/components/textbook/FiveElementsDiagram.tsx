@@ -2,7 +2,6 @@ export default function FiveElementsDiagram() {
   return (
     <div className="w-full p-4 md:p-6 space-y-4" data-testid="five-elements-diagram">
       <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-five-elements-title">簿記の５要素・・・勘定科目の本籍</h3>
-
       <div className="overflow-x-auto">
         <div className="min-w-[380px] flex flex-col md:flex-row gap-4 md:gap-6 justify-center items-stretch">
           <div className="flex-1 max-w-[280px] mx-auto md:mx-0">
@@ -25,7 +24,7 @@ export default function FiveElementsDiagram() {
                     <span className="text-lg md:text-xl font-bold text-rose-800 dark:text-rose-200">負債</span>
                   </div>
                   <div className="flex-1 bg-blue-200 dark:bg-blue-800 flex items-center justify-center p-3">
-                    <span className="text-lg md:text-xl font-bold text-blue-800 dark:text-blue-200">純資産</span>
+                    <span className="text-lg md:text-xl font-bold text-blue-800 dark:text-blue-200">資本</span>
                   </div>
                 </div>
               </div>
@@ -60,7 +59,6 @@ export default function FiveElementsDiagram() {
           </div>
         </div>
       </div>
-
       <div className="flex flex-wrap justify-center gap-2 pt-2">
         {[
           { label: "資産", color: "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200" },
