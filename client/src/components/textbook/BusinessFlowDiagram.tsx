@@ -21,7 +21,7 @@ export default function BusinessFlowDiagram() {
 
             <div />
 
-            <div className="p-2">
+            <div className="p-2 ml-[30px] mr-[30px]">
               <div className="text-sm font-bold text-orange-600 dark:text-orange-400 mb-2">U</div>
               <div className="space-y-1 text-[10px] text-foreground">
                 <div>一般顧客</div>
