@@ -164,8 +164,8 @@ function BSRydeen() {
             <Row label="長期借入金（年間返済分）" amount={6000000} indent={1} />
             <Row label="" amount={18226231} bold />
           </div>
-          <div className="rounded p-1.5 bg-orange-100 dark:bg-orange-900/60 space-y-0.5">
-            <SectionHeader color="bg-orange-200 dark:bg-orange-800 text-orange-800 dark:text-orange-200">借入金</SectionHeader>
+          <div className="rounded p-1.5 bg-pink-100 dark:bg-pink-900/60 space-y-0.5">
+            <SectionHeader color="bg-pink-200 dark:bg-pink-800 text-pink-800 dark:text-pink-200">借入金</SectionHeader>
             <Row label="長期借入金" amount={65962275} indent={1} />
             <Row label="長期未払金" amount={1913215} indent={1} />
             <Row label="" amount={67875490} bold />
@@ -194,7 +194,7 @@ function BSGraph() {
     { label: "運転資金負債", value: 24349467, color: "bg-sky-300 dark:bg-sky-700" },
     { label: "その他負債", value: 8006645, color: "bg-pink-300 dark:bg-pink-700" },
     { label: "年間返済額", value: 18226231, color: "bg-purple-300 dark:bg-purple-700" },
-    { label: "借入金", value: 67875490, color: "bg-orange-300 dark:bg-orange-700" },
+    { label: "借入金", value: 67875490, color: "bg-pink-300 dark:bg-pink-700" },
     { label: "資本金", value: 59700745, color: "bg-slate-300 dark:bg-slate-600" },
   ];
 
