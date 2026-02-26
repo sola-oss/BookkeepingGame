@@ -114,7 +114,7 @@ function PLSection() {
                   <div className="text-center px-1">
                     <div className="flex items-center gap-1 justify-center">
                       <span className="text-[9px] font-bold bg-blue-500 text-white px-1 rounded">K</span>
-                      <span className="text-[9px] font-bold text-foreground">経費</span>
+                      <span className="text-[9px] font-bold text-[#1f538f]">経費</span>
                     </div>
                     <div className="text-foreground/70 mt-0.5 text-left text-[8px]">固定費</div>
                     <div className="text-[7px] text-foreground/60 text-left ml-1 space-y-0.5 mt-0.5">
