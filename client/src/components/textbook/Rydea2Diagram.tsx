@@ -1,5 +1,3 @@
-import { ArrowDown } from "lucide-react";
-
 export default function Rydea2Diagram() {
   return (
     <div className="w-full p-4 md:p-6 space-y-4" data-testid="rydea2-diagram">
@@ -9,11 +7,6 @@ export default function Rydea2Diagram() {
         <div className="min-w-[580px] space-y-3">
 
           <BSSection />
-
-          <div className="flex items-center gap-2 ml-4">
-            <div className="border border-red-400 rounded px-2 py-0.5 text-[10px] font-bold text-red-600 dark:text-red-400">収支計画表</div>
-            <ArrowDown className="w-4 h-4 text-red-500" />
-          </div>
 
           <PLSection />
 
