@@ -166,8 +166,7 @@ function BSRydeen() {
           <div className="rounded p-1.5 bg-pink-100 dark:bg-pink-900/60 space-y-0.5">
             <SectionHeader color="bg-pink-200 dark:bg-pink-800 text-pink-800 dark:text-pink-200">借入金</SectionHeader>
             <Row label="長期借入金" amount={67875490} indent={1} />
-            <Row label="長期未払金" amount={1913215} indent={1} />
-            <Row label="" amount={69788705} bold />
+            <Row label="" amount={67875490} bold />
           </div>
           <div className="rounded p-1.5 bg-slate-100 dark:bg-slate-700/60 space-y-0.5">
             <SectionHeader color="bg-slate-200 dark:bg-slate-600 text-slate-800 dark:text-slate-200">資本金</SectionHeader>
