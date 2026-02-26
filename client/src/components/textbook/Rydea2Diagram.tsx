@@ -115,7 +115,6 @@ function PLSection() {
                 <div className="bg-blue-200 dark:bg-blue-800 flex items-center justify-center border-b-2 border-slate-300 dark:border-slate-500" style={{ height: "52%" }}>
                   <div className="text-center px-1">
                     <div className="flex items-center gap-1 justify-center">
-                      <span className="text-[9px] font-bold bg-blue-500 text-white px-1 rounded">K</span>
                       <span className="text-[9px] font-bold text-[#1f538f]">経費</span>
                     </div>
                     <div className="text-foreground/70 mt-0.5 text-left text-[8px] font-medium">固定費</div>
