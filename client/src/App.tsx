@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -8,26 +9,27 @@ import { JournalProvider } from "@/context/JournalContext";
 import { ExamProvider } from "@/context/ExamContext";
 import { MockExamProvider } from "@/context/MockExamContext";
 import Home from "@/pages/Home";
-import Game from "@/pages/Game";
-import Result from "@/pages/Result";
-import WeakPoints from "@/pages/WeakPoints";
-import Settings from "@/pages/Settings";
-import Badges from "@/pages/Badges";
-import FinancialStatements from "@/pages/FinancialStatements";
-import JournalMode from "@/pages/JournalMode";
-import JournalResult from "@/pages/JournalResult";
-import ExamStart from "@/pages/ExamStart";
-import ExamMode from "@/pages/ExamMode";
-import ExamReview from "@/pages/ExamReview";
-import ExamResult from "@/pages/ExamResult";
-import MockExamStart from "@/pages/MockExamStart";
-import MockExam from "@/pages/MockExam";
-import MockExamResult from "@/pages/MockExamResult";
-import AccountList from "@/pages/AccountList";
-import AccountDetail from "@/pages/AccountDetail";
-import TextbookList from "@/pages/TextbookList";
-import AccountingFlowMode from "@/pages/AccountingFlowMode";
 import NotFound from "@/pages/not-found";
+
+const Game = lazy(() => import("@/pages/Game"));
+const Result = lazy(() => import("@/pages/Result"));
+const WeakPoints = lazy(() => import("@/pages/WeakPoints"));
+const Settings = lazy(() => import("@/pages/Settings"));
+const Badges = lazy(() => import("@/pages/Badges"));
+const FinancialStatements = lazy(() => import("@/pages/FinancialStatements"));
+const JournalMode = lazy(() => import("@/pages/JournalMode"));
+const JournalResult = lazy(() => import("@/pages/JournalResult"));
+const ExamStart = lazy(() => import("@/pages/ExamStart"));
+const ExamMode = lazy(() => import("@/pages/ExamMode"));
+const ExamReview = lazy(() => import("@/pages/ExamReview"));
+const ExamResult = lazy(() => import("@/pages/ExamResult"));
+const MockExamStart = lazy(() => import("@/pages/MockExamStart"));
+const MockExam = lazy(() => import("@/pages/MockExam"));
+const MockExamResult = lazy(() => import("@/pages/MockExamResult"));
+const AccountList = lazy(() => import("@/pages/AccountList"));
+const AccountDetail = lazy(() => import("@/pages/AccountDetail"));
+const TextbookList = lazy(() => import("@/pages/TextbookList"));
+const AccountingFlowMode = lazy(() => import("@/pages/AccountingFlowMode"));
 
 function Router() {
   return (
@@ -66,7 +68,9 @@ function App() {
             <ExamProvider>
               <MockExamProvider>
                 <Toaster />
-                <Router />
+                <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="text-muted-foreground">読み込み中...</div></div>}>
+                  <Router />
+                </Suspense>
               </MockExamProvider>
             </ExamProvider>
           </JournalProvider>

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, lazy, Suspense } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
@@ -14,16 +14,16 @@ import { Input } from "@/components/ui/input";
 import { textbookChapters, searchTextbookChapters } from "@/data/textbookPages";
 import type { TextbookChapter, TextbookSection } from "@shared/schema";
 
-import BookkeepingFlowDiagram from "@/components/textbook/BookkeepingFlowDiagram";
-import BSPLRelationDiagram from "@/components/textbook/BSPLRelationDiagram";
-import FiveElementsDiagram from "@/components/textbook/FiveElementsDiagram";
-import TAccountDiagram from "@/components/textbook/TAccountDiagram";
-import RydeenFinancialDiagram from "@/components/textbook/RydeenFinancialDiagram";
-import Rydea2Diagram from "@/components/textbook/Rydea2Diagram";
-import BusinessFlowDiagram from "@/components/textbook/BusinessFlowDiagram";
-import BokiKaikeiDiagram from "@/components/textbook/BokiKaikeiDiagram";
+const BookkeepingFlowDiagram = lazy(() => import("@/components/textbook/BookkeepingFlowDiagram"));
+const BSPLRelationDiagram = lazy(() => import("@/components/textbook/BSPLRelationDiagram"));
+const FiveElementsDiagram = lazy(() => import("@/components/textbook/FiveElementsDiagram"));
+const TAccountDiagram = lazy(() => import("@/components/textbook/TAccountDiagram"));
+const RydeenFinancialDiagram = lazy(() => import("@/components/textbook/RydeenFinancialDiagram"));
+const Rydea2Diagram = lazy(() => import("@/components/textbook/Rydea2Diagram"));
+const BusinessFlowDiagram = lazy(() => import("@/components/textbook/BusinessFlowDiagram"));
+const BokiKaikeiDiagram = lazy(() => import("@/components/textbook/BokiKaikeiDiagram"));
 
-const diagramComponents: Record<string, () => JSX.Element> = {
+const diagramComponents: Record<string, React.LazyExoticComponent<() => JSX.Element>> = {
   "bookkeeping-flow": BookkeepingFlowDiagram,
   "bs-pl-relation": BSPLRelationDiagram,
   "five-elements": FiveElementsDiagram,
@@ -64,7 +64,9 @@ function SectionContent({ section }: { section: TextbookSection }) {
         {DiagramComponent && (
           <Card className="border-dashed overflow-hidden">
             <CardContent className="p-0">
-              <DiagramComponent />
+              <Suspense fallback={<div className="flex items-center justify-center py-8"><span className="text-sm text-muted-foreground">図解を読み込み中...</span></div>}>
+                <DiagramComponent />
+              </Suspense>
             </CardContent>
           </Card>
         )}
