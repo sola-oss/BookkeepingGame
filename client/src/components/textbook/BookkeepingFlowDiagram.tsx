@@ -2,6 +2,7 @@ export default function BookkeepingFlowDiagram() {
   return (
     <div className="w-full p-4 md:p-6 space-y-4" data-testid="bookkeeping-flow-diagram">
       <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-flow-title">簿記の流れ</h3>
+
       <div className="overflow-x-auto">
         <div className="min-w-[560px] space-y-2 px-2">
 
@@ -24,7 +25,7 @@ export default function BookkeepingFlowDiagram() {
               </svg>
 
               <div className="px-4 py-2.5 rounded-lg bg-emerald-100 dark:bg-emerald-900 border border-emerald-300 dark:border-emerald-700 text-center">
-                <span className="font-bold text-sm text-emerald-800 dark:text-emerald-200">元帳</span>
+                <span className="font-bold text-sm text-emerald-800 dark:text-emerald-200">勘定記入</span>
               </div>
             </div>
 
@@ -51,6 +52,32 @@ export default function BookkeepingFlowDiagram() {
             <div style={{ width: "96px" }} />
           </div>
 
+          <div className="flex items-start justify-center gap-0">
+            <div className="flex items-start gap-0" style={{ width: "fit-content" }}>
+              <div style={{ width: "60px" }} />
+              <div style={{ width: "40px" }} />
+              <div className="flex flex-col items-center" style={{ width: "52px" }}>
+                <svg width="16" height="16" viewBox="0 0 16 16" className="mb-1">
+                  <polygon points="4,0 12,0 12,10 16,10 8,16 0,10 4,10" fill="#d1d5db" />
+                </svg>
+                <div className="px-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded text-center bg-white dark:bg-slate-900">
+                  <span className="text-[11px] text-foreground">仕訳帳</span>
+                </div>
+              </div>
+              <div style={{ width: "40px" }} />
+              <div className="flex flex-col items-center" style={{ width: "72px" }}>
+                <svg width="16" height="16" viewBox="0 0 16 16" className="mb-1">
+                  <polygon points="4,0 12,0 12,10 16,10 8,16 0,10 4,10" fill="#d1d5db" />
+                </svg>
+                <div className="px-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded text-center bg-white dark:bg-slate-900">
+                  <span className="text-[11px] text-foreground">総勘定元帳</span>
+                </div>
+              </div>
+            </div>
+            <div style={{ width: "98px" }} />
+            <div className="flex flex-col items-center">
+            </div>
+          </div>
 
         </div>
       </div>
