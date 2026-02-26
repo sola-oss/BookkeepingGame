@@ -124,7 +124,7 @@ function PLSection() {
                   </div>
                 </div>
                 <div className="bg-yellow-100 dark:bg-yellow-800 flex items-center justify-center flex-1">
-                  <div className="text-[8px] font-bold text-foreground">利益</div>
+                  <div className="text-[8px] font-bold text-[#827a31]">利益</div>
                 </div>
               </div>
               <div className="flex-1 bg-orange-200 dark:bg-orange-800 flex items-center justify-center">
