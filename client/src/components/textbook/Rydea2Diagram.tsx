@@ -97,6 +97,9 @@ function PLSection() {
         </div>
       </div>
       <div className="flex-1 border-2 border-orange-300 dark:border-orange-600 rounded-lg overflow-hidden">
+        <div className="bg-orange-50 dark:bg-orange-950 p-1.5 border-b border-orange-200 dark:border-orange-700 text-right">
+          <div className="border border-red-400 rounded px-1.5 py-0.5 text-[10px] font-bold text-red-600 dark:text-red-400 inline-block">消</div>
+        </div>
         <div className="p-3 space-y-1">
           <div className="border-2 border-red-400 dark:border-red-500 rounded-lg overflow-hidden" style={{ height: "280px" }}>
             <div className="flex h-full">
