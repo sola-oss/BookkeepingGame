@@ -152,11 +152,6 @@ function PLSection() {
                   </div>
 
                   <div className="flex-1 flex flex-col">
-                    <div className="bg-green-50 dark:bg-green-950 border border-green-300 dark:border-green-700 rounded p-1.5 mb-1">
-                      <div className="text-[9px] text-green-800 dark:text-green-200">変動費</div>
-                      <div className="text-[8px] text-green-600 dark:text-green-400 ml-2">率固定</div>
-                    </div>
-
                     <div className="text-[9px] text-orange-600 dark:text-orange-400 font-bold text-center mb-1">粗利の把握</div>
 
                     <div className="bg-blue-50 dark:bg-blue-950 border border-blue-300 dark:border-blue-700 rounded p-1.5 mb-1">
