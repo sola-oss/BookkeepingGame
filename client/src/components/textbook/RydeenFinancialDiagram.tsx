@@ -286,62 +286,73 @@ function PLRydeen() {
   return (
     <div className="overflow-x-auto">
       <div className="min-w-[360px] p-2 border border-slate-300 dark:border-slate-600 rounded space-y-1 text-[10px]">
-        <SectionHeader color="bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200">U 売上高</SectionHeader>
-        <Row label="売上高" amount={230980493} bold />
-
-        <SectionHeader color="bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200">G 変動費　34.8%</SectionHeader>
-        <div className="pl-2 space-y-0.5">
-          <div className="text-[10px] font-bold text-amber-700 dark:text-amber-300 py-0.5">ヒト</div>
-          <Row label="外注費" amount={46872159} indent={2} />
-          <Row label="" amount={46872159} indent={3} bold />
-          <div className="text-[10px] font-bold text-amber-700 dark:text-amber-300 py-0.5">モノ</div>
-          <Row label="材料費" amount={18458621} indent={2} />
-          <Row label="" amount={18458621} indent={3} bold />
-          <div className="text-[10px] font-bold text-amber-700 dark:text-amber-300 py-0.5">その他原価</div>
-          <Row label="その他原価" amount={15142079} indent={2} />
-          <Row label="" amount={15142079} indent={3} bold />
+        <div className="rounded p-1.5 bg-orange-100 dark:bg-orange-900/60 space-y-0.5">
+          <SectionHeader color="bg-orange-200 dark:bg-orange-800 text-orange-800 dark:text-orange-200">売上高</SectionHeader>
+          <Row label="売上高" amount={230980493} bold />
         </div>
-        <Row label="変動費合計" amount={80472859} bold borderTop />
 
-        <div className="border-2 border-lime-400 dark:border-lime-600 rounded p-1.5 my-1">
+        <div className="rounded p-1.5 bg-green-100 dark:bg-green-900/60 space-y-0.5">
+          <SectionHeader color="bg-green-200 dark:bg-green-800 text-green-800 dark:text-green-200">変動費</SectionHeader>
+          <div className="pl-2 space-y-0.5">
+            <div className="text-[10px] font-bold text-green-700 dark:text-green-300 py-0.5">ヒト</div>
+            <Row label="外注費" amount={46872159} indent={2} />
+            <Row label="" amount={46872159} indent={3} bold />
+            <div className="text-[10px] font-bold text-green-700 dark:text-green-300 py-0.5">モノ</div>
+            <Row label="材料費" amount={18458621} indent={2} />
+            <Row label="" amount={18458621} indent={3} bold />
+            <div className="text-[10px] font-bold text-green-700 dark:text-green-300 py-0.5">その他原価</div>
+            <Row label="その他原価" amount={15142079} indent={2} />
+            <Row label="" amount={15142079} indent={3} bold />
+          </div>
+          <Row label="変動費合計" amount={80472859} bold borderTop />
+        </div>
+
+        <div className="border-2 border-green-400 dark:border-green-600 rounded p-1.5 my-1 bg-green-50 dark:bg-green-950/30">
           <Row label="粗利" amount={150507634} bold />
         </div>
 
-        <SectionHeader color="bg-violet-100 dark:bg-violet-900 text-violet-800 dark:text-violet-200">K 固定費</SectionHeader>
-        <div className="pl-2 space-y-0.5">
-          <div className="text-[10px] font-bold text-violet-700 dark:text-violet-300 py-0.5">人件費用</div>
-          <Row label="労務費" amount={84216571} indent={2} />
-          <Row label="給与手当" amount={16854626} indent={2} />
-          <Row label="法定福利費" amount={2309106} indent={2} />
-          <Row label="福利厚生費" amount={792995} indent={2} />
-          <Row label="" amount={104173298} indent={3} bold />
-          <div className="text-[10px] font-bold text-violet-700 dark:text-violet-300 py-0.5">投資費用</div>
-          <Row label="接待交際費" amount={326593} indent={2} />
-          <Row label="販売促進費" amount={10617972} indent={2} />
-          <Row label="旅費交通費" amount={1877761} indent={2} />
-          <Row label="研究開発費" amount={1154524} indent={2} />
-          <Row label="" amount={13976850} indent={3} bold />
-          <div className="text-[10px] font-bold text-violet-700 dark:text-violet-300 py-0.5">その他費用</div>
-          <Row label="修繕費" amount={80486} indent={2} />
-          <Row label="地代家賃" amount={134655} indent={2} />
-          <Row label="租税公課" amount={2556486} indent={2} />
-          <Row label="消耗品費" amount={1781455} indent={2} />
-          <Row label="保険料" amount={3436249} indent={2} />
-          <Row label="支払利息" amount={1355525} indent={2} />
-          <Row label="雑費" amount={3504101} indent={2} />
-          <Row label="" amount={12848957} indent={3} bold />
+        <div className="rounded p-1.5 bg-blue-100 dark:bg-blue-900/60 space-y-0.5">
+          <SectionHeader color="bg-blue-200 dark:bg-blue-800 text-blue-800 dark:text-blue-200">人件費用</SectionHeader>
+          <Row label="労務費" amount={84216571} indent={1} />
+          <Row label="給与手当" amount={16854626} indent={1} />
+          <Row label="法定福利費" amount={2309106} indent={1} />
+          <Row label="福利厚生費" amount={792995} indent={1} />
+          <Row label="" amount={104173298} bold />
         </div>
+
+        <div className="rounded p-1.5 bg-sky-100 dark:bg-sky-900/60 space-y-0.5">
+          <SectionHeader color="bg-sky-200 dark:bg-sky-800 text-sky-800 dark:text-sky-200">投資費用</SectionHeader>
+          <Row label="接待交際費" amount={326593} indent={1} />
+          <Row label="販売促進費" amount={10617972} indent={1} />
+          <Row label="旅費交通費" amount={1877761} indent={1} />
+          <Row label="研究開発費" amount={1154524} indent={1} />
+          <Row label="" amount={13976850} bold />
+        </div>
+
+        <div className="rounded p-1.5 bg-slate-100 dark:bg-slate-700/60 space-y-0.5">
+          <SectionHeader color="bg-slate-200 dark:bg-slate-600 text-slate-800 dark:text-slate-200">その他費用</SectionHeader>
+          <Row label="修繕費" amount={80486} indent={1} />
+          <Row label="地代家賃" amount={134655} indent={1} />
+          <Row label="租税公課" amount={2556486} indent={1} />
+          <Row label="消耗品費" amount={1781455} indent={1} />
+          <Row label="保険料" amount={3436249} indent={1} />
+          <Row label="支払利息" amount={1355525} indent={1} />
+          <Row label="雑費" amount={3504101} indent={1} />
+          <Row label="" amount={12848957} bold />
+        </div>
+
         <Row label="固定費合計" amount={130999105} bold borderTop />
 
-        <div className="border-2 border-teal-400 dark:border-teal-600 rounded p-1.5 my-1">
-          <Row label="営業利益" amount={19508529} bold />
+        <Row label="営業利益" amount={19508529} bold borderTop />
+
+        <div className="rounded p-1.5 bg-orange-50 dark:bg-orange-900/30 space-y-0.5 mt-1">
+          <SectionHeader color="bg-orange-100 dark:bg-orange-800 text-orange-800 dark:text-orange-200">営業外収益</SectionHeader>
+          <Row label="受取利息" amount={2019} indent={1} />
+          <Row label="受取配当金" amount={4320} indent={1} />
+          <Row label="雑収入" amount={529937} indent={1} />
+          <Row label="" amount={536276} bold />
         </div>
 
-        <Row label="営業外収益" amount="" />
-        <Row label="受取利息" amount={2019} indent={1} />
-        <Row label="受取配当金" amount={4320} indent={1} />
-        <Row label="雑収入" amount={529937} indent={1} />
-        <Row label="" amount={536276} indent={2} />
         <Row label="経常利益" amount={20044805} bold borderTop />
         <Row label="特別利益" amount={0} />
         <Row label="特別損失" amount={0} />
@@ -362,13 +373,13 @@ function PLRydeen() {
 function PLGraph() {
   const total = 230980493;
   const costItems = [
-    { label: "変動費", value: 80472859, color: "bg-amber-300 dark:bg-amber-700", pct: "34.8%" },
-    { label: "固定費", value: 130999105, color: "bg-violet-300 dark:bg-violet-700", pct: "56.7%" },
-    { label: "税引前利益", value: 20044805, color: "bg-teal-300 dark:bg-teal-700", pct: "8.7%" },
+    { label: "変動費", value: 80472859, color: "bg-orange-300 dark:bg-orange-700", pct: "34.8%" },
+    { label: "固定費", value: 130999105, color: "bg-blue-300 dark:bg-blue-700", pct: "56.7%" },
+    { label: "税引前利益", value: 20044805, color: "bg-green-200 dark:bg-green-800", pct: "8.7%" },
   ];
   const revItems = [
-    { label: "粗利", value: 150507634, color: "bg-lime-300 dark:bg-lime-700", pct: "65.2%" },
-    { label: "変動費", value: 80472859, color: "bg-amber-300 dark:bg-amber-700", pct: "34.8%" },
+    { label: "粗利", value: 150507634, color: "bg-green-300 dark:bg-green-700", pct: "65.2%" },
+    { label: "変動費", value: 80472859, color: "bg-orange-300 dark:bg-orange-700", pct: "34.8%" },
   ];
 
   return (
