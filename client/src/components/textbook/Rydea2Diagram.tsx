@@ -144,9 +144,6 @@ function PLSection() {
             </div>
 
             <div>
-              <div className="text-center mb-2">
-                <span className="text-[10px] text-muted-foreground">決算書</span>
-              </div>
               <div className="border-2 border-red-400 dark:border-red-500 rounded-lg overflow-hidden" style={{ height: "280px" }}>
                 <div className="flex h-full">
                   <div className="flex-1 flex flex-col border-r-2 border-slate-400 dark:border-slate-500">
