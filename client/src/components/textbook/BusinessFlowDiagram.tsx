@@ -50,7 +50,7 @@ export default function BusinessFlowDiagram() {
               </div>
             </div>
 
-            <div className="flex items-center justify-center py-1">
+            <div className="flex items-center justify-center py-1 -mt-8">
               <div className="w-20 h-20 rounded-full border-2 border-slate-400 dark:border-slate-500 bg-slate-50 dark:bg-slate-800 flex items-center justify-center">
                 <span className="text-sm font-bold text-foreground">会社</span>
               </div>
