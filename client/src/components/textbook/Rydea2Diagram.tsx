@@ -152,27 +152,29 @@ function PLSection() {
 
 function BottomSection() {
   return (
-    <div className="ml-[28px] border-t-2 border-dashed border-slate-300 dark:border-slate-600 pt-3 space-y-3">
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <div className="border-b border-green-400 dark:border-green-600 pb-1">
-            <span className="text-[10px] font-bold text-green-700 dark:text-green-300">決算書で見える部分</span>
-          </div>
-          <div className="border-t-2 border-dashed border-slate-400 dark:border-slate-500 pt-2">
-            <span className="text-[10px] font-bold text-foreground">決算書で見えない部分</span>
-          </div>
-          <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded p-2 space-y-1">
-            <div className="text-[10px] text-foreground text-center">営業利益</div>
-            <div className="text-[10px] text-muted-foreground text-center">＋</div>
-            <div className="text-[10px] text-foreground text-center">減価償却費</div>
-            <div className="text-[10px] text-muted-foreground text-center">＋</div>
-            <div className="text-[10px] text-foreground text-center">役員報酬</div>
-          </div>
+    <div className="ml-[28px] space-y-0">
+      <div className="border-t-2 border-green-500 dark:border-green-400 py-1">
+        <span className="text-[10px] font-bold text-green-700 dark:text-green-300">▲ 決算書で見える部分</span>
+      </div>
+
+      <div className="border-t-2 border-dashed border-slate-400 dark:border-slate-500 py-1">
+        <span className="text-[10px] font-bold text-foreground">▼ 決算書で見えない部分</span>
+      </div>
+
+      <div className="flex gap-3 mt-1">
+        <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded p-2 space-y-0.5 flex-1">
+          <div className="text-[10px] text-foreground text-center">営業利益</div>
+          <div className="text-[10px] text-muted-foreground text-center">＋</div>
+          <div className="text-[10px] text-foreground text-center">減価償却費</div>
+          <div className="text-[10px] text-muted-foreground text-center">＋</div>
+          <div className="text-[10px] text-foreground text-center">役員報酬</div>
         </div>
 
-        <div className="space-y-2">
+        <div className="border-l-2 border-slate-300 dark:border-slate-600" />
+
+        <div className="flex-1 space-y-1">
           <div className="text-[10px] font-bold text-foreground">使えるおカネの配分</div>
-          <div className="space-y-1">
+          <div className="space-y-0.5">
             {[
               { num: "①", label: "返済" },
               { num: "②", label: "税金" },
@@ -184,9 +186,6 @@ function BottomSection() {
                 <span className="text-[10px] text-foreground">{item.label}</span>
               </div>
             ))}
-          </div>
-          <div className="text-right">
-            <span className="text-[9px] border border-red-400 rounded px-1.5 py-0.5 text-red-600 dark:text-red-400 font-bold">社長の意図</span>
           </div>
         </div>
       </div>
