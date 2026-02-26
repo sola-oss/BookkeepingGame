@@ -40,46 +40,46 @@ function BSSection() {
         </div>
 
         <div className="grid grid-cols-[90px_1fr_1fr] gap-0 border-b border-blue-200 dark:border-blue-700">
-          <div className="bg-sky-100 dark:bg-sky-900 p-2 flex items-center border-r border-blue-200 dark:border-blue-700">
+          <div className="bg-sky-100 dark:bg-sky-900 p-1 flex items-center border-r border-blue-200 dark:border-blue-700">
             <span className="text-[10px] font-bold text-sky-800 dark:text-sky-200">① 運転資金資産</span>
           </div>
-          <div className="bg-sky-50 dark:bg-sky-950 p-2 border-r border-sky-200 dark:border-sky-800 space-y-1 text-center">
-            <div className="bg-sky-100 dark:bg-sky-900 border border-sky-300 dark:border-sky-700 rounded px-1 py-0.5 text-[9px] text-sky-800 dark:text-sky-200">受取手形</div>
-            <div className="bg-sky-100 dark:bg-sky-900 border border-sky-300 dark:border-sky-700 rounded px-1 py-0.5 text-[9px] text-sky-800 dark:text-sky-200">売掛金</div>
-            <div className="bg-sky-100 dark:bg-sky-900 border border-sky-300 dark:border-sky-700 rounded px-1 py-0.5 text-[9px] text-sky-800 dark:text-sky-200">未収入金</div>
+          <div className="bg-sky-50 dark:bg-sky-950 p-0.5 border-r border-sky-200 dark:border-sky-800 flex flex-col gap-0.5 text-center">
+            <div className="bg-sky-100 dark:bg-sky-900 border border-sky-300 dark:border-sky-700 rounded py-1.5 text-[9px] text-sky-800 dark:text-sky-200 flex-1 flex items-center justify-center">受取手形</div>
+            <div className="bg-sky-100 dark:bg-sky-900 border border-sky-300 dark:border-sky-700 rounded py-1.5 text-[9px] text-sky-800 dark:text-sky-200 flex-1 flex items-center justify-center">売掛金</div>
+            <div className="bg-sky-100 dark:bg-sky-900 border border-sky-300 dark:border-sky-700 rounded py-1.5 text-[9px] text-sky-800 dark:text-sky-200 flex-1 flex items-center justify-center">未収入金</div>
           </div>
-          <div className="bg-sky-50 dark:bg-sky-950 p-2 space-y-1 text-center">
-            <div className="bg-sky-100 dark:bg-sky-900 border border-sky-300 dark:border-sky-700 rounded px-1 py-0.5 text-[9px] text-sky-800 dark:text-sky-200">支払手形</div>
-            <div className="bg-sky-100 dark:bg-sky-900 border border-sky-300 dark:border-sky-700 rounded px-1 py-0.5 text-[9px] text-sky-800 dark:text-sky-200">買掛金</div>
+          <div className="bg-sky-50 dark:bg-sky-950 p-0.5 flex flex-col gap-0.5 text-center">
+            <div className="bg-sky-100 dark:bg-sky-900 border border-sky-300 dark:border-sky-700 rounded py-1.5 text-[9px] text-sky-800 dark:text-sky-200 flex-1 flex items-center justify-center">支払手形</div>
+            <div className="bg-sky-100 dark:bg-sky-900 border border-sky-300 dark:border-sky-700 rounded py-1.5 text-[9px] text-sky-800 dark:text-sky-200 flex-1 flex items-center justify-center">買掛金</div>
           </div>
         </div>
 
         <div className="grid grid-cols-[90px_1fr_1fr] gap-0 border-b border-blue-200 dark:border-blue-700">
-          <div className="bg-green-100 dark:bg-green-900 p-2 flex items-center border-r border-blue-200 dark:border-blue-700">
+          <div className="bg-green-100 dark:bg-green-900 p-1 flex items-center border-r border-blue-200 dark:border-blue-700">
             <span className="text-[10px] font-bold text-green-800 dark:text-green-200">② バッファー</span>
           </div>
-          <div className="bg-green-50 dark:bg-green-950 p-2 border-r border-green-200 dark:border-green-800 space-y-1 text-center">
-            <div className="bg-green-100 dark:bg-green-900 border border-green-300 dark:border-green-700 rounded px-1 py-0.5 text-[9px] text-green-800 dark:text-green-200">現預金</div>
-            <div className="bg-green-100 dark:bg-green-900 border border-green-300 dark:border-green-700 rounded px-1 py-0.5 text-[9px] text-green-800 dark:text-green-200">定期預金</div>
-            <div className="bg-green-100 dark:bg-green-900 border border-green-300 dark:border-green-700 rounded px-1 py-0.5 text-[9px] text-green-800 dark:text-green-200">有価証券</div>
+          <div className="bg-green-50 dark:bg-green-950 p-0.5 border-r border-green-200 dark:border-green-800 flex flex-col gap-0.5 text-center">
+            <div className="bg-green-100 dark:bg-green-900 border border-green-300 dark:border-green-700 rounded py-1.5 text-[9px] text-green-800 dark:text-green-200 flex-1 flex items-center justify-center">現預金</div>
+            <div className="bg-green-100 dark:bg-green-900 border border-green-300 dark:border-green-700 rounded py-1.5 text-[9px] text-green-800 dark:text-green-200 flex-1 flex items-center justify-center">定期預金</div>
+            <div className="bg-green-100 dark:bg-green-900 border border-green-300 dark:border-green-700 rounded py-1.5 text-[9px] text-green-800 dark:text-green-200 flex-1 flex items-center justify-center">有価証券</div>
           </div>
-          <div className="bg-pink-50 dark:bg-pink-950 p-2 space-y-1 text-center">
-            <div className="bg-pink-100 dark:bg-pink-900 border border-pink-300 dark:border-pink-700 rounded px-1 py-0.5 text-[9px] text-pink-800 dark:text-pink-200">年間返済額</div>
-            <div className="bg-pink-100 dark:bg-pink-900 border border-pink-300 dark:border-pink-700 rounded px-1 py-0.5 text-[9px] text-pink-800 dark:text-pink-200">借入金（銀行・役員）</div>
+          <div className="bg-pink-50 dark:bg-pink-950 p-0.5 flex flex-col gap-0.5 text-center">
+            <div className="bg-pink-100 dark:bg-pink-900 border border-pink-300 dark:border-pink-700 rounded py-1.5 text-[9px] text-pink-800 dark:text-pink-200 flex-1 flex items-center justify-center">年間返済額</div>
+            <div className="bg-pink-100 dark:bg-pink-900 border border-pink-300 dark:border-pink-700 rounded py-1.5 text-[9px] text-pink-800 dark:text-pink-200 flex-1 flex items-center justify-center">借入金（銀行・役員）</div>
           </div>
         </div>
 
         <div className="grid grid-cols-[90px_1fr_1fr] gap-0">
-          <div className="bg-pink-100 dark:bg-pink-900 p-2 flex items-center border-r border-blue-200 dark:border-blue-700">
+          <div className="bg-pink-100 dark:bg-pink-900 p-1 flex items-center border-r border-blue-200 dark:border-blue-700">
             <span className="text-[10px] font-bold text-pink-800 dark:text-pink-200">③ 生産手段資産</span>
           </div>
-          <div className="bg-pink-50 dark:bg-pink-950 p-2 border-r border-pink-200 dark:border-pink-800 space-y-1 text-center">
-            <div className="bg-pink-100 dark:bg-pink-900 border border-pink-300 dark:border-pink-700 rounded px-1 py-0.5 text-[9px] text-pink-800 dark:text-pink-200">商品</div>
-            <div className="bg-pink-100 dark:bg-pink-900 border border-pink-300 dark:border-pink-700 rounded px-1 py-0.5 text-[9px] text-pink-800 dark:text-pink-200">不動産</div>
+          <div className="bg-pink-50 dark:bg-pink-950 p-0.5 border-r border-pink-200 dark:border-pink-800 flex flex-col gap-0.5 text-center">
+            <div className="bg-pink-100 dark:bg-pink-900 border border-pink-300 dark:border-pink-700 rounded py-1.5 text-[9px] text-pink-800 dark:text-pink-200 flex-1 flex items-center justify-center">商品</div>
+            <div className="bg-pink-100 dark:bg-pink-900 border border-pink-300 dark:border-pink-700 rounded py-1.5 text-[9px] text-pink-800 dark:text-pink-200 flex-1 flex items-center justify-center">不動産</div>
           </div>
-          <div className="bg-slate-50 dark:bg-slate-900 p-2 space-y-1 text-center">
-            <div className="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded px-1 py-0.5 text-[9px] text-foreground">資本金</div>
-            <div className="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded px-1 py-0.5 text-[9px] text-foreground">利益剰余金</div>
+          <div className="bg-slate-50 dark:bg-slate-900 p-0.5 flex flex-col gap-0.5 text-center">
+            <div className="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded py-1.5 text-[9px] text-foreground flex-1 flex items-center justify-center">資本金</div>
+            <div className="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded py-1.5 text-[9px] text-foreground flex-1 flex items-center justify-center">利益剰余金</div>
           </div>
         </div>
       </div>
