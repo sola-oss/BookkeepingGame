@@ -34,7 +34,7 @@ export default function BusinessFlowDiagram() {
             </div>
 
             <div className="flex flex-col justify-center gap-8 pr-1">
-              <div className="flex items-center justify-end">
+              <div className="flex items-center justify-end -mt-2">
                 <svg width="24" height="20" viewBox="0 0 24 20" className="shrink-0">
                   <polygon points="24,4 8,4 8,0 0,10 8,20 8,16 24,16" fill="#3b82f6" />
                 </svg>
