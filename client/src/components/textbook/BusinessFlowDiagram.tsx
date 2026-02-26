@@ -62,7 +62,7 @@ export default function BusinessFlowDiagram() {
               <div className="bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded-sm ml-1">売上</div>
             </div>
 
-            <div className="p-2">
+            <div className="p-2 ml-[40px] mr-[40px] pl-[15px] pr-[15px]">
               <div className="text-sm font-bold text-blue-600 dark:text-blue-400 mb-1">K</div>
               <div className="space-y-0.5 text-[10px] text-foreground">
                 <div className="flex gap-4"><span>人件費</span><span className="text-muted-foreground">銀行振込</span></div>
