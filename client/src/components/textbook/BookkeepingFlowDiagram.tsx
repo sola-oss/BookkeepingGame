@@ -52,24 +52,6 @@ export default function BookkeepingFlowDiagram() {
             <div style={{ width: "96px" }} />
           </div>
 
-          <div className="flex items-start justify-center gap-0">
-            <div className="flex items-start gap-0" style={{ width: "fit-content" }}>
-              <div style={{ width: "60px" }} />
-              <div style={{ width: "40px" }} />
-              <div className="flex flex-col items-center" style={{ width: "52px" }}>
-                <svg width="16" height="16" viewBox="0 0 16 16" className="mb-1">
-                  <polygon points="4,0 12,0 12,10 16,10 8,16 0,10 4,10" fill="#d1d5db" />
-                </svg>
-                <div className="px-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded text-center bg-white dark:bg-slate-900">
-                  <span className="text-[11px] text-foreground">仕訳帳</span>
-                </div>
-              </div>
-              <div style={{ width: "40px" }} />
-            </div>
-            <div style={{ width: "98px" }} />
-            <div className="flex flex-col items-center">
-            </div>
-          </div>
 
         </div>
       </div>
