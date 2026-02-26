@@ -144,28 +144,47 @@ function PLSection() {
             </div>
 
             <div>
-              <div className="border-2 border-red-400 dark:border-red-500 rounded-lg p-2">
-                <div className="space-y-2 h-full flex flex-col">
-                  <div className="flex items-start gap-1.5">
-                    <span className="text-[10px] font-bold bg-red-500 text-white px-1.5 py-0.5 rounded shrink-0">U</span>
-                    <div className="flex-1 text-[10px] font-bold text-foreground">売　上</div>
-                  </div>
-
-                  <div className="flex-1 flex flex-col">
-                    <div className="text-[9px] text-orange-600 dark:text-orange-400 font-bold text-center mb-1">粗利の把握</div>
-
-                    <div className="bg-blue-50 dark:bg-blue-950 border border-blue-300 dark:border-blue-700 rounded p-1.5 mb-1">
-                      <div className="text-[9px] text-blue-800 dark:text-blue-200">固定費</div>
-                      <div className="text-[8px] text-blue-600 dark:text-blue-400 ml-2">額固定</div>
-                      <div className="text-[8px] text-muted-foreground ml-2">・定型</div>
-                      <div className="text-[8px] text-muted-foreground ml-2">・非定型→定型化</div>
+              <div className="text-center mb-2">
+                <span className="text-[10px] text-muted-foreground">決算書</span>
+              </div>
+              <div className="border-2 border-red-400 dark:border-red-500 rounded-lg overflow-hidden" style={{ height: "280px" }}>
+                <div className="flex h-full">
+                  <div className="flex-1 flex flex-col border-r-2 border-slate-400 dark:border-slate-500">
+                    <div className="bg-green-400 dark:bg-green-600 flex items-center justify-center border-b-2 border-slate-400 dark:border-slate-500" style={{ height: "35%" }}>
+                      <div className="text-center px-1">
+                        <div className="flex items-center gap-1 justify-center">
+                          <span className="text-[9px] font-bold bg-green-600 text-white px-1 rounded">G</span>
+                          <span className="text-[9px] font-bold text-foreground">原価</span>
+                        </div>
+                        <div className="text-[8px] text-foreground/70 mt-0.5">変動費</div>
+                      </div>
                     </div>
-
-                    <div className="border border-slate-300 dark:border-slate-600 rounded p-1.5 text-center mt-auto">
-                      <div className="text-[10px] font-bold text-foreground">利　益</div>
+                    <div className="bg-blue-400 dark:bg-blue-600 flex items-center justify-center border-b-2 border-slate-400 dark:border-slate-500" style={{ height: "52%" }}>
+                      <div className="text-center px-1">
+                        <div className="flex items-center gap-1 justify-center">
+                          <span className="text-[9px] font-bold bg-blue-600 text-white px-1 rounded">K</span>
+                          <span className="text-[9px] font-bold text-white">経費</span>
+                        </div>
+                        <div className="text-[8px] text-white/70 mt-0.5">固定費</div>
+                      </div>
+                    </div>
+                    <div className="bg-yellow-300 dark:bg-yellow-600 flex items-center justify-center flex-1">
+                      <div className="text-[8px] font-bold text-foreground">利益</div>
+                    </div>
+                  </div>
+                  <div className="flex-1 bg-orange-300 dark:bg-orange-600 flex items-center justify-center">
+                    <div className="text-center px-1">
+                      <div className="flex items-center gap-1 justify-center">
+                        <span className="text-[9px] font-bold bg-red-500 text-white px-1 rounded">U</span>
+                        <span className="text-[10px] font-bold text-foreground">売上</span>
+                      </div>
                     </div>
                   </div>
                 </div>
+              </div>
+              <div className="flex justify-between px-1 mt-0.5">
+                <span className="text-[9px] text-muted-foreground">費用</span>
+                <span className="text-[9px] text-muted-foreground">収入</span>
               </div>
             </div>
           </div>
