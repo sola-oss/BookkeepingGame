@@ -147,29 +147,29 @@ function PLSection() {
               <div className="border-2 border-red-400 dark:border-red-500 rounded-lg overflow-hidden" style={{ height: "280px" }}>
                 <div className="flex h-full">
                   <div className="flex-1 flex flex-col border-r-2 border-slate-400 dark:border-slate-500">
-                    <div className="bg-green-400 dark:bg-green-600 flex items-center justify-center border-b-2 border-slate-400 dark:border-slate-500" style={{ height: "35%" }}>
+                    <div className="bg-green-200 dark:bg-green-800 flex items-center justify-center border-b-2 border-slate-300 dark:border-slate-500" style={{ height: "35%" }}>
                       <div className="text-center px-1">
                         <div className="flex items-center gap-1 justify-center">
-                          <span className="text-[9px] font-bold bg-green-600 text-white px-1 rounded">G</span>
+                          <span className="text-[9px] font-bold bg-green-500 text-white px-1 rounded">G</span>
                           <span className="text-[9px] font-bold text-foreground">原価</span>
                         </div>
                         <div className="text-[8px] text-foreground/70 mt-0.5">変動費</div>
                       </div>
                     </div>
-                    <div className="bg-blue-400 dark:bg-blue-600 flex items-center justify-center border-b-2 border-slate-400 dark:border-slate-500" style={{ height: "52%" }}>
+                    <div className="bg-blue-200 dark:bg-blue-800 flex items-center justify-center border-b-2 border-slate-300 dark:border-slate-500" style={{ height: "52%" }}>
                       <div className="text-center px-1">
                         <div className="flex items-center gap-1 justify-center">
-                          <span className="text-[9px] font-bold bg-blue-600 text-white px-1 rounded">K</span>
-                          <span className="text-[9px] font-bold text-white">経費</span>
+                          <span className="text-[9px] font-bold bg-blue-500 text-white px-1 rounded">K</span>
+                          <span className="text-[9px] font-bold text-foreground">経費</span>
                         </div>
-                        <div className="text-white/70 mt-0.5 text-[10px] text-left">固定費 </div>
+                        <div className="text-foreground/70 mt-0.5 text-[10px] text-left">固定費 </div>
                       </div>
                     </div>
-                    <div className="bg-yellow-300 dark:bg-yellow-600 flex items-center justify-center flex-1">
+                    <div className="bg-yellow-100 dark:bg-yellow-800 flex items-center justify-center flex-1">
                       <div className="text-[8px] font-bold text-foreground">利益</div>
                     </div>
                   </div>
-                  <div className="flex-1 bg-orange-300 dark:bg-orange-600 flex items-center justify-center">
+                  <div className="flex-1 bg-orange-200 dark:bg-orange-800 flex items-center justify-center">
                     <div className="text-center px-1">
                       <div className="flex items-center gap-1 justify-center">
                         <span className="text-[9px] font-bold bg-red-500 text-white px-1 rounded">U</span>
