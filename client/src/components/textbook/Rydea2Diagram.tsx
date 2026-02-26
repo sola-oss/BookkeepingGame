@@ -98,10 +98,6 @@ function PLSection() {
       </div>
 
       <div className="flex-1 border-2 border-orange-300 dark:border-orange-600 rounded-lg overflow-hidden">
-        <div className="bg-orange-50 dark:bg-orange-950 px-3 py-1.5 border-b border-orange-200 dark:border-orange-700 text-center">
-          <span className="text-[10px] font-bold text-orange-700 dark:text-orange-300">消</span>
-        </div>
-
         <div className="p-3">
           <div className="grid grid-cols-2 gap-4">
             <div>
