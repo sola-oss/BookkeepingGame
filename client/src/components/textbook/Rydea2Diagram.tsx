@@ -131,7 +131,7 @@ function PLSection() {
                 <div className="text-center px-1">
                   <div className="flex items-center gap-1 justify-center">
                     <span className="text-[9px] font-bold bg-red-500 text-white px-1 rounded">U</span>
-                    <span className="text-[10px] font-bold text-foreground">売上</span>
+                    <span className="text-[10px] font-bold text-[#993232]">売上</span>
                   </div>
                 </div>
               </div>
