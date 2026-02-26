@@ -6,7 +6,7 @@ export default function BusinessFlowDiagram() {
 
       <div className="overflow-x-auto">
         <div className="min-w-[520px] px-2">
-          <div className="grid grid-cols-[1fr_auto_1fr] gap-0" style={{ gridTemplateRows: "auto auto" }}>
+          <div className="grid grid-cols-[1fr_auto_1fr] gap-0">
 
             <div className="p-2">
               <div className="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2">G</div>
@@ -32,44 +32,38 @@ export default function BusinessFlowDiagram() {
               </div>
             </div>
 
-            <div className="flex items-start justify-end pr-1 pt-2">
-              <div className="flex items-center gap-1">
-                <div className="bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded-sm">原価</div>
-                <svg width="24" height="20" viewBox="0 0 24 20" className="shrink-0">
-                  <polygon points="0,4 16,4 16,0 24,10 16,20 16,16 0,16" fill="#3b82f6" />
-                </svg>
-              </div>
-              <span className="text-[9px] font-bold text-blue-600 dark:text-blue-400 ml-1 mt-0.5">B</span>
+            <div className="flex items-center justify-end pr-1">
+              <svg width="24" height="20" viewBox="0 0 24 20" className="shrink-0">
+                <polygon points="24,4 8,4 8,0 0,10 8,20 8,16 24,16" fill="#3b82f6" />
+              </svg>
+              <div className="bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded-sm ml-1">原価</div>
+              <span className="text-[9px] font-bold text-blue-600 dark:text-blue-400 ml-1">B</span>
             </div>
 
-            <div className="flex items-center justify-center py-4">
+            <div className="flex items-center justify-center py-4 relative">
               <div className="w-20 h-20 rounded-full border-2 border-slate-400 dark:border-slate-500 bg-slate-50 dark:bg-slate-800 flex items-center justify-center">
                 <span className="text-sm font-bold text-foreground">会社</span>
               </div>
             </div>
 
-            <div className="flex items-start justify-start pl-1 pt-2">
-              <span className="text-[9px] font-bold text-orange-600 dark:text-orange-400 mr-1 mt-0.5">A</span>
-              <div className="flex items-center gap-1">
-                <svg width="24" height="20" viewBox="0 0 24 20" className="shrink-0">
-                  <polygon points="0,4 16,4 16,0 24,10 16,20 16,16 0,16" fill="#f59e0b" />
-                </svg>
-                <div className="bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded-sm">売上</div>
-              </div>
+            <div className="flex items-center justify-start pl-1">
+              <span className="text-[9px] font-bold text-orange-600 dark:text-orange-400 mr-1">A</span>
+              <svg width="24" height="20" viewBox="0 0 24 20" className="shrink-0">
+                <polygon points="24,4 8,4 8,0 0,10 8,20 8,16 24,16" fill="#f59e0b" />
+              </svg>
+              <div className="bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded-sm ml-1">売上</div>
             </div>
 
             <div className="p-2">
               <div className="text-sm font-bold text-blue-600 dark:text-blue-400 mb-1">K</div>
-              <div className="flex items-start gap-2">
-                <div className="flex items-center gap-1 mt-1">
-                  <div className="bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded-sm">経費</div>
-                  <svg width="20" height="24" viewBox="0 0 20 24" className="shrink-0">
-                    <polygon points="4,24 4,8 0,8 10,0 20,8 16,8 16,24" fill="#22c55e" />
-                  </svg>
-                  <span className="text-[9px] font-bold text-green-600 dark:text-green-400">C</span>
-                </div>
+              <div className="flex items-center gap-1 mb-2">
+                <svg width="24" height="20" viewBox="0 0 24 20" className="shrink-0">
+                  <polygon points="24,4 8,4 8,0 0,10 8,20 8,16 24,16" fill="#22c55e" />
+                </svg>
+                <div className="bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded-sm">経費</div>
+                <span className="text-[9px] font-bold text-green-600 dark:text-green-400">C</span>
               </div>
-              <div className="mt-2 space-y-0.5 text-[10px] text-foreground">
+              <div className="space-y-0.5 text-[10px] text-foreground">
                 <div className="flex gap-4"><span>人件費</span><span className="text-muted-foreground">銀行振込</span></div>
                 <div className="flex gap-4"><span>広告宣伝費</span><span className="text-muted-foreground">銀行振込</span></div>
                 <div className="flex gap-4"><span>地代家賃</span><span className="text-muted-foreground">銀行振込</span></div>
