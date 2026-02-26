@@ -3,12 +3,11 @@ export default function BusinessFlowDiagram() {
     <div className="w-full p-4 md:p-6 space-y-4" data-testid="business-flow-diagram">
       <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-business-flow-title">商流図</h3>
       <p className="text-xs text-muted-foreground text-center">会社名: RYDEENストアー</p>
-
       <div className="overflow-x-auto">
         <div className="min-w-[520px] px-2">
           <div className="grid grid-cols-[1fr_auto_1fr] gap-0">
 
-            <div className="p-2">
+            <div className="p-2 text-left ml-[40px] mr-[40px] mt-[0px] mb-[0px] pt-[0px] pb-[0px] pl-[15px] pr-[15px]">
               <div className="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2">G</div>
               <div className="space-y-1 text-[10px] text-foreground">
                 <div>食品メーカー</div>
@@ -78,7 +77,6 @@ export default function BusinessFlowDiagram() {
           </div>
         </div>
       </div>
-
       <div className="border-t border-slate-200 dark:border-slate-700 pt-4">
         <div className="overflow-x-auto">
           <table className="w-full text-[10px] md:text-xs border-collapse min-w-[400px]">
