@@ -371,57 +371,106 @@ function PLRydeen() {
 }
 
 function PLGraph() {
-  const total = 230980493;
-  const costItems = [
-    { label: "変動費", value: 80472859, color: "bg-green-300 dark:bg-green-700", pct: "34.8%" },
-    { label: "固定費", value: 130999105, color: "bg-blue-300 dark:bg-blue-700", pct: "56.7%" },
-    { label: "税引前利益", value: 20044805, color: "bg-yellow-300 dark:bg-yellow-700", pct: "8.7%" },
-  ];
-  const revItems = [
-    { label: "粗利", value: 150507634, color: "bg-orange-300 dark:bg-orange-700", pct: "65.2%" },
-    { label: "変動費", value: 80472859, color: "bg-green-300 dark:bg-green-700", pct: "34.8%" },
-  ];
+  const sales = 230980493;
+  const variable = 80472859;
+  const fixed = 130999105;
+  const pretax = 20044805;
+  const gross = 150507634;
+
+  const topH = 340;
+  const variablePct = variable / sales;
+  const fixedPct = fixed / sales;
+  const pretaxPct = pretax / sales;
+  const grossPct = gross / sales;
+  const bottomH = topH * grossPct;
 
   return (
-    <div className="space-y-3">
-      <div className="flex gap-6 justify-center">
-        <div className="text-center">
-          <div className="text-[10px] font-bold text-muted-foreground mb-1">費用</div>
-          <div className="w-20 md:w-24 border border-slate-300 dark:border-slate-600 rounded overflow-hidden" style={{ height: "280px" }}>
-            {costItems.map((item) => (
-              <div
-                key={item.label}
-                className={`${item.color} flex items-center justify-center border-b border-white/30`}
-                style={{ height: `${(item.value / total) * 100}%` }}
-              >
-                <div className="text-center px-0.5">
-                  <div className="text-[8px] md:text-[9px] font-bold text-foreground leading-tight">{item.label}</div>
-                  <div className="text-[7px] md:text-[8px] text-foreground/70">{item.pct}</div>
-                </div>
+    <div className="space-y-2" data-testid="pl-graph">
+      <div className="text-center text-[10px] font-bold text-muted-foreground mb-1">損益計算書（グラフ）</div>
+
+      <div className="relative mx-auto" style={{ maxWidth: "320px" }}>
+        <div className="flex" style={{ height: `${topH}px` }}>
+          <div className="flex-1 border-2 border-slate-400 dark:border-slate-500 rounded-l overflow-hidden flex flex-col">
+            <div
+              className="bg-green-400 dark:bg-green-600 flex items-center justify-center border-b-2 border-slate-400 dark:border-slate-500"
+              style={{ height: `${variablePct * 100}%` }}
+            >
+              <div className="text-center px-1">
+                <div className="text-[9px] md:text-[10px] font-bold text-foreground">変動費</div>
+                <div className="text-[8px] md:text-[9px] text-foreground/80 font-mono">{variable.toLocaleString()}</div>
               </div>
-            ))}
+            </div>
+            <div
+              className="bg-blue-400 dark:bg-blue-600 flex items-center justify-center border-b-2 border-slate-400 dark:border-slate-500"
+              style={{ height: `${fixedPct * 100}%` }}
+            >
+              <div className="text-center px-1">
+                <div className="text-[9px] md:text-[10px] font-bold text-white">固定費</div>
+                <div className="text-[8px] md:text-[9px] text-white/80 font-mono">{fixed.toLocaleString()}</div>
+              </div>
+            </div>
+            <div
+              className="bg-yellow-300 dark:bg-yellow-600 flex items-center justify-center flex-1"
+            >
+              <div className="text-center px-1">
+                <div className="text-[8px] md:text-[9px] font-bold text-foreground">税引前利益 {pretax.toLocaleString()}</div>
+              </div>
+            </div>
+          </div>
+          <div className="flex-1 border-2 border-l-0 border-slate-400 dark:border-slate-500 rounded-r overflow-hidden flex items-center justify-center bg-orange-300 dark:bg-orange-600">
+            <div className="text-center px-1">
+              <div className="text-[10px] md:text-[11px] font-bold text-foreground">売上高</div>
+              <div className="text-[9px] md:text-[10px] text-foreground/80 font-mono">{sales.toLocaleString()}</div>
+            </div>
           </div>
         </div>
-        <div className="text-center">
-          <div className="text-[10px] font-bold text-muted-foreground mb-1">収入</div>
-          <div className="w-20 md:w-24 border border-slate-300 dark:border-slate-600 rounded overflow-hidden" style={{ height: "280px" }}>
-            {revItems.map((item) => (
-              <div
-                key={item.label + "-rev"}
-                className={`${item.color} flex items-center justify-center border-b border-white/30`}
-                style={{ height: `${(item.value / total) * 100}%` }}
-              >
-                <div className="text-center px-0.5">
-                  <div className="text-[8px] md:text-[9px] font-bold text-foreground leading-tight">{item.label}</div>
-                  <div className="text-[7px] md:text-[8px] text-foreground/70">{item.pct}</div>
-                </div>
+        <div className="flex justify-between px-1 mt-0.5 mb-1">
+          <span className="text-[10px] font-bold text-muted-foreground">費用</span>
+          <span className="text-[10px] font-bold text-muted-foreground">収入</span>
+        </div>
+
+        <svg className="absolute left-0 right-0 pointer-events-none" style={{ top: `${topH}px`, height: "40px", width: "100%" }}>
+          <defs>
+            <marker id="arrowhead-pl" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#ef4444" />
+            </marker>
+          </defs>
+          <line x1="25%" y1="2" x2="35%" y2="34" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arrowhead-pl)" />
+          <line x1="75%" y1="2" x2="65%" y2="34" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arrowhead-pl)" />
+        </svg>
+
+        <div className="mt-8" />
+
+        <div className="flex" style={{ height: `${bottomH}px` }}>
+          <div className="flex-1 border-2 border-slate-400 dark:border-slate-500 rounded-l overflow-hidden flex flex-col">
+            <div
+              className="bg-blue-400 dark:bg-blue-600 flex items-center justify-center border-b-2 border-slate-400 dark:border-slate-500"
+              style={{ height: `${(fixed / gross) * 100}%` }}
+            >
+              <div className="text-center px-1">
+                <div className="text-[9px] md:text-[10px] font-bold text-white">固定費</div>
+                <div className="text-[8px] md:text-[9px] text-white/80 font-mono">{fixed.toLocaleString()}</div>
               </div>
-            ))}
+            </div>
+            <div
+              className="bg-yellow-300 dark:bg-yellow-600 flex items-center justify-center flex-1"
+            >
+              <div className="text-center px-1">
+                <div className="text-[8px] md:text-[9px] font-bold text-foreground">税引前利益 {pretax.toLocaleString()}</div>
+              </div>
+            </div>
+          </div>
+          <div className="flex-1 border-2 border-l-0 border-red-400 dark:border-red-500 rounded-r overflow-hidden flex items-center justify-center bg-orange-200 dark:bg-orange-700">
+            <div className="text-center px-1">
+              <div className="text-[10px] md:text-[11px] font-bold text-foreground">粗利</div>
+              <div className="text-[9px] md:text-[10px] text-foreground/80 font-mono">{gross.toLocaleString()}</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="text-center text-[10px] text-muted-foreground">
-        売上高: {total.toLocaleString()}円
+        <div className="flex justify-between px-1 mt-0.5">
+          <span className="text-[10px] font-bold text-muted-foreground">費用</span>
+          <span className="text-[10px] font-bold text-muted-foreground">収入</span>
+        </div>
       </div>
     </div>
   );
