@@ -373,13 +373,13 @@ function PLRydeen() {
 function PLGraph() {
   const total = 230980493;
   const costItems = [
-    { label: "変動費", value: 80472859, color: "bg-orange-300 dark:bg-orange-700", pct: "34.8%" },
+    { label: "変動費", value: 80472859, color: "bg-green-300 dark:bg-green-700", pct: "34.8%" },
     { label: "固定費", value: 130999105, color: "bg-blue-300 dark:bg-blue-700", pct: "56.7%" },
-    { label: "税引前利益", value: 20044805, color: "bg-green-200 dark:bg-green-800", pct: "8.7%" },
+    { label: "税引前利益", value: 20044805, color: "bg-yellow-300 dark:bg-yellow-700", pct: "8.7%" },
   ];
   const revItems = [
-    { label: "粗利", value: 150507634, color: "bg-green-300 dark:bg-green-700", pct: "65.2%" },
-    { label: "変動費", value: 80472859, color: "bg-orange-300 dark:bg-orange-700", pct: "34.8%" },
+    { label: "粗利", value: 150507634, color: "bg-orange-300 dark:bg-orange-700", pct: "65.2%" },
+    { label: "変動費", value: 80472859, color: "bg-green-300 dark:bg-green-700", pct: "34.8%" },
   ];
 
   return (
