@@ -144,11 +144,7 @@ function PLSection() {
             </div>
 
             <div>
-              <div className="text-center mb-2">
-                <span className="text-[10px] text-muted-foreground">決算書</span>
-              </div>
-
-              <div className="border-2 border-red-400 dark:border-red-500 rounded-lg p-2 h-[calc(100%-28px)]">
+              <div className="border-2 border-red-400 dark:border-red-500 rounded-lg p-2">
                 <div className="space-y-2 h-full flex flex-col">
                   <div className="flex items-start gap-1.5">
                     <span className="text-[10px] font-bold bg-red-500 text-white px-1.5 py-0.5 rounded shrink-0">U</span>
