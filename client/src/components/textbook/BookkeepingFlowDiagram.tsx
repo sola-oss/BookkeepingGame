@@ -67,14 +67,7 @@ export default function BookkeepingFlowDiagram() {
               </div>
             </div>
             <div />
-            <div className="flex flex-col items-center py-1">
-              <svg width="14" height="14" viewBox="0 0 14 14" className="mb-1">
-                <polygon points="3,0 11,0 11,8 14,8 7,14 0,8 3,8" fill="#d1d5db" />
-              </svg>
-              <div className="px-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-900 text-center">
-                <span className="text-[11px] text-foreground">総勘定元帳</span>
-              </div>
-            </div>
+            <div />
             <div />
             <div className="flex flex-col items-center py-1">
               <div className="px-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-900 text-center space-y-0.5">
