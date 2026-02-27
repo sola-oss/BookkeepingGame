@@ -69,12 +69,7 @@ export default function BookkeepingFlowDiagram() {
             <div />
             <div />
             <div />
-            <div className="flex flex-col items-center py-1">
-              <div className="px-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-900 text-center space-y-0.5">
-                <div className="text-[11px] text-foreground">PL/損益計算書</div>
-                <div className="text-[11px] text-foreground">BS/貸借対照表</div>
-              </div>
-            </div>
+            <div />
           </div>
 
           <div className="flex items-start justify-center gap-12 mt-4">
