@@ -16,28 +16,36 @@ export default function BokiKaikeiDiagram() {
                 {[
                   { label: "取引", id: "torihiki", arrowLabel: "記録" },
                   { label: "仕訳", id: "shiwake", arrowLabel: "転記" },
-                  { label: "元帳", id: "tenki", arrowLabel: "集計" },
+                  { label: "元帳", id: "tenki", arrowLabel: null },
                 ].map((step) => (
                   <div key={step.id} className="flex items-center gap-1.5 md:gap-2">
                     <div className="px-1.5 py-1 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" data-testid={`box-${step.id}`}>
                       <span className="text-[10px] md:text-xs text-slate-600 dark:text-slate-300">{step.label}</span>
                     </div>
-                    <div className="flex flex-col items-center flex-shrink-0">
-                      <ArrowRight className="w-3 h-3 text-slate-300 dark:text-slate-600" />
-                      <span className="text-[8px] text-muted-foreground mt-0.5">{step.arrowLabel}</span>
-                    </div>
+                    {step.arrowLabel && (
+                      <div className="flex flex-col items-center flex-shrink-0">
+                        <ArrowRight className="w-3 h-3 text-slate-300 dark:text-slate-600" />
+                        <span className="text-[8px] text-muted-foreground mt-0.5">{step.arrowLabel}</span>
+                      </div>
+                    )}
                   </div>
                 ))}
-                <div className="px-4 py-3 md:px-6 md:py-4 rounded-xl bg-amber-50 dark:bg-amber-950 shadow-lg flex-shrink-0" data-testid="box-kessan" style={{ borderWidth: "3px", borderStyle: "solid", borderColor: "rgb(251 191 36)" }}>
-                  <span className="text-lg md:text-xl font-bold text-amber-700 dark:text-amber-300 block text-center" data-testid="text-kessan-label">決算書</span>
-                  <div className="flex gap-1.5 mt-1 justify-center">
-                    <span className="text-[10px] md:text-xs font-medium text-amber-600 dark:text-amber-400" data-testid="text-kessan-bs">BS</span>
-                    <span className="text-[10px] md:text-xs text-amber-500 dark:text-amber-500">/</span>
-                    <span className="text-[10px] md:text-xs font-medium text-amber-600 dark:text-amber-400" data-testid="text-kessan-pl">PL</span>
-                  </div>
-                </div>
               </div>
               <p className="text-[9px] md:text-[10px] dark:text-slate-500 text-center mt-2 text-[#5fb298]" data-testid="text-boki-def">決算書ができるまで</p>
+            </div>
+
+            <div className="flex flex-col items-center flex-shrink-0">
+              <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-slate-300 dark:text-slate-600" />
+              <span className="text-[8px] text-muted-foreground mt-0.5">集計</span>
+            </div>
+
+            <div className="px-4 py-3 md:px-6 md:py-4 rounded-xl bg-amber-50 dark:bg-amber-950 shadow-lg flex-shrink-0" data-testid="box-kessan" style={{ borderWidth: "3px", borderStyle: "solid", borderColor: "rgb(251 191 36)" }}>
+              <span className="text-lg md:text-xl font-bold text-amber-700 dark:text-amber-300 block text-center" data-testid="text-kessan-label">決算書</span>
+              <div className="flex gap-1.5 mt-1 justify-center">
+                <span className="text-[10px] md:text-xs font-medium text-amber-600 dark:text-amber-400" data-testid="text-kessan-bs">BS</span>
+                <span className="text-[10px] md:text-xs text-amber-500 dark:text-amber-500">/</span>
+                <span className="text-[10px] md:text-xs font-medium text-amber-600 dark:text-amber-400" data-testid="text-kessan-pl">PL</span>
+              </div>
             </div>
 
             <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-slate-300 dark:text-slate-600 flex-shrink-0" />
