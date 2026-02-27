@@ -2,7 +2,6 @@ export default function BookkeepingFlowDiagram() {
   return (
     <div className="w-full p-4 md:p-6 space-y-4" data-testid="bookkeeping-flow-diagram">
       <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-flow-title">簿記の流れ</h3>
-
       <div className="overflow-x-auto">
         <div className="min-w-[540px] px-4">
 
@@ -29,7 +28,7 @@ export default function BookkeepingFlowDiagram() {
             </div>
 
             <div className="px-4 py-2.5 rounded-lg bg-emerald-100 dark:bg-emerald-900 border border-emerald-300 dark:border-emerald-700 text-center">
-              <span className="font-bold text-sm text-emerald-800 dark:text-emerald-200">勘定記入</span>
+              <span className="font-bold text-sm text-emerald-800 dark:text-emerald-200">元帳</span>
             </div>
 
             <div className="flex justify-center">
@@ -58,14 +57,7 @@ export default function BookkeepingFlowDiagram() {
 
             <div />
             <div />
-            <div className="flex flex-col items-center py-1">
-              <svg width="14" height="14" viewBox="0 0 14 14" className="mb-1">
-                <polygon points="3,0 11,0 11,8 14,8 7,14 0,8 3,8" fill="#d1d5db" />
-              </svg>
-              <div className="px-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-900 text-center">
-                <span className="text-[11px] text-foreground">仕訳帳</span>
-              </div>
-            </div>
+            <div />
             <div />
             <div />
             <div />
