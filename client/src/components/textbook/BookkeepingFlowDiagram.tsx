@@ -64,14 +64,6 @@ export default function BookkeepingFlowDiagram() {
             <div />
           </div>
 
-          <div className="flex items-start justify-center gap-12 mt-4">
-            <div className="text-[11px] text-rose-500 dark:text-rose-400">
-              決算書作成までが「作る会計」。
-            </div>
-            <div className="text-[11px] text-rose-500 dark:text-rose-400">
-              完成後が「読む会計」
-            </div>
-          </div>
 
         </div>
       </div>
