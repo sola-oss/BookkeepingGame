@@ -27,8 +27,8 @@ export default function BookkeepingFlowDiagram() {
               </svg>
             </div>
 
-            <div className="px-4 py-2.5 rounded-lg bg-emerald-100 dark:bg-emerald-900 border border-emerald-300 dark:border-emerald-700 text-center">
-              <span className="font-bold text-sm text-emerald-800 dark:text-emerald-200">元帳</span>
+            <div className="px-4 py-2.5 rounded-lg bg-pink-100 dark:bg-pink-900 border border-pink-300 dark:border-pink-700 text-center">
+              <span className="font-bold text-sm text-pink-800 dark:text-pink-200">元帳</span>
             </div>
 
             <div className="flex justify-center">
