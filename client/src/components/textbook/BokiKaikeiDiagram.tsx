@@ -34,7 +34,7 @@ export default function BokiKaikeiDiagram() {
 
             <div className="flex flex-col items-center flex-shrink-0">
               <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-slate-300 dark:text-slate-600" />
-              <span className="text-muted-foreground mt-0.5 text-[10px]">集計</span>
+              <span className="text-muted-foreground text-[10px] mt-[10px] mb-[10px]">集計</span>
             </div>
 
             <div className="px-4 py-3 md:px-6 md:py-4 rounded-xl bg-amber-50 dark:bg-amber-950 shadow-lg flex-shrink-0" data-testid="box-kessan" style={{ borderWidth: "3px", borderStyle: "solid", borderColor: "rgb(251 191 36)" }}>
