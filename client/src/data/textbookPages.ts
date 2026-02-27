@@ -19,7 +19,6 @@ export const textbookChapters: TextbookChapter[] = [
       {
         id: "boki_mokuteki",
         title: "簿記の目的",
-        diagramId: "boki-purpose",
         content: [
           "簿記には3つの目的があります：",
           "記録 → 自分のため：日々の取引を正確に記録する",
