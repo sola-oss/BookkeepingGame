@@ -10,7 +10,7 @@ export default function BokiKaikeiDiagram() {
       <div className="overflow-x-auto">
         <div className="min-w-[460px] px-2">
           <div className="flex items-center justify-center gap-2 md:gap-3">
-            <div className="border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50/60 dark:bg-slate-900/40 p-3 md:p-4 flex-shrink-0" data-testid="section-boki">
+            <div className="border-2 border-emerald-400 dark:border-emerald-600 rounded-lg bg-emerald-50/60 dark:bg-emerald-950/40 p-3 md:p-4 flex-shrink-0" data-testid="section-boki">
               <p className="font-bold dark:text-emerald-400 text-center mb-2 text-[16px] text-emerald-700" data-testid="text-boki-label">簿記</p>
               <div className="flex items-center gap-1.5 md:gap-2">
                 {[
@@ -49,7 +49,7 @@ export default function BokiKaikeiDiagram() {
 
             <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-slate-300 dark:text-slate-600 flex-shrink-0" />
 
-            <div className="border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50/60 dark:bg-slate-900/40 p-2 md:p-3 flex-shrink-0 w-[80px] md:w-[100px] flex flex-col items-center justify-center" data-testid="section-kaikei">
+            <div className="border-2 border-emerald-400 dark:border-emerald-600 rounded-lg bg-emerald-50/60 dark:bg-emerald-950/40 p-2 md:p-3 flex-shrink-0 w-[80px] md:w-[100px] flex flex-col items-center justify-center" data-testid="section-kaikei">
               <p className="font-bold dark:text-emerald-400 text-center text-[16px] text-emerald-700" data-testid="text-kaikei-label">会計</p>
               <p className="text-[9px] md:text-[10px] text-slate-400 dark:text-slate-500 text-center mt-1" data-testid="text-kaikei-caption">（理論）</p>
             </div>
