@@ -22,6 +22,7 @@ const RydeenFinancialDiagram = lazy(() => import("@/components/textbook/RydeenFi
 const Rydea2Diagram = lazy(() => import("@/components/textbook/Rydea2Diagram"));
 const BusinessFlowDiagram = lazy(() => import("@/components/textbook/BusinessFlowDiagram"));
 const BokiKaikeiDiagram = lazy(() => import("@/components/textbook/BokiKaikeiDiagram"));
+const AccountingTermsDiagram = lazy(() => import("@/components/textbook/AccountingTermsDiagram"));
 
 const diagramComponents: Record<string, React.LazyExoticComponent<() => JSX.Element>> = {
   "bookkeeping-flow": BookkeepingFlowDiagram,
@@ -32,6 +33,7 @@ const diagramComponents: Record<string, React.LazyExoticComponent<() => JSX.Elem
   "rydea2": Rydea2Diagram,
   "business-flow": BusinessFlowDiagram,
   "boki-kaikei": BokiKaikeiDiagram,
+  "accounting-terms": AccountingTermsDiagram,
 };
 
 const chapterColors: Record<string, { bg: string; border: string; text: string; accent: string }> = {
