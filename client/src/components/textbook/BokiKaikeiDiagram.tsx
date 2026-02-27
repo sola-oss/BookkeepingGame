@@ -14,15 +14,18 @@ export default function BokiKaikeiDiagram() {
               <p className="font-semibold dark:text-slate-400 text-center mb-2 text-[16px] text-[#5fb298]" data-testid="text-boki-label">簿記</p>
               <div className="flex items-center gap-1.5 md:gap-2">
                 {[
-                  { label: "取引", id: "torihiki" },
-                  { label: "仕訳", id: "shiwake" },
-                  { label: "元帳", id: "tenki" },
+                  { label: "取引", id: "torihiki", arrowLabel: "記録" },
+                  { label: "仕訳", id: "shiwake", arrowLabel: "転記" },
+                  { label: "元帳", id: "tenki", arrowLabel: "集計" },
                 ].map((step) => (
                   <div key={step.id} className="flex items-center gap-1.5 md:gap-2">
                     <div className="px-1.5 py-1 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" data-testid={`box-${step.id}`}>
                       <span className="text-[10px] md:text-xs text-slate-600 dark:text-slate-300">{step.label}</span>
                     </div>
-                    <ArrowRight className="w-3 h-3 text-slate-300 dark:text-slate-600 flex-shrink-0" />
+                    <div className="flex flex-col items-center flex-shrink-0">
+                      <ArrowRight className="w-3 h-3 text-slate-300 dark:text-slate-600" />
+                      <span className="text-[8px] text-muted-foreground mt-0.5">{step.arrowLabel}</span>
+                    </div>
                   </div>
                 ))}
                 <div className="px-4 py-3 md:px-6 md:py-4 rounded-xl bg-amber-50 dark:bg-amber-950 shadow-lg flex-shrink-0" data-testid="box-kessan" style={{ borderWidth: "3px", borderStyle: "solid", borderColor: "rgb(251 191 36)" }}>
