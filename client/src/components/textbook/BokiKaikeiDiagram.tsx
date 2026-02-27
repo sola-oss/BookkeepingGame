@@ -31,7 +31,6 @@ export default function BokiKaikeiDiagram() {
                   </div>
                 ))}
               </div>
-              <p className="text-[9px] md:text-[10px] dark:text-slate-500 text-center mt-2 text-[#5fb298]" data-testid="text-boki-def">決算書ができるまで</p>
             </div>
 
             <div className="flex flex-col items-center flex-shrink-0">
