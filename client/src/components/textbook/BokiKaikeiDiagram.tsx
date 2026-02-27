@@ -24,7 +24,7 @@ export default function BokiKaikeiDiagram() {
                     {step.arrowLabel && (
                       <div className="flex flex-col items-center flex-shrink-0">
                         <ArrowRight className="w-3 h-3 text-slate-300 dark:text-slate-600" />
-                        <span className="text-[8px] text-muted-foreground mt-0.5">{step.arrowLabel}</span>
+                        <span className="text-muted-foreground mt-0.5 text-[10px]">{step.arrowLabel}</span>
                       </div>
                     )}
                   </div>
