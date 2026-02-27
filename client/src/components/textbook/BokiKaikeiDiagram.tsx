@@ -23,7 +23,7 @@ export default function BokiKaikeiDiagram() {
                     </div>
                     {step.arrowLabel && (
                       <div className="flex flex-col items-center flex-shrink-0">
-                        <ArrowRight className="w-3 h-3 text-slate-300 dark:text-slate-600" />
+                        <ArrowRight className="w-3 h-3 text-slate-500 dark:text-slate-400" />
                         <span className="text-muted-foreground mt-0.5 text-[10px]">{step.arrowLabel}</span>
                       </div>
                     )}
@@ -33,7 +33,7 @@ export default function BokiKaikeiDiagram() {
             </div>
 
             <div className="flex flex-col items-center flex-shrink-0">
-              <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-slate-300 dark:text-slate-600" />
+              <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-slate-500 dark:text-slate-400" />
               <span className="text-muted-foreground mt-[0px] mb-[0px] text-[8px]">集計</span>
             </div>
 
@@ -46,7 +46,7 @@ export default function BokiKaikeiDiagram() {
               </div>
             </div>
 
-            <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-slate-300 dark:text-slate-600 flex-shrink-0" />
+            <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-slate-500 dark:text-slate-400 flex-shrink-0" />
 
             <div className="border-2 border-emerald-400 dark:border-emerald-600 rounded-lg bg-emerald-50/60 dark:bg-emerald-950/40 p-2 md:p-3 flex-shrink-0 w-[80px] md:w-[100px] flex flex-col items-center justify-center" data-testid="section-kaikei">
               <p className="font-bold dark:text-emerald-400 text-center text-[16px] text-emerald-700" data-testid="text-kaikei-label">会計</p>
