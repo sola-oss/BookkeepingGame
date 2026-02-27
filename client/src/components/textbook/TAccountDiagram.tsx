@@ -363,7 +363,7 @@ export default function TAccountDiagram() {
         <div className="h-[1px] flex-1 bg-slate-200 dark:bg-slate-700" />
       </div>
       <div className="space-y-1">
-        <p className="text-xs font-bold text-foreground" data-testid="text-ledger-heading">総勘定元帳（T字勘定）</p>
+        <p className="text-xs font-bold text-foreground" data-testid="text-ledger-heading">補助元帳（T字勘定）</p>
 
         {largeAccounts.length > 0 && (
           <div className="grid grid-cols-1 gap-3 mb-3">
@@ -379,13 +379,11 @@ export default function TAccountDiagram() {
           ))}
         </div>
       </div>
-
       <div className="flex items-center justify-center gap-2 py-2">
         <div className="h-[1px] flex-1 bg-slate-200 dark:bg-slate-700" />
         <span className="text-xs font-bold text-amber-600 dark:text-amber-400 px-2 whitespace-nowrap" data-testid="text-aggregate-label">↓ 残高を集計 ↓</span>
         <div className="h-[1px] flex-1 bg-slate-200 dark:bg-slate-700" />
       </div>
-
       <div className="space-y-3">
         <MiniPL summary={summary} />
         <NetIncomeArrow />
