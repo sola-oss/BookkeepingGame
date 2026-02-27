@@ -10,8 +10,8 @@ export default function BokiKaikeiDiagram() {
       <div className="overflow-x-auto">
         <div className="min-w-[460px] px-2">
           <div className="flex items-center justify-center gap-2 md:gap-3">
-            <div className="border-2 border-emerald-400 dark:border-emerald-600 rounded-lg bg-emerald-50/60 dark:bg-emerald-950/40 p-3 md:p-4 flex-shrink-0" data-testid="section-boki">
-              <p className="font-bold dark:text-emerald-400 text-center mb-2 text-[16px] text-emerald-700" data-testid="text-boki-label">簿記</p>
+            <div className="border-2 border-blue-400 dark:border-blue-600 rounded-lg bg-blue-50/60 dark:bg-blue-950/40 p-3 md:p-4 flex-shrink-0" data-testid="section-boki">
+              <p className="font-bold dark:text-blue-400 text-center mb-2 text-[16px] text-blue-700" data-testid="text-boki-label">簿記</p>
               <div className="flex items-center gap-1.5 md:gap-2">
                 {[
                   { label: "取引", id: "torihiki", arrowLabel: "記録" },
