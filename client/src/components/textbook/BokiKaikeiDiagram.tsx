@@ -6,7 +6,6 @@ export default function BokiKaikeiDiagram() {
       <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-boki-kaikei-title">
         簿記と会計の関係
       </h3>
-
       <div className="overflow-x-auto">
         <div className="min-w-[460px] px-2">
           <div className="flex items-center justify-center gap-2 md:gap-3">
@@ -19,7 +18,7 @@ export default function BokiKaikeiDiagram() {
                   { label: "元帳", id: "tenki", arrowLabel: null },
                 ].map((step) => (
                   <div key={step.id} className="flex items-center gap-1.5 md:gap-2">
-                    <div className="px-1.5 py-1 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" data-testid={`box-${step.id}`}>
+                    <div className="px-1.5 py-1 rounded dark:bg-slate-800 border border-slate-200 dark:border-slate-700 bg-[#ceecf5]" data-testid={`box-${step.id}`}>
                       <span className="text-[10px] md:text-xs text-slate-600 dark:text-slate-300">{step.label}</span>
                     </div>
                     {step.arrowLabel && (
