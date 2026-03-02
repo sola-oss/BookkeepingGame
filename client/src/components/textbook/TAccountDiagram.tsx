@@ -176,11 +176,16 @@ function JournalTable({ entries, flashAccount, onClickAccount, amountHighlight, 
   );
 }
 
-function TAccountRow({ entry, isHighlighted, highlightRef }: { entry: TAccountEntry; isHighlighted: boolean; highlightRef: ((el: HTMLDivElement | null) => void) | null }) {
+function TAccountRow({ entry, isHighlighted, isIncrease, highlightRef }: { entry: TAccountEntry; isHighlighted: boolean; isIncrease?: boolean; highlightRef: ((el: HTMLDivElement | null) => void) | null }) {
+  const highlightClass = isHighlighted
+    ? isIncrease
+      ? "animate-flash-category bg-emerald-200 dark:bg-emerald-700 ring-1 ring-emerald-400"
+      : "animate-flash-category bg-red-200 dark:bg-red-700 ring-1 ring-red-400"
+    : "";
   return (
     <div
       ref={highlightRef}
-      className={`flex justify-between gap-1 text-[10px] md:text-[11px] px-1 rounded transition-colors ${isHighlighted ? "animate-flash-category bg-amber-200 dark:bg-amber-700 ring-1 ring-amber-400" : ""}`}
+      className={`flex justify-between gap-1 text-[10px] md:text-[11px] px-1 rounded transition-colors ${highlightClass}`}
     >
       <span className="text-muted-foreground truncate">{entry.date}</span>
       <span className="text-foreground truncate flex-1 text-center">{entry.label}</span>
@@ -195,24 +200,34 @@ function TAccount({ account, amountHighlight, onHighlightRef }: { account: TAcco
   const balance = debitTotal - creditTotal;
 
   const isTargetAccount = amountHighlight && amountHighlight.account === account.name;
+  const borderHighlight = isTargetAccount
+    ? amountHighlight.isIncrease
+      ? "border-emerald-400 dark:border-emerald-500"
+      : "border-red-400 dark:border-red-500"
+    : "border-slate-400 dark:border-slate-500";
+  const headerHighlight = isTargetAccount
+    ? amountHighlight.isIncrease
+      ? "bg-emerald-100 dark:bg-emerald-900/50 border-emerald-400 dark:border-emerald-500"
+      : "bg-red-100 dark:bg-red-900/50 border-red-400 dark:border-red-500"
+    : "bg-slate-100 dark:bg-slate-800 border-slate-400 dark:border-slate-500";
 
   return (
     <div data-testid={`t-account-${account.name}`}>
-      <div className={`border-2 rounded-md overflow-hidden transition-colors ${isTargetAccount ? "border-amber-400 dark:border-amber-500" : "border-slate-400 dark:border-slate-500"}`}>
-        <div className={`border-b-2 py-1.5 text-center ${isTargetAccount ? "bg-amber-100 dark:bg-amber-900/50 border-amber-400 dark:border-amber-500" : "bg-slate-100 dark:bg-slate-800 border-slate-400 dark:border-slate-500"}`}>
+      <div className={`border-2 rounded-md overflow-hidden transition-colors ${borderHighlight}`}>
+        <div className={`border-b-2 py-1.5 text-center ${headerHighlight}`}>
           <span className="font-bold text-sm text-foreground">{account.name}</span>
         </div>
         <div className="flex min-h-[40px]">
           <div className="flex-1 border-r border-slate-400 dark:border-slate-500 p-1.5 space-y-0.5">
             {account.debit.map((entry, i) => {
               const isMatch = isTargetAccount && amountHighlight.side === "debit" && entry.date === amountHighlight.date && entry.amount === amountHighlight.amount;
-              return <TAccountRow key={i} entry={entry} isHighlighted={!!isMatch} highlightRef={isMatch ? onHighlightRef : null} />;
+              return <TAccountRow key={i} entry={entry} isHighlighted={!!isMatch} isIncrease={isMatch ? amountHighlight.isIncrease : undefined} highlightRef={isMatch ? onHighlightRef : null} />;
             })}
           </div>
           <div className="flex-1 p-1.5 space-y-0.5">
             {account.credit.map((entry, i) => {
               const isMatch = isTargetAccount && amountHighlight.side === "credit" && entry.date === amountHighlight.date && entry.amount === amountHighlight.amount;
-              return <TAccountRow key={i} entry={entry} isHighlighted={!!isMatch} highlightRef={isMatch ? onHighlightRef : null} />;
+              return <TAccountRow key={i} entry={entry} isHighlighted={!!isMatch} isIncrease={isMatch ? amountHighlight.isIncrease : undefined} highlightRef={isMatch ? onHighlightRef : null} />;
             })}
           </div>
         </div>
