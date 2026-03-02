@@ -28,12 +28,6 @@ export const textbookChapters: TextbookChapter[] = [
         ],
       },
       {
-        id: "boki_flow",
-        title: "簿記の流れ",
-        diagramId: "bookkeeping-flow",
-        content: [],
-      },
-      {
         id: "bs_pl_relation",
         title: "BSとPLの関係",
         diagramId: "bs-pl-relation",
