@@ -584,7 +584,7 @@ export default function TAccountDiagram() {
             className="w-full py-2 px-4 text-xs font-medium text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md transition-colors"
             data-testid="button-show-all-t-accounts"
           >
-            他の勘定科目も見る（{smallAccounts.length}件）
+            他の補助元帳も見る（{smallAccounts.length}件）
           </button>
         ) : (
           <>
