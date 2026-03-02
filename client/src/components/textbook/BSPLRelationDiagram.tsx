@@ -160,7 +160,7 @@ export default function BSPLRelationDiagram() {
                         x={cx}
                         y={bodyBottom + ovalRy + 14}
                         textAnchor="middle"
-                        className="text-[11px] fill-slate-500 dark:fill-slate-400"
+                        className="text-[12px] font-bold fill-blue-800 dark:fill-blue-300"
                       >
                         BS
                       </text>
