@@ -188,7 +188,7 @@ const accountCategoryMap: Record<string, AccountCategory> = {
 
 
 const categoryFlashStyles: Record<AccountCategory, string> = {
-  asset: "animate-flash-category bg-gray-200 dark:bg-gray-600",
+  asset: "animate-flash-category bg-sky-200 dark:bg-sky-700",
   liability: "animate-flash-category bg-rose-200 dark:bg-rose-700",
   equity: "animate-flash-category bg-blue-200 dark:bg-blue-700",
   cost: "animate-flash-category bg-orange-200 dark:bg-orange-700",
@@ -389,7 +389,7 @@ function MiniHonsekiDiagram({ activeCategory }: { activeCategory: AccountCategor
           </div>
           <div className="flex" style={{ minHeight: "60px" }}>
             <div className="flex-1 border-r border-slate-300 dark:border-slate-600 flex items-stretch">
-              <MiniHonsekiCell label="資産" category="asset" activeCategory={activeCategory} className="w-full bg-gray-200 dark:bg-gray-700 text-[11px] text-gray-800 dark:text-gray-200" />
+              <MiniHonsekiCell label="資産" category="asset" activeCategory={activeCategory} className="w-full bg-sky-200 dark:bg-sky-800 text-[11px] text-sky-800 dark:text-sky-200" />
             </div>
             <div className="flex-1 flex flex-col">
               <MiniHonsekiCell label="負債" category="liability" activeCategory={activeCategory} className="flex-1 bg-rose-200 dark:bg-rose-800 text-[10px] text-rose-800 dark:text-rose-200 border-b border-slate-300 dark:border-slate-600" />
