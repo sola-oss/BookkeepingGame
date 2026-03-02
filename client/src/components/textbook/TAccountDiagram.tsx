@@ -501,9 +501,11 @@ export default function TAccountDiagram() {
   }, [amountHighlight]);
 
   useEffect(() => {
-    if (amountHighlight && highlightRowRef.current) {
-      highlightRowRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
+    if (!amountHighlight || !highlightRowRef.current) return;
+    const timer = setTimeout(() => {
+      highlightRowRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 1000);
+    return () => clearTimeout(timer);
   }, [amountHighlight]);
 
   const handleClickAccount = useCallback((name: string) => {
