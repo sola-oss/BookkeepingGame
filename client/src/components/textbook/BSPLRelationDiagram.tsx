@@ -81,9 +81,9 @@ export default function BSPLRelationDiagram() {
                       </text>
                       <text
                         x={midX}
-                        y={arcMidY + 3}
+                        y={arcMidY + 4}
                         textAnchor="middle"
-                        className="text-[10px] fill-slate-400 dark:fill-slate-500"
+                        className={`text-[12px] font-bold ${isNeg ? "fill-red-500 dark:fill-red-400" : "fill-blue-500 dark:fill-blue-400"}`}
                       >
                         PL
                       </text>
