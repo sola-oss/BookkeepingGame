@@ -1,3 +1,5 @@
+import { useState, useEffect, useCallback } from "react";
+
 interface JournalLine {
   account: string;
   amount: number;
@@ -69,7 +71,22 @@ function buildTAccounts(entries: JournalEntry[]): TAccountData[] {
     }));
 }
 
-function JournalTable({ entries }: { entries: JournalEntry[] }) {
+function AccountCell({ account, flashAccount, onClickAccount }: { account: string | undefined; flashAccount: string | null; onClickAccount: (name: string) => void }) {
+  if (!account) return <td className="border border-slate-300 dark:border-slate-600 px-2 py-1" />;
+  const cat = accountCategoryMap[account];
+  const isFlashing = flashAccount === account && cat;
+  return (
+    <td
+      className={`border border-slate-300 dark:border-slate-600 px-2 py-1 cursor-pointer select-none transition-colors ${isFlashing && cat ? categoryFlashStyles[cat] : "text-foreground"}`}
+      onClick={() => onClickAccount(account)}
+      data-testid={`journal-account-${account}`}
+    >
+      <span className="underline decoration-dotted underline-offset-2">{account}</span>
+    </td>
+  );
+}
+
+function JournalTable({ entries, flashAccount, onClickAccount }: { entries: JournalEntry[]; flashAccount: string | null; onClickAccount: (name: string) => void }) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-[11px] md:text-xs border-collapse" data-testid="journal-table">
@@ -99,15 +116,11 @@ function JournalTable({ entries }: { entries: JournalEntry[] }) {
                 {row === 0 ? (
                   <td className="border border-slate-300 dark:border-slate-600 px-2 py-1 text-muted-foreground" rowSpan={maxRows}>{entry.date}</td>
                 ) : null}
-                <td className="border border-slate-300 dark:border-slate-600 px-2 py-1 text-foreground">
-                  {entry.debit[row]?.account ?? ""}
-                </td>
+                <AccountCell account={entry.debit[row]?.account} flashAccount={flashAccount} onClickAccount={onClickAccount} />
                 <td className="border border-slate-300 dark:border-slate-600 px-2 py-1 text-right font-mono text-foreground">
                   {entry.debit[row] ? entry.debit[row].amount.toLocaleString() : ""}
                 </td>
-                <td className="border border-slate-300 dark:border-slate-600 px-2 py-1 text-foreground">
-                  {entry.credit[row]?.account ?? ""}
-                </td>
+                <AccountCell account={entry.credit[row]?.account} flashAccount={flashAccount} onClickAccount={onClickAccount} />
                 <td className="border border-slate-300 dark:border-slate-600 px-2 py-1 text-right font-mono text-foreground">
                   {entry.credit[row] ? entry.credit[row].amount.toLocaleString() : ""}
                 </td>
@@ -171,6 +184,24 @@ const accountCategoryMap: Record<string, AccountCategory> = {
   "仕入": "cost",
   "家賃": "expense", "給料": "expense", "通信費": "expense", "水道光熱費": "expense",
   "売上": "revenue", "受取利息": "revenue",
+};
+
+const categoryLegend: { key: AccountCategory; label: string; bg: string; text: string; flashBg: string }[] = [
+  { key: "asset", label: "資産", bg: "bg-gray-200 dark:bg-gray-700", text: "text-gray-800 dark:text-gray-200", flashBg: "bg-gray-300 dark:bg-gray-600" },
+  { key: "liability", label: "負債", bg: "bg-rose-200 dark:bg-rose-800", text: "text-rose-800 dark:text-rose-200", flashBg: "bg-rose-300 dark:bg-rose-700" },
+  { key: "equity", label: "資本", bg: "bg-blue-200 dark:bg-blue-800", text: "text-blue-800 dark:text-blue-200", flashBg: "bg-blue-300 dark:bg-blue-700" },
+  { key: "cost", label: "原価", bg: "bg-orange-200 dark:bg-orange-800", text: "text-orange-800 dark:text-orange-200", flashBg: "bg-orange-300 dark:bg-orange-700" },
+  { key: "expense", label: "経費", bg: "bg-amber-200 dark:bg-amber-800", text: "text-amber-800 dark:text-amber-200", flashBg: "bg-amber-300 dark:bg-amber-700" },
+  { key: "revenue", label: "収益", bg: "bg-green-200 dark:bg-green-800", text: "text-green-800 dark:text-green-200", flashBg: "bg-green-300 dark:bg-green-700" },
+];
+
+const categoryFlashStyles: Record<AccountCategory, string> = {
+  asset: "animate-flash-category bg-gray-200 dark:bg-gray-600",
+  liability: "animate-flash-category bg-rose-200 dark:bg-rose-700",
+  equity: "animate-flash-category bg-blue-200 dark:bg-blue-700",
+  cost: "animate-flash-category bg-orange-200 dark:bg-orange-700",
+  expense: "animate-flash-category bg-amber-200 dark:bg-amber-700",
+  revenue: "animate-flash-category bg-green-200 dark:bg-green-700",
 };
 
 interface BalanceItem {
@@ -349,13 +380,48 @@ export default function TAccountDiagram() {
   const smallAccounts = tAccounts.filter((a) => !a.large);
   const summary = buildFinancialSummary(tAccounts);
 
+  const [flashAccount, setFlashAccount] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<AccountCategory | null>(null);
+
+  useEffect(() => {
+    if (!flashAccount) return;
+    const timer = setTimeout(() => {
+      setFlashAccount(null);
+      setActiveCategory(null);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [flashAccount]);
+
+  const handleClickAccount = useCallback((name: string) => {
+    const cat = accountCategoryMap[name];
+    if (!cat) return;
+    setFlashAccount(null);
+    setActiveCategory(null);
+    requestAnimationFrame(() => {
+      setFlashAccount(name);
+      setActiveCategory(cat);
+    });
+  }, []);
+
   return (
     <div className="w-full p-4 md:p-6 space-y-4" data-testid="t-account-diagram">
       <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-t-account-title">取引事例と元帳への転記</h3>
       <p className="text-xs text-muted-foreground text-center">仕訳には4つの要素がある：日付・勘定科目・金額・適用</p>
       <div className="space-y-1">
         <p className="text-xs font-bold text-foreground" data-testid="text-journal-heading">仕訳帳（4月の取引）</p>
-        <JournalTable entries={journalEntries} />
+        <p className="text-[10px] text-muted-foreground">勘定科目をタップすると本籍（カテゴリ）を確認できます</p>
+        <div className="flex flex-wrap gap-1.5 py-1" data-testid="mini-legend">
+          {categoryLegend.map((item) => (
+            <div
+              key={item.key}
+              className={`px-2.5 py-1 rounded text-[10px] font-bold transition-all duration-300 ${item.bg} ${item.text} ${activeCategory === item.key ? "ring-2 ring-offset-1 ring-slate-500 dark:ring-slate-300 scale-110" : "opacity-70"} ${!activeCategory ? "opacity-100" : ""}`}
+              data-testid={`legend-${item.key}`}
+            >
+              {item.label}
+            </div>
+          ))}
+        </div>
+        <JournalTable entries={journalEntries} flashAccount={flashAccount} onClickAccount={handleClickAccount} />
       </div>
       <div className="flex items-center justify-center gap-2 py-2">
         <div className="h-[1px] flex-1 bg-slate-200 dark:bg-slate-700" />
