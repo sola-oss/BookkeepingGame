@@ -186,14 +186,6 @@ const accountCategoryMap: Record<string, AccountCategory> = {
   "売上": "revenue", "受取利息": "revenue",
 };
 
-const categoryLegend: { key: AccountCategory; label: string; bg: string; text: string; flashBg: string }[] = [
-  { key: "asset", label: "資産", bg: "bg-gray-200 dark:bg-gray-700", text: "text-gray-800 dark:text-gray-200", flashBg: "bg-gray-300 dark:bg-gray-600" },
-  { key: "liability", label: "負債", bg: "bg-rose-200 dark:bg-rose-800", text: "text-rose-800 dark:text-rose-200", flashBg: "bg-rose-300 dark:bg-rose-700" },
-  { key: "equity", label: "資本", bg: "bg-blue-200 dark:bg-blue-800", text: "text-blue-800 dark:text-blue-200", flashBg: "bg-blue-300 dark:bg-blue-700" },
-  { key: "cost", label: "原価", bg: "bg-orange-200 dark:bg-orange-800", text: "text-orange-800 dark:text-orange-200", flashBg: "bg-orange-300 dark:bg-orange-700" },
-  { key: "expense", label: "経費", bg: "bg-amber-200 dark:bg-amber-800", text: "text-amber-800 dark:text-amber-200", flashBg: "bg-amber-300 dark:bg-amber-700" },
-  { key: "revenue", label: "収益", bg: "bg-green-200 dark:bg-green-800", text: "text-green-800 dark:text-green-200", flashBg: "bg-green-300 dark:bg-green-700" },
-];
 
 const categoryFlashStyles: Record<AccountCategory, string> = {
   asset: "animate-flash-category bg-gray-200 dark:bg-gray-600",
@@ -374,6 +366,65 @@ function NetIncomeArrow() {
   );
 }
 
+function MiniHonsekiCell({ label, category, activeCategory, className }: { label: string; category: AccountCategory; activeCategory: AccountCategory | null; className: string }) {
+  const isActive = activeCategory === category;
+  return (
+    <div className={`flex items-center justify-center transition-all duration-300 ${className} ${isActive ? "ring-2 ring-inset ring-slate-800 dark:ring-white animate-flash-category" : ""}`}>
+      <span className={`font-bold ${isActive ? "scale-110" : ""} transition-transform duration-300`}>{label}</span>
+    </div>
+  );
+}
+
+function MiniHonsekiDiagram({ activeCategory }: { activeCategory: AccountCategory | null }) {
+  return (
+    <div className="flex gap-2 py-1" data-testid="mini-honseki">
+      <div className="w-[150px]">
+        <div className="text-center mb-0.5">
+          <span className="text-[9px] font-bold text-muted-foreground">貸借対照表</span>
+        </div>
+        <div className="border border-slate-300 dark:border-slate-600 rounded overflow-hidden">
+          <div className="flex text-center text-[8px] font-bold text-muted-foreground border-b border-slate-300 dark:border-slate-600">
+            <div className="flex-1 py-0.5 border-r border-slate-300 dark:border-slate-600">借方</div>
+            <div className="flex-1 py-0.5">貸方</div>
+          </div>
+          <div className="flex" style={{ minHeight: "60px" }}>
+            <div className="flex-1 border-r border-slate-300 dark:border-slate-600 flex items-stretch">
+              <MiniHonsekiCell label="資産" category="asset" activeCategory={activeCategory} className="w-full bg-gray-200 dark:bg-gray-700 text-[11px] text-gray-800 dark:text-gray-200" />
+            </div>
+            <div className="flex-1 flex flex-col">
+              <MiniHonsekiCell label="負債" category="liability" activeCategory={activeCategory} className="flex-1 bg-rose-200 dark:bg-rose-800 text-[10px] text-rose-800 dark:text-rose-200 border-b border-slate-300 dark:border-slate-600" />
+              <MiniHonsekiCell label="資本" category="equity" activeCategory={activeCategory} className="flex-1 bg-blue-200 dark:bg-blue-800 text-[10px] text-blue-800 dark:text-blue-200" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="w-[150px]">
+        <div className="text-center mb-0.5">
+          <span className="text-[9px] font-bold text-muted-foreground">損益計算書</span>
+        </div>
+        <div className="border border-slate-300 dark:border-slate-600 rounded overflow-hidden">
+          <div className="flex text-center text-[8px] font-bold text-muted-foreground border-b border-slate-300 dark:border-slate-600">
+            <div className="flex-1 py-0.5 border-r border-slate-300 dark:border-slate-600">借方</div>
+            <div className="flex-1 py-0.5">貸方</div>
+          </div>
+          <div className="flex" style={{ minHeight: "60px" }}>
+            <div className="flex-1 border-r border-slate-300 dark:border-slate-600 flex flex-col">
+              <MiniHonsekiCell label="原価" category="cost" activeCategory={activeCategory} className="flex-1 bg-orange-200 dark:bg-orange-800 text-[10px] text-orange-800 dark:text-orange-200 border-b border-slate-300 dark:border-slate-600" />
+              <MiniHonsekiCell label="経費" category="expense" activeCategory={activeCategory} className="flex-1 bg-amber-200 dark:bg-amber-800 text-[10px] text-amber-800 dark:text-amber-200 border-b border-slate-300 dark:border-slate-600" />
+              <div className="flex-[0.5] bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
+                <span className="text-[9px] font-bold text-slate-500 dark:text-slate-300">利益</span>
+              </div>
+            </div>
+            <div className="flex-1 flex items-stretch">
+              <MiniHonsekiCell label="収益" category="revenue" activeCategory={activeCategory} className="w-full bg-green-200 dark:bg-green-800 text-[11px] text-green-800 dark:text-green-200" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function TAccountDiagram() {
   const tAccounts = buildTAccounts(journalEntries);
   const largeAccounts = tAccounts.filter((a) => a.large);
@@ -410,17 +461,7 @@ export default function TAccountDiagram() {
       <div className="space-y-1">
         <p className="text-xs font-bold text-foreground" data-testid="text-journal-heading">仕訳帳（4月の取引）</p>
         <p className="text-[10px] text-muted-foreground">勘定科目をタップすると本籍（カテゴリ）を確認できます</p>
-        <div className="flex flex-wrap gap-1.5 py-1" data-testid="mini-legend">
-          {categoryLegend.map((item) => (
-            <div
-              key={item.key}
-              className={`px-2.5 py-1 rounded text-[10px] font-bold transition-all duration-300 ${item.bg} ${item.text} ${activeCategory === item.key ? "ring-2 ring-offset-1 ring-slate-500 dark:ring-slate-300 scale-110" : "opacity-70"} ${!activeCategory ? "opacity-100" : ""}`}
-              data-testid={`legend-${item.key}`}
-            >
-              {item.label}
-            </div>
-          ))}
-        </div>
+        <MiniHonsekiDiagram activeCategory={activeCategory} />
         <JournalTable entries={journalEntries} flashAccount={flashAccount} onClickAccount={handleClickAccount} />
       </div>
       <div className="flex items-center justify-center gap-2 py-2">
