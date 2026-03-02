@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 interface JournalLine {
   account: string;
@@ -22,6 +22,20 @@ interface TAccountData {
   debit: TAccountEntry[];
   credit: TAccountEntry[];
   large?: boolean;
+}
+
+type AccountCategory = "asset" | "liability" | "equity" | "cost" | "expense" | "revenue";
+
+interface AmountHighlight {
+  account: string;
+  date: string;
+  side: "debit" | "credit";
+  amount: number;
+  isIncrease: boolean;
+}
+
+function isNormalDebit(cat: AccountCategory): boolean {
+  return cat === "asset" || cat === "cost" || cat === "expense";
 }
 
 const journalEntries: JournalEntry[] = [
@@ -86,7 +100,40 @@ function AccountCell({ account, flashAccount, onClickAccount }: { account: strin
   );
 }
 
-function JournalTable({ entries, flashAccount, onClickAccount }: { entries: JournalEntry[]; flashAccount: string | null; onClickAccount: (name: string) => void }) {
+function AmountCell({ line, date, side, amountHighlight, onClickAmount }: {
+  line: JournalLine | undefined;
+  date: string;
+  side: "debit" | "credit";
+  amountHighlight: AmountHighlight | null;
+  onClickAmount: (account: string, date: string, side: "debit" | "credit", amount: number) => void;
+}) {
+  if (!line) return <td className="border border-slate-300 dark:border-slate-600 px-2 py-1" />;
+  const isHighlighted = amountHighlight && amountHighlight.account === line.account && amountHighlight.date === date && amountHighlight.side === side && amountHighlight.amount === line.amount;
+  return (
+    <td
+      className="border border-slate-300 dark:border-slate-600 px-2 py-1 text-right font-mono text-foreground cursor-pointer select-none"
+      onClick={() => onClickAmount(line.account, date, side, line.amount)}
+      data-testid={`journal-amount-${line.account}-${date}-${side}`}
+    >
+      <span className="inline-flex items-center gap-1">
+        {isHighlighted && (
+          <span className={`text-[9px] font-bold px-1 rounded ${amountHighlight.isIncrease ? "bg-emerald-200 dark:bg-emerald-800 text-emerald-700 dark:text-emerald-300" : "bg-red-200 dark:bg-red-800 text-red-700 dark:text-red-300"}`}>
+            {amountHighlight.isIncrease ? "+" : "−"}
+          </span>
+        )}
+        <span className="underline decoration-dotted underline-offset-2">{line.amount.toLocaleString()}</span>
+      </span>
+    </td>
+  );
+}
+
+function JournalTable({ entries, flashAccount, onClickAccount, amountHighlight, onClickAmount }: {
+  entries: JournalEntry[];
+  flashAccount: string | null;
+  onClickAccount: (name: string) => void;
+  amountHighlight: AmountHighlight | null;
+  onClickAmount: (account: string, date: string, side: "debit" | "credit", amount: number) => void;
+}) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-[11px] md:text-xs border-collapse" data-testid="journal-table">
@@ -117,13 +164,9 @@ function JournalTable({ entries, flashAccount, onClickAccount }: { entries: Jour
                   <td className="border border-slate-300 dark:border-slate-600 px-2 py-1 text-muted-foreground" rowSpan={maxRows}>{entry.date}</td>
                 ) : null}
                 <AccountCell account={entry.debit[row]?.account} flashAccount={flashAccount} onClickAccount={onClickAccount} />
-                <td className="border border-slate-300 dark:border-slate-600 px-2 py-1 text-right font-mono text-foreground">
-                  {entry.debit[row] ? entry.debit[row].amount.toLocaleString() : ""}
-                </td>
+                <AmountCell line={entry.debit[row]} date={entry.date} side="debit" amountHighlight={amountHighlight} onClickAmount={onClickAmount} />
                 <AccountCell account={entry.credit[row]?.account} flashAccount={flashAccount} onClickAccount={onClickAccount} />
-                <td className="border border-slate-300 dark:border-slate-600 px-2 py-1 text-right font-mono text-foreground">
-                  {entry.credit[row] ? entry.credit[row].amount.toLocaleString() : ""}
-                </td>
+                <AmountCell line={entry.credit[row]} date={entry.date} side="credit" amountHighlight={amountHighlight} onClickAmount={onClickAmount} />
               </tr>
             ));
           })}
@@ -133,35 +176,44 @@ function JournalTable({ entries, flashAccount, onClickAccount }: { entries: Jour
   );
 }
 
-function TAccount({ account }: { account: TAccountData }) {
+function TAccountRow({ entry, isHighlighted, highlightRef }: { entry: TAccountEntry; isHighlighted: boolean; highlightRef: ((el: HTMLDivElement | null) => void) | null }) {
+  return (
+    <div
+      ref={highlightRef}
+      className={`flex justify-between gap-1 text-[10px] md:text-[11px] px-1 rounded transition-colors ${isHighlighted ? "animate-flash-category bg-amber-200 dark:bg-amber-700 ring-1 ring-amber-400" : ""}`}
+    >
+      <span className="text-muted-foreground truncate">{entry.date}</span>
+      <span className="text-foreground truncate flex-1 text-center">{entry.label}</span>
+      <span className="text-foreground font-mono whitespace-nowrap">{entry.amount.toLocaleString()}</span>
+    </div>
+  );
+}
+
+function TAccount({ account, amountHighlight, onHighlightRef }: { account: TAccountData; amountHighlight: AmountHighlight | null; onHighlightRef: (el: HTMLDivElement | null) => void }) {
   const debitTotal = account.debit.reduce((s, e) => s + e.amount, 0);
   const creditTotal = account.credit.reduce((s, e) => s + e.amount, 0);
   const balance = debitTotal - creditTotal;
 
+  const isTargetAccount = amountHighlight && amountHighlight.account === account.name;
+
   return (
     <div data-testid={`t-account-${account.name}`}>
-      <div className="border-2 border-slate-400 dark:border-slate-500 rounded-md overflow-hidden">
-        <div className="bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-400 dark:border-slate-500 py-1.5 text-center">
+      <div className={`border-2 rounded-md overflow-hidden transition-colors ${isTargetAccount ? "border-amber-400 dark:border-amber-500" : "border-slate-400 dark:border-slate-500"}`}>
+        <div className={`border-b-2 py-1.5 text-center ${isTargetAccount ? "bg-amber-100 dark:bg-amber-900/50 border-amber-400 dark:border-amber-500" : "bg-slate-100 dark:bg-slate-800 border-slate-400 dark:border-slate-500"}`}>
           <span className="font-bold text-sm text-foreground">{account.name}</span>
         </div>
         <div className="flex min-h-[40px]">
           <div className="flex-1 border-r border-slate-400 dark:border-slate-500 p-1.5 space-y-0.5">
-            {account.debit.map((entry, i) => (
-              <div key={i} className="flex justify-between gap-1 text-[10px] md:text-[11px]">
-                <span className="text-muted-foreground truncate">{entry.date}</span>
-                <span className="text-foreground truncate flex-1 text-center">{entry.label}</span>
-                <span className="text-foreground font-mono whitespace-nowrap">{entry.amount.toLocaleString()}</span>
-              </div>
-            ))}
+            {account.debit.map((entry, i) => {
+              const isMatch = isTargetAccount && amountHighlight.side === "debit" && entry.date === amountHighlight.date && entry.amount === amountHighlight.amount;
+              return <TAccountRow key={i} entry={entry} isHighlighted={!!isMatch} highlightRef={isMatch ? onHighlightRef : null} />;
+            })}
           </div>
           <div className="flex-1 p-1.5 space-y-0.5">
-            {account.credit.map((entry, i) => (
-              <div key={i} className="flex justify-between gap-1 text-[10px] md:text-[11px]">
-                <span className="text-muted-foreground truncate">{entry.date}</span>
-                <span className="text-foreground truncate flex-1 text-center">{entry.label}</span>
-                <span className="text-foreground font-mono whitespace-nowrap">{entry.amount.toLocaleString()}</span>
-              </div>
-            ))}
+            {account.credit.map((entry, i) => {
+              const isMatch = isTargetAccount && amountHighlight.side === "credit" && entry.date === amountHighlight.date && entry.amount === amountHighlight.amount;
+              return <TAccountRow key={i} entry={entry} isHighlighted={!!isMatch} highlightRef={isMatch ? onHighlightRef : null} />;
+            })}
           </div>
         </div>
         <div className="border-t border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 flex justify-between text-[10px] md:text-[11px]">
@@ -174,8 +226,6 @@ function TAccount({ account }: { account: TAccountData }) {
     </div>
   );
 }
-
-type AccountCategory = "asset" | "liability" | "equity" | "cost" | "expense" | "revenue";
 
 const accountCategoryMap: Record<string, AccountCategory> = {
   "現金": "asset", "売掛金": "asset", "備品": "asset",
@@ -430,6 +480,8 @@ export default function TAccountDiagram() {
 
   const [flashAccount, setFlashAccount] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<AccountCategory | null>(null);
+  const [amountHighlight, setAmountHighlight] = useState<AmountHighlight | null>(null);
+  const highlightRowRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!flashAccount) return;
@@ -440,14 +492,41 @@ export default function TAccountDiagram() {
     return () => clearTimeout(timer);
   }, [flashAccount]);
 
+  useEffect(() => {
+    if (!amountHighlight) return;
+    const timer = setTimeout(() => {
+      setAmountHighlight(null);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [amountHighlight]);
+
+  useEffect(() => {
+    if (amountHighlight && highlightRowRef.current) {
+      highlightRowRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [amountHighlight]);
+
   const handleClickAccount = useCallback((name: string) => {
     const cat = accountCategoryMap[name];
     if (!cat) return;
+    setAmountHighlight(null);
     setFlashAccount(null);
     setActiveCategory(null);
     requestAnimationFrame(() => {
       setFlashAccount(name);
       setActiveCategory(cat);
+    });
+  }, []);
+
+  const handleClickAmount = useCallback((account: string, date: string, side: "debit" | "credit", amount: number) => {
+    const cat = accountCategoryMap[account];
+    if (!cat) return;
+    const isIncrease = isNormalDebit(cat) ? side === "debit" : side === "credit";
+    setFlashAccount(null);
+    setActiveCategory(null);
+    setAmountHighlight(null);
+    requestAnimationFrame(() => {
+      setAmountHighlight({ account, date, side, amount, isIncrease });
     });
   }, []);
 
@@ -457,9 +536,9 @@ export default function TAccountDiagram() {
       <p className="text-xs text-muted-foreground text-center">仕訳には4つの要素がある：日付・勘定科目・金額・適用</p>
       <div className="space-y-1">
         <p className="text-xs font-bold text-foreground" data-testid="text-journal-heading">仕訳帳（4月の取引）</p>
-        <p className="text-[10px] text-muted-foreground">勘定科目をタップすると本籍（カテゴリ）を確認できます</p>
+        <p className="text-[10px] text-muted-foreground">勘定科目をタップ→本籍確認 ｜ 金額をタップ→+/-とT字勘定の位置を確認</p>
         <MiniHonsekiDiagram activeCategory={activeCategory} />
-        <JournalTable entries={journalEntries} flashAccount={flashAccount} onClickAccount={handleClickAccount} />
+        <JournalTable entries={journalEntries} flashAccount={flashAccount} onClickAccount={handleClickAccount} amountHighlight={amountHighlight} onClickAmount={handleClickAmount} />
       </div>
       <div className="flex items-center justify-center gap-2 py-2">
         <div className="h-[1px] flex-1 bg-slate-200 dark:bg-slate-700" />
@@ -472,14 +551,14 @@ export default function TAccountDiagram() {
         {largeAccounts.length > 0 && (
           <div className="grid grid-cols-1 gap-3 mb-3">
             {largeAccounts.map((account) => (
-              <TAccount key={account.name} account={account} />
+              <TAccount key={account.name} account={account} amountHighlight={amountHighlight} onHighlightRef={(el) => { highlightRowRef.current = el; }} />
             ))}
           </div>
         )}
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {smallAccounts.map((account) => (
-            <TAccount key={account.name} account={account} />
+            <TAccount key={account.name} account={account} amountHighlight={amountHighlight} onHighlightRef={(el) => { highlightRowRef.current = el; }} />
           ))}
         </div>
       </div>
