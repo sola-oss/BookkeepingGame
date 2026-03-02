@@ -15,8 +15,8 @@ export default function FiveElementsDiagram() {
               </div>
               <div className="flex min-h-[160px]">
                 <div className="flex-1 border-r border-slate-300 dark:border-slate-600 flex items-stretch">
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center p-4">
-                    <span className="text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-200">資産</span>
+                  <div className="w-full bg-violet-200 dark:bg-violet-800 flex items-center justify-center p-4">
+                    <span className="text-xl md:text-2xl font-bold text-violet-800 dark:text-violet-200">資産</span>
                   </div>
                 </div>
                 <div className="flex-1 flex flex-col">
@@ -45,11 +45,8 @@ export default function FiveElementsDiagram() {
                   <div className="flex-1 bg-orange-200 dark:bg-orange-800 flex items-center justify-center p-2 border-b border-slate-300 dark:border-slate-600">
                     <span className="text-base md:text-lg font-bold text-orange-800 dark:text-orange-200">原価</span>
                   </div>
-                  <div className="flex-1 bg-amber-200 dark:bg-amber-800 flex items-center justify-center p-2 border-b border-slate-300 dark:border-slate-600">
+                  <div className="flex-1 bg-amber-200 dark:bg-amber-800 flex items-center justify-center p-2">
                     <span className="text-base md:text-lg font-bold text-amber-800 dark:text-amber-200">経費</span>
-                  </div>
-                  <div className="flex-[0.6] bg-slate-100 dark:bg-slate-700 flex items-center justify-center p-1">
-                    <span className="text-sm font-bold text-slate-500 dark:text-slate-300">利益</span>
                   </div>
                 </div>
                 <div className="flex-1 flex items-stretch">
@@ -64,7 +61,7 @@ export default function FiveElementsDiagram() {
       </div>
       <div className="flex flex-wrap justify-center gap-2 pt-2">
         {[
-          { label: "資産", color: "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200" },
+          { label: "資産", color: "bg-violet-200 dark:bg-violet-800 text-violet-800 dark:text-violet-200" },
           { label: "負債", color: "bg-rose-200 dark:bg-rose-800 text-rose-800 dark:text-rose-200" },
           { label: "資本", color: "bg-blue-200 dark:bg-blue-800 text-blue-800 dark:text-blue-200" },
           { label: "原価", color: "bg-orange-200 dark:bg-orange-800 text-orange-800 dark:text-orange-200" },
