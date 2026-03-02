@@ -410,10 +410,7 @@ function MiniHonsekiDiagram({ activeCategory }: { activeCategory: AccountCategor
           <div className="flex" style={{ minHeight: "60px" }}>
             <div className="flex-1 border-r border-slate-300 dark:border-slate-600 flex flex-col">
               <MiniHonsekiCell label="原価" category="cost" activeCategory={activeCategory} className="flex-1 bg-orange-200 dark:bg-orange-800 text-[10px] text-orange-800 dark:text-orange-200 border-b border-slate-300 dark:border-slate-600" />
-              <MiniHonsekiCell label="経費" category="expense" activeCategory={activeCategory} className="flex-1 bg-amber-200 dark:bg-amber-800 text-[10px] text-amber-800 dark:text-amber-200 border-b border-slate-300 dark:border-slate-600" />
-              <div className="flex-[0.5] bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
-                <span className="text-[9px] font-bold text-slate-500 dark:text-slate-300">利益</span>
-              </div>
+              <MiniHonsekiCell label="経費" category="expense" activeCategory={activeCategory} className="flex-1 bg-amber-200 dark:bg-amber-800 text-[10px] text-amber-800 dark:text-amber-200" />
             </div>
             <div className="flex-1 flex items-stretch">
               <MiniHonsekiCell label="収益" category="revenue" activeCategory={activeCategory} className="w-full bg-green-200 dark:bg-green-800 text-[11px] text-green-800 dark:text-green-200" />
