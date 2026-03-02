@@ -496,6 +496,7 @@ export default function TAccountDiagram() {
   const [flashAccount, setFlashAccount] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<AccountCategory | null>(null);
   const [amountHighlight, setAmountHighlight] = useState<AmountHighlight | null>(null);
+  const [showAllTAccounts, setShowAllTAccounts] = useState(false);
   const highlightRowRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -539,13 +540,17 @@ export default function TAccountDiagram() {
     const cat = accountCategoryMap[account];
     if (!cat) return;
     const isIncrease = isNormalDebit(cat) ? side === "debit" : side === "credit";
+    const isLarge = largeAccounts.some((a) => a.name === account);
+    if (!isLarge) {
+      setShowAllTAccounts(true);
+    }
     setFlashAccount(null);
     setActiveCategory(null);
     setAmountHighlight(null);
     requestAnimationFrame(() => {
       setAmountHighlight({ account, date, side, amount, isIncrease });
     });
-  }, []);
+  }, [largeAccounts]);
 
   return (
     <div className="w-full p-4 md:p-6 space-y-4" data-testid="t-account-diagram">
@@ -573,11 +578,30 @@ export default function TAccountDiagram() {
           </div>
         )}
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {smallAccounts.map((account) => (
-            <TAccount key={account.name} account={account} amountHighlight={amountHighlight} onHighlightRef={(el) => { highlightRowRef.current = el; }} />
-          ))}
-        </div>
+        {!showAllTAccounts ? (
+          <button
+            onClick={() => setShowAllTAccounts(true)}
+            className="w-full py-2 px-4 text-xs font-medium text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md transition-colors"
+            data-testid="button-show-all-t-accounts"
+          >
+            他の勘定科目も見る（{smallAccounts.length}件）
+          </button>
+        ) : (
+          <>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              {smallAccounts.map((account) => (
+                <TAccount key={account.name} account={account} amountHighlight={amountHighlight} onHighlightRef={(el) => { highlightRowRef.current = el; }} />
+              ))}
+            </div>
+            <button
+              onClick={() => setShowAllTAccounts(false)}
+              className="w-full py-2 px-4 text-xs font-medium text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md transition-colors"
+              data-testid="button-hide-t-accounts"
+            >
+              閉じる
+            </button>
+          </>
+        )}
       </div>
       <div className="flex items-center justify-center gap-2 py-2">
         <div className="h-[1px] flex-1 bg-slate-200 dark:bg-slate-700" />
