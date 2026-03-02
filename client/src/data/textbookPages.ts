@@ -94,14 +94,7 @@ export const textbookChapters: TextbookChapter[] = [
         id: "kaikei_yogo",
         title: "会計用語の整理",
         diagramId: "accounting-terms",
-        content: [
-          "【会計】",
-          "収支: 収入 - 支出",
-          "損益: 収益 - 費用",
-          "【税法】",
-          "法人税: 益金 - 損金",
-          "所得税: 収入金額 - 必要経費",
-        ],
+        content: [],
       },
       {
         id: "rydeen_financial",
