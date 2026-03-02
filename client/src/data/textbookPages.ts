@@ -31,12 +31,7 @@ export const textbookChapters: TextbookChapter[] = [
         id: "boki_flow",
         title: "簿記の流れ",
         diagramId: "bookkeeping-flow",
-        content: [
-          "簿記は以下の流れで進みます：",
-          "取引が発生したら「仕訳」として記録し、それを「勘定」に転記、最後に「決算書」として集計します。",
-          "仕訳帳に記録 → 総勘定元帳に転記 → PL（損益計算書）とBS（貸借対照表）に集計",
-          "決算書を作成するまでが「作る会計」、完成した決算書を読み解くのが「読む会計」です。",
-        ],
+        content: [],
       },
       {
         id: "bs_pl_relation",
