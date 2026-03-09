@@ -286,11 +286,6 @@ function PLRydeen() {
   return (
     <div className="overflow-x-auto">
       <div className="min-w-[360px] p-2 border border-slate-300 dark:border-slate-600 rounded space-y-1 text-[10px]">
-        <div className="rounded p-1.5 bg-orange-100 dark:bg-orange-900/60 space-y-0.5">
-          <SectionHeader color="bg-orange-200 dark:bg-orange-800 text-orange-800 dark:text-orange-200">売上高</SectionHeader>
-          <Row label="売上高" amount={230980493} bold />
-        </div>
-
         <div className="rounded p-1.5 bg-green-100 dark:bg-green-900/60 space-y-0.5">
           <SectionHeader color="bg-green-200 dark:bg-green-800 text-green-800 dark:text-green-200">変動費</SectionHeader>
           <div className="pl-2 space-y-0.5">
@@ -305,10 +300,6 @@ function PLRydeen() {
             <Row label="" amount={15142079} indent={3} bold />
           </div>
           <Row label="変動費合計" amount={80472859} bold borderTop />
-        </div>
-
-        <div className="border-2 border-green-400 dark:border-green-600 rounded p-1.5 my-1 bg-green-50 dark:bg-green-950/30">
-          <Row label="粗利" amount={150507634} bold />
         </div>
 
         <div className="rounded p-1.5 bg-blue-100 dark:bg-blue-900/60 space-y-0.5">
@@ -343,6 +334,17 @@ function PLRydeen() {
 
         <Row label="固定費合計" amount={130999105} bold borderTop />
 
+        <Row label="税引前当期純利益" amount={20044805} bold borderTop />
+
+        <div className="rounded p-1.5 bg-orange-100 dark:bg-orange-900/60 space-y-0.5 mt-1">
+          <SectionHeader color="bg-orange-200 dark:bg-orange-800 text-orange-800 dark:text-orange-200">売上高</SectionHeader>
+          <Row label="売上高" amount={230980493} bold />
+        </div>
+
+        <div className="border-2 border-green-400 dark:border-green-600 rounded p-1.5 my-1 bg-green-50 dark:bg-green-950/30">
+          <Row label="粗利" amount={150507634} bold />
+        </div>
+
         <Row label="営業利益" amount={19508529} bold borderTop />
 
         <div className="rounded p-1.5 bg-orange-50 dark:bg-orange-900/30 space-y-0.5 mt-1">
@@ -356,7 +358,6 @@ function PLRydeen() {
         <Row label="経常利益" amount={20044805} bold borderTop />
         <Row label="特別利益" amount={0} />
         <Row label="特別損失" amount={0} />
-        <Row label="税引前当期純利益" amount={20044805} bold borderTop />
 
         <div className="bg-slate-100 dark:bg-slate-800 rounded p-2 mt-2 space-y-0.5">
           <div className="text-[10px] font-bold text-muted-foreground mb-1">使えるおカネの配分</div>
