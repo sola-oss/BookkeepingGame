@@ -2,7 +2,6 @@ export default function AccountingTermsDiagram() {
   return (
     <div className="w-full p-4 md:p-6 space-y-4" data-testid="accounting-terms-diagram">
       <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-accounting-terms-title">会計用語の整理</h3>
-
       <div className="overflow-x-auto">
         <table className="mx-auto border-collapse text-sm min-w-[360px]">
           <tbody>
@@ -12,7 +11,7 @@ export default function AccountingTermsDiagram() {
               </td>
               <td className="border border-slate-300 dark:border-slate-600 px-4 py-2.5 bg-blue-50 dark:bg-blue-950">
                 <div className="flex items-center gap-1.5 flex-wrap">
-                  <span className="font-bold text-foreground">収支</span>
+                  <span className="font-bold text-foreground">収　支</span>
                   <span className="text-muted-foreground">=</span>
                   <span className="text-blue-600 dark:text-blue-400 font-medium">収入</span>
                   <span className="text-muted-foreground">−</span>
