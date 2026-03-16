@@ -40,7 +40,7 @@ export default function AccountingTermsDiagram() {
                   <span className="text-muted-foreground">=</span>
                   <span className="text-blue-600 dark:text-blue-400 font-medium">益　　金</span>
                   <span className="text-muted-foreground">−</span>
-                  <span className="text-red-500 dark:text-red-400 font-medium">損金</span>
+                  <span className="text-red-500 dark:text-red-400 font-medium">損　　金</span>
                 </div>
               </td>
             </tr>
