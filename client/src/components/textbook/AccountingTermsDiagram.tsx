@@ -22,7 +22,7 @@ export default function AccountingTermsDiagram() {
             <tr>
               <td className="border border-slate-300 dark:border-slate-600 px-4 py-2.5 bg-blue-50 dark:bg-blue-950">
                 <div className="flex items-center gap-1.5 flex-wrap">
-                  <span className="font-bold text-foreground">損益</span>
+                  <span className="font-bold text-foreground">損　益</span>
                   <span className="text-muted-foreground">=</span>
                   <span className="text-blue-600 dark:text-blue-400 font-medium">収益</span>
                   <span className="text-muted-foreground">−</span>
