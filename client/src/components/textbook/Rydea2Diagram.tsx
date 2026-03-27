@@ -118,9 +118,6 @@ function PLSection() {
                       <span className="text-[9px] font-bold text-[#1f538f]">経費</span>
                     </div>
                     <div className="text-foreground/70 mt-0.5 text-left text-[8px] font-medium">固定費</div>
-                    <div className="text-[7px] text-foreground/60 text-left ml-1 space-y-0.5 mt-0.5">
-                      <div className="font-medium">・定型</div>
-                    </div>
                   </div>
                 </div>
                 <div className="bg-yellow-100 dark:bg-yellow-800 flex items-center justify-center flex-1">
