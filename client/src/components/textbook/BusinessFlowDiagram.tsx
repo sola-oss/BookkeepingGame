@@ -56,7 +56,7 @@ export default function BusinessFlowDiagram() {
                 </svg>
                 <div className="bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded-sm ml-1">売上</div>
               </div>
-              <div className="p-1.5 border border-orange-300 dark:border-orange-600 rounded-lg">
+              <div className="p-1.5">
                 <div className="text-sm font-bold text-orange-600 dark:text-orange-400 mb-1">U</div>
                 <div className="space-y-0.5 text-[10px] text-foreground">
                   <div>一般顧客</div>
