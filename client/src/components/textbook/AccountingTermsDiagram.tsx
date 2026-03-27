@@ -15,7 +15,7 @@ export default function AccountingTermsDiagram() {
                   <span className="text-muted-foreground">=</span>
                   <span className="text-blue-600 dark:text-blue-400 font-medium">収　　入</span>
                   <span className="text-muted-foreground">−</span>
-                  <span className="text-red-500 dark:text-red-400 font-medium">支　出</span>
+                  <span className="text-red-500 dark:text-red-400 font-medium">支　　出</span>
                 </div>
               </td>
             </tr>
