@@ -100,7 +100,7 @@ function PLSection() {
         <div className="bg-orange-50 dark:bg-orange-950 p-1.5 border-b border-orange-200 dark:border-orange-700 text-left">
           <div className="border border-red-400 rounded px-1.5 py-0.5 text-[10px] font-bold text-red-600 dark:text-red-400 inline-block">消</div>
         </div>
-        <div className="p-3 space-y-1">
+        <div className="p-2">
           <div className="flex gap-2 items-stretch" style={{ height: "280px" }}>
             <div className="flex flex-col gap-0 border-2 border-slate-300 dark:border-slate-600 rounded-lg overflow-hidden w-[90px] flex-shrink-0">
               <div className="bg-green-100 dark:bg-green-900 flex items-center justify-center border-b-2 border-slate-300 dark:border-slate-500 flex-1">
@@ -143,9 +143,6 @@ function PLSection() {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="flex justify-end px-1">
-            <span className="text-[9px] text-muted-foreground">費用　　　　　　　　　収入</span>
           </div>
         </div>
       </div>
