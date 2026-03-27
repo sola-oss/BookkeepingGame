@@ -10,7 +10,6 @@ export default function BusinessFlowDiagram() {
             <div className="absolute top-1/2 left-0 right-1/2 h-px bg-slate-300 dark:bg-slate-600 -translate-y-1/2" />
 
             <div className="p-2 text-left ml-[40px] mr-[40px] mt-[0px] mb-[0px] pt-[0px] pb-[0px] pl-[15px] pr-[15px]">
-              <div className="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2">G</div>
               <div className="space-y-1 text-[10px] text-foreground">
                 <div>食品メーカー</div>
                 <div className="text-muted-foreground ml-2">（株）RYDDEENヌードル</div>
@@ -57,7 +56,6 @@ export default function BusinessFlowDiagram() {
                 <div className="bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded-sm ml-1">売上</div>
               </div>
               <div className="p-1.5">
-                <div className="text-sm font-bold text-orange-600 dark:text-orange-400 mb-1">U</div>
                 <div className="space-y-0.5 text-[10px] text-foreground">
                   <div>一般顧客</div>
                   <div className="text-muted-foreground ml-1">→現金orクレジット</div>
@@ -68,7 +66,6 @@ export default function BusinessFlowDiagram() {
             </div>
 
             <div className="p-2 ml-[40px] mr-[40px] pl-[15px] pr-[15px]">
-              <div className="text-sm font-bold text-blue-600 dark:text-blue-400 mb-1">K</div>
               <div className="space-y-0.5 text-[10px] text-foreground">
                 <div className="flex gap-4"><span>人件費</span><span className="text-muted-foreground">銀行振込</span></div>
                 <div className="flex gap-4"><span>広告宣伝費</span><span className="text-muted-foreground">銀行振込</span></div>
