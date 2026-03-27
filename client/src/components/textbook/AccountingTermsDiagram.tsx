@@ -13,7 +13,7 @@ export default function AccountingTermsDiagram() {
                 <div className="flex items-center gap-1.5 flex-wrap">
                   <span className="font-bold text-foreground">収　支</span>
                   <span className="text-muted-foreground">=</span>
-                  <span className="text-blue-600 dark:text-blue-400 font-medium">収入</span>
+                  <span className="text-blue-600 dark:text-blue-400 font-medium">収　入</span>
                   <span className="text-muted-foreground">−</span>
                   <span className="text-red-500 dark:text-red-400 font-medium">支出</span>
                 </div>
