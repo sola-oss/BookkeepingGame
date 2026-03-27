@@ -103,7 +103,7 @@ function PLSection() {
         <div className="p-3 space-y-1">
           <div className="flex gap-2 items-stretch" style={{ height: "280px" }}>
             <div className="flex flex-col gap-0 border-2 border-slate-300 dark:border-slate-600 rounded-lg overflow-hidden w-[90px] flex-shrink-0">
-              <div className="bg-green-100 dark:bg-green-900 flex items-center justify-center border-b-2 border-slate-300 dark:border-slate-500" style={{ height: "35%" }}>
+              <div className="bg-green-100 dark:bg-green-900 flex items-center justify-center border-b-2 border-slate-300 dark:border-slate-500 flex-1">
                 <div className="text-center px-1">
                   <div className="text-[9px] font-bold text-green-800 dark:text-green-200 leading-tight">仕入・<br />材料費</div>
                 </div>
@@ -117,7 +117,7 @@ function PLSection() {
             <div className="border-2 border-red-400 dark:border-red-500 rounded-lg overflow-hidden flex-1">
               <div className="flex h-full">
                 <div className="flex-1 flex flex-col border-r-2 border-slate-400 dark:border-slate-500">
-                  <div className="bg-green-200 dark:bg-green-800 flex items-center justify-center border-b-2 border-slate-300 dark:border-slate-500" style={{ height: "35%" }}>
+                  <div className="bg-green-200 dark:bg-green-800 flex items-center justify-center border-b-2 border-slate-300 dark:border-slate-500 flex-1">
                     <div className="text-center px-1">
                       <div className="flex items-center gap-1 justify-center">
                         <span className="text-[9px] font-bold text-[#2f5e28]">原価</span>
@@ -125,7 +125,7 @@ function PLSection() {
                       <div className="text-[8px] text-foreground/70 mt-0.5 font-medium">変動費</div>
                     </div>
                   </div>
-                  <div className="bg-blue-200 dark:bg-blue-800 flex items-center justify-center border-b-2 border-slate-300 dark:border-slate-500" style={{ height: "52%" }}>
+                  <div className="bg-blue-200 dark:bg-blue-800 flex items-center justify-center border-b-2 border-slate-300 dark:border-slate-500 flex-1">
                     <div className="text-center px-1">
                       <div className="flex items-center gap-1 justify-center">
                         <span className="text-[9px] font-bold text-[#1f538f]">経費</span>
