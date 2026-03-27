@@ -24,9 +24,9 @@ export default function AccountingTermsDiagram() {
                 <div className="flex items-center gap-1.5 flex-wrap">
                   <span className="font-bold text-foreground">損　益</span>
                   <span className="text-muted-foreground">=</span>
-                  <span className="text-blue-600 dark:text-blue-400 font-medium">収　益</span>
+                  <span className="text-blue-600 dark:text-blue-400 font-medium">収　　益</span>
                   <span className="text-muted-foreground">−</span>
-                  <span className="text-red-500 dark:text-red-400 font-medium">費用</span>
+                  <span className="text-red-500 dark:text-red-400 font-medium">費　　用</span>
                 </div>
               </td>
             </tr>
