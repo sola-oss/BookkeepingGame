@@ -23,15 +23,7 @@ export default function BusinessFlowDiagram() {
 
             <div />
 
-            <div className="p-2 ml-[30px] mr-[30px]">
-              <div className="text-sm font-bold text-orange-600 dark:text-orange-400 mb-2">U</div>
-              <div className="space-y-1 text-[10px] text-foreground">
-                <div>一般顧客</div>
-                <div className="text-muted-foreground ml-2">→現金orクレジット</div>
-                <div className="mt-1">店舗販売　３店舗</div>
-                <div className="mt-1">移動販売　３店舗</div>
-              </div>
-            </div>
+            <div />
 
             <div className="flex flex-col justify-center gap-8 pr-1">
               <div className="flex items-center justify-end -mt-8">
@@ -56,12 +48,23 @@ export default function BusinessFlowDiagram() {
               </div>
             </div>
 
-            <div className="flex items-center justify-start pl-1">
-              <span className="text-[9px] font-bold text-orange-600 dark:text-orange-400 mr-1">A</span>
-              <svg width="24" height="20" viewBox="0 0 24 20" className="shrink-0">
-                <polygon points="24,4 8,4 8,0 0,10 8,20 8,16 24,16" fill="#f59e0b" />
-              </svg>
-              <div className="bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded-sm ml-1">売上</div>
+            <div className="flex items-center gap-2 pl-1">
+              <div className="flex items-center shrink-0">
+                <span className="text-[9px] font-bold text-orange-600 dark:text-orange-400 mr-1">A</span>
+                <svg width="24" height="20" viewBox="0 0 24 20" className="shrink-0">
+                  <polygon points="24,4 8,4 8,0 0,10 8,20 8,16 24,16" fill="#f59e0b" />
+                </svg>
+                <div className="bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded-sm ml-1">売上</div>
+              </div>
+              <div className="p-1.5 border border-orange-300 dark:border-orange-600 rounded-lg">
+                <div className="text-sm font-bold text-orange-600 dark:text-orange-400 mb-1">U</div>
+                <div className="space-y-0.5 text-[10px] text-foreground">
+                  <div>一般顧客</div>
+                  <div className="text-muted-foreground ml-1">→現金orクレジット</div>
+                  <div className="mt-0.5">店舗販売　３店舗</div>
+                  <div>移動販売　３店舗</div>
+                </div>
+              </div>
             </div>
 
             <div className="p-2 ml-[40px] mr-[40px] pl-[15px] pr-[15px]">
