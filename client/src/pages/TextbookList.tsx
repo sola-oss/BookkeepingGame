@@ -20,6 +20,7 @@ const FiveElementsDiagram = lazy(() => import("@/components/textbook/FiveElement
 const TAccountDiagram = lazy(() => import("@/components/textbook/TAccountDiagram"));
 const RydeenFinancialDiagram = lazy(() => import("@/components/textbook/RydeenFinancialDiagram"));
 const Rydea2Diagram = lazy(() => import("@/components/textbook/Rydea2Diagram"));
+const Rydea2HiddenDiagram = lazy(() => import("@/components/textbook/Rydea2HiddenDiagram"));
 const BusinessFlowDiagram = lazy(() => import("@/components/textbook/BusinessFlowDiagram"));
 const BokiKaikeiDiagram = lazy(() => import("@/components/textbook/BokiKaikeiDiagram"));
 const AccountingTermsDiagram = lazy(() => import("@/components/textbook/AccountingTermsDiagram"));
@@ -31,6 +32,7 @@ const diagramComponents: Record<string, React.LazyExoticComponent<() => JSX.Elem
   "t-account": TAccountDiagram,
   "rydeen-financial": RydeenFinancialDiagram,
   "rydea2": Rydea2Diagram,
+  "rydea2-hidden": Rydea2HiddenDiagram,
   "business-flow": BusinessFlowDiagram,
   "boki-kaikei": BokiKaikeiDiagram,
   "accounting-terms": AccountingTermsDiagram,
