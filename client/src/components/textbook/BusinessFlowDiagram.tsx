@@ -9,17 +9,7 @@ export default function BusinessFlowDiagram() {
             <div className="absolute left-1/2 top-0 bottom-0 w-px bg-slate-300 dark:bg-slate-600 -translate-x-1/2" />
             <div className="absolute top-1/2 left-0 right-0 h-px bg-slate-300 dark:bg-slate-600 -translate-y-1/2" />
 
-            <div className="p-2 text-left ml-[40px] mr-[40px] mt-[0px] mb-[0px] pt-[0px] pb-[0px] pl-[15px] pr-[15px]">
-              <div className="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2">G</div>
-              <div className="space-y-1 text-[10px] text-foreground">
-                <div>食品メーカー</div>
-                <div className="text-muted-foreground ml-2">（株）RYDDEENヌードル</div>
-                <div className="text-muted-foreground ml-2">→銀行振り込み</div>
-                <div className="mt-1">卸売メーカー</div>
-                <div className="text-muted-foreground ml-2">（株）RYDDEEN商店</div>
-                <div className="text-muted-foreground ml-2">→銀行振り込み</div>
-              </div>
-            </div>
+            <div />
 
             <div />
 
