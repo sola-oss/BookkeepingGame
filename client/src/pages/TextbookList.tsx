@@ -26,6 +26,11 @@ const BokiKaikeiDiagram = lazy(() => import("@/components/textbook/BokiKaikeiDia
 const CashVsAccrualDiagram = lazy(() => import("@/components/textbook/CashVsAccrualDiagram"));
 const CostClassificationDiagram = lazy(() => import("@/components/textbook/CostClassificationDiagram"));
 const AccountingTermsDiagram = lazy(() => import("@/components/textbook/AccountingTermsDiagram"));
+const JitsumuRoadmapDiagram = lazy(() => import("@/components/textbook/JitsumuRoadmapDiagram"));
+const PeriodAccountingDiagram = lazy(() => import("@/components/textbook/PeriodAccountingDiagram"));
+const MatchingPrincipleDiagram = lazy(() => import("@/components/textbook/MatchingPrincipleDiagram"));
+const AccrualAccountsDiagram = lazy(() => import("@/components/textbook/AccrualAccountsDiagram"));
+const ClosingEntriesDiagram = lazy(() => import("@/components/textbook/ClosingEntriesDiagram"));
 
 const diagramComponents: Record<string, React.LazyExoticComponent<() => JSX.Element>> = {
   "bookkeeping-flow": BookkeepingFlowDiagram,
@@ -37,9 +42,14 @@ const diagramComponents: Record<string, React.LazyExoticComponent<() => JSX.Elem
   "rydea2-hidden": Rydea2HiddenDiagram,
   "business-flow": BusinessFlowDiagram,
   "boki-kaikei": BokiKaikeiDiagram,
-    "cash-vs-accrual": CashVsAccrualDiagram,
-    "cost-classification": CostClassificationDiagram,
+  "cash-vs-accrual": CashVsAccrualDiagram,
+  "cost-classification": CostClassificationDiagram,
   "accounting-terms": AccountingTermsDiagram,
+  "jitsumu-roadmap": JitsumuRoadmapDiagram,
+  "period-accounting": PeriodAccountingDiagram,
+  "matching-principle": MatchingPrincipleDiagram,
+  "accrual-accounts": AccrualAccountsDiagram,
+  "closing-entries": ClosingEntriesDiagram,
 };
 
 const chapterColors: Record<string, { bg: string; border: string; text: string; accent: string }> = {

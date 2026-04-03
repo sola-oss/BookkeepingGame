@@ -149,8 +149,21 @@ export const textbookChapters: TextbookChapter[] = [
     title: "仕訳の実務",
     sections: [
       {
+        id: "jitsumu_roadmap",
+        title: "仕訳の実務：学習ロードマップ",
+        diagramId: "jitsumu-roadmap",
+        content: [
+          "Chapter IIIでは「仕訳の実務」を4つのステップで体系的に学びます。",
+          "STEP 1 なぜ仕訳が必要か：発生主義と現金主義の違いを理解する",
+          "STEP 2 何を仕訳するか：費用の種類（変動費・固定費）を把握する",
+          "STEP 3 いつ仕訳するか：期間損益計算と費用収益対応の原則を学ぶ",
+          "STEP 4 決算時の調整：経過勘定と決算整理仕訳で正確に締める",
+          "この4ステップを順に習得することで、実務に使える仕訳力が身につきます。",
+        ],
+      },
+      {
         id: "cash_accrual",
-          diagramId: "cash-vs-accrual",
+        diagramId: "cash-vs-accrual",
         title: "現金主義と発生主義",
         content: [
           "売上の計上タイミングには2つの考え方があります：",
@@ -162,7 +175,7 @@ export const textbookChapters: TextbookChapter[] = [
       },
       {
         id: "cost_classification",
-          diagramId: "cost-classification",
+        diagramId: "cost-classification",
         title: "変動費と固定費",
         content: [
           "費用は「変動費」と「固定費」に分けて管理します。",
@@ -175,13 +188,20 @@ export const textbookChapters: TextbookChapter[] = [
       {
         id: "period_accounting",
         title: "期間損益計算",
+        diagramId: "period-accounting",
         content: [
-          "会計期間を区切って損益を計算するために、いくつかの重要な原則があります。",
+          "企業の経営活動は永続しますが（ゴーイングコンサーン）、その成績を測るには「期間」で区切る必要があります。",
+          "会計期間とは：通常1年間（例：4月1日〜翌年3月31日）の期間を指します。",
+          "なぜ1年で区切るのか：①経営成績の把握 ②税務署・株主・銀行への報告義務 ③経営計画との比較",
+          "期間損益計算の核心：「当期の収益」と「当期の費用」だけを正確に対応させて、当期純利益を計算します。",
+          "この「当期に属するもの」の確定が難しいため、費用収益対応の原則や経過勘定が必要になります。",
+          "決算日（期末）に向けて、期中に記録した仕訳が「正しく当期に属しているか」を再確認・調整します。",
         ],
       },
       {
         id: "matching_principle",
         title: "費用収益対応の原則",
+        diagramId: "matching-principle",
         content: [
           "その期の収益に対応する費用のみを計上する原則です。",
           "例：来期分の家賃を今期に前払いした場合、今期の費用にはなりません。",
@@ -191,6 +211,7 @@ export const textbookChapters: TextbookChapter[] = [
       {
         id: "accrual_accounts",
         title: "経過勘定",
+        diagramId: "accrual-accounts",
         content: [
           "期間損益を正しく計算するために、4つの経過勘定を使います：",
           "前払費用：先に払ったが、まだサービスを受けていない（資産）",
@@ -202,6 +223,7 @@ export const textbookChapters: TextbookChapter[] = [
       {
         id: "closing_entries",
         title: "決算整理仕訳",
+        diagramId: "closing-entries",
         content: [
           "決算時に必要な調整仕訳が4つあります：",
           "① 減価償却：固定資産の価値減少を費用化する（毎期少しずつ費用にする）",
