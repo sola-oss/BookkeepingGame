@@ -150,6 +150,7 @@ export const textbookChapters: TextbookChapter[] = [
     sections: [
       {
         id: "cash_accrual",
+          diagramId: "cash-vs-accrual",
         title: "現金主義と発生主義",
         content: [
           "売上の計上タイミングには2つの考え方があります：",
