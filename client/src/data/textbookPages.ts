@@ -162,6 +162,7 @@ export const textbookChapters: TextbookChapter[] = [
       },
       {
         id: "cost_classification",
+          diagramId: "cost-classification",
         title: "変動費と固定費",
         content: [
           "費用は「変動費」と「固定費」に分けて管理します。",
