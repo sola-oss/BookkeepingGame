@@ -1,12 +1,11 @@
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Play, BookOpen, Settings, Trophy, Flame, Target, Award, FileText, ArrowRightLeft, Layers, PenLine, Library, ExternalLink, GraduationCap, TrendingUp } from "lucide-react";
+import { BookOpen, Settings, Trophy, Flame, Target, FileText, ArrowRightLeft, Layers, Library, ExternalLink, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGame } from "@/context/GameContext";
 import { useJournal } from "@/context/JournalContext";
 import { getLastAccuracy, getLastScore } from "@/lib/storage";
-import { getEarnedBadges, badgeDefinitions } from "@shared/schema";
 
 const OFFICIAL_SAMPLE_URL = "https://www.kentei.ne.jp/bookkeeping/class3";
 
@@ -18,7 +17,6 @@ export default function Home() {
 
   const lastAccuracy = getLastAccuracy(userData);
   const lastScore = getLastScore(userData);
-  const earnedBadges = getEarnedBadges(userData);
 
   const handleStartClassification = () => {
     dispatch({ type: "START_GAME" });
@@ -102,91 +100,72 @@ export default function Home() {
           transition={{ duration: 0.3, delay: 0.1 }}
           className="space-y-3"
         >
-          <div className="grid grid-cols-2 gap-3">
-            <Card
-              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
-              onClick={handleStartClassification}
-              data-testid="button-start-classification"
-            >
-              <CardContent className="pt-4 pb-3 text-center space-y-2">
-                <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <Layers className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="font-bold text-foreground text-sm">分類</h3>
-                <p className="text-xs text-muted-foreground">
-                  5要素に分類
-                </p>
-              </CardContent>
-            </Card>
+          <Card
+            className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
+            onClick={() => navigate("/textbook")}
+            data-testid="button-textbook"
+          >
+            <CardContent className="py-3 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <BookOpen className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-bold text-foreground text-sm">教科書</h3>
+                <p className="text-xs text-muted-foreground">考え方を学ぶ</p>
+              </div>
+            </CardContent>
+          </Card>
 
-            <Card
-              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
-              onClick={handleStartJournal}
-              data-testid="button-start-journal"
-            >
-              <CardContent className="pt-4 pb-3 text-center space-y-2">
-                <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <ArrowRightLeft className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="font-bold text-foreground text-sm">仕訳</h3>
-                <p className="text-xs text-muted-foreground">
-                  選択式
-                </p>
-              </CardContent>
-            </Card>
+          <div>
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 px-1">練習ゲーム</p>
+            <div className="grid grid-cols-2 gap-3">
+              <Card
+                className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
+                onClick={handleStartClassification}
+                data-testid="button-start-classification"
+              >
+                <CardContent className="pt-4 pb-3 text-center space-y-2">
+                  <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                    <Layers className="w-5 h-5 text-primary" />
+                  </div>
+                  <h3 className="font-bold text-foreground text-sm">分類</h3>
+                  <p className="text-xs text-muted-foreground">
+                    5要素に分類
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card
+                className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
+                onClick={handleStartJournal}
+                data-testid="button-start-journal"
+              >
+                <CardContent className="pt-4 pb-3 text-center space-y-2">
+                  <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                    <ArrowRightLeft className="w-5 h-5 text-primary" />
+                  </div>
+                  <h3 className="font-bold text-foreground text-sm">仕訳</h3>
+                  <p className="text-xs text-muted-foreground">
+                    選択式
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-2">
             <Card
               className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
               onClick={() => navigate("/mock-exam-start")}
               data-testid="button-start-exam"
             >
-              <CardContent className="py-3 flex items-center justify-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <GraduationCap className="w-5 h-5 text-primary" />
-                </div>
-                <div className="text-left">
-                  <h3 className="font-bold text-foreground text-sm">模試</h3>
-                  <p className="text-xs text-muted-foreground">
-                    日商簿記3級形式
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card
-              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible border-emerald-200 dark:border-emerald-800"
-              onClick={() => navigate("/accounting-flow")}
-              data-testid="button-accounting-flow"
-            >
-              <CardContent className="py-3 flex items-center justify-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center">
-                  <TrendingUp className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-                </div>
-                <div className="text-left">
-                  <h3 className="font-bold text-foreground text-sm">会計フロー</h3>
-                  <p className="text-xs text-muted-foreground">
-                    仕訳→決算書
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="grid grid-cols-4 gap-2">
-            <Card
-              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
-              onClick={() => navigate("/textbook")}
-              data-testid="button-textbook"
-            >
               <CardContent className="pt-4 pb-3 text-center space-y-2">
                 <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <BookOpen className="w-5 h-5 text-primary" />
+                  <GraduationCap className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="font-bold text-foreground text-sm">教科書</h3>
+                <h3 className="font-bold text-foreground text-sm">模試</h3>
                 <p className="text-xs text-muted-foreground">
-                  考え方を学ぶ
+                  日商簿記3級形式
                 </p>
               </CardContent>
             </Card>
@@ -207,46 +186,20 @@ export default function Home() {
             </Card>
             <Card
               className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
-              onClick={() => navigate("/weakpoints")}
-              data-testid="button-weakpoints"
+              onClick={() => navigate("/statements")}
+              data-testid="button-statements"
             >
               <CardContent className="pt-4 pb-3 text-center space-y-2">
                 <div className="w-10 h-10 mx-auto rounded-full bg-muted flex items-center justify-center">
-                  <Target className="w-5 h-5 text-muted-foreground" />
+                  <FileText className="w-5 h-5 text-muted-foreground" />
                 </div>
-                <h3 className="font-bold text-foreground text-sm">弱点帳</h3>
+                <h3 className="font-bold text-foreground text-sm">財務諸表</h3>
                 <p className="text-xs text-muted-foreground">
-                  苦手克服
-                </p>
-              </CardContent>
-            </Card>
-            <Card
-              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
-              onClick={() => navigate("/badges")}
-              data-testid="button-badges"
-            >
-              <CardContent className="pt-4 pb-3 text-center space-y-2">
-                <div className="w-10 h-10 mx-auto rounded-full bg-muted flex items-center justify-center">
-                  <Award className="w-5 h-5 text-muted-foreground" />
-                </div>
-                <h3 className="font-bold text-foreground text-sm">バッジ</h3>
-                <p className="text-xs text-muted-foreground">
-                  {earnedBadges.length}/{badgeDefinitions.length}
+                  サンプル
                 </p>
               </CardContent>
             </Card>
           </div>
-
-          <Button
-            variant="outline"
-            size="lg"
-            className="w-full py-4 flex-col gap-1"
-            onClick={() => navigate("/statements")}
-            data-testid="button-statements"
-          >
-            <FileText className="w-5 h-5" />
-            <span className="text-xs">財務諸表サンプル</span>
-          </Button>
         </motion.section>
 
         <motion.section
