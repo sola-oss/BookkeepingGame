@@ -268,16 +268,18 @@ function TAccount({ account, amountHighlight, onHighlightRef }: { account: TAcco
             })}
           </div>
         </div>
-        <div className="border-t border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 space-y-0.5 text-[10px] md:text-[11px]">
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">借方合計</span>
-            <span className="font-mono text-foreground">{debitTotal.toLocaleString()}</span>
+        <div className="border-t border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-[10px] md:text-[11px]">
+          <div className="flex">
+            <div className="flex-1 flex justify-between px-2 py-1 border-r border-slate-300 dark:border-slate-600">
+              <span className="text-muted-foreground">借方合計</span>
+              <span className="font-mono text-foreground">{debitTotal.toLocaleString()}</span>
+            </div>
+            <div className="flex-1 flex justify-between px-2 py-1">
+              <span className="text-muted-foreground">貸方合計</span>
+              <span className="font-mono text-foreground">{creditTotal.toLocaleString()}</span>
+            </div>
           </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">貸方合計</span>
-            <span className="font-mono text-foreground">{creditTotal.toLocaleString()}</span>
-          </div>
-          <div className="flex justify-between border-t border-slate-300 dark:border-slate-600 pt-0.5">
+          <div className="flex justify-between border-t border-slate-300 dark:border-slate-600 px-2 py-0.5">
             <span className="text-muted-foreground">残高</span>
             <span className={`font-bold font-mono ${balance >= 0 ? "text-blue-600 dark:text-blue-400" : "text-red-600 dark:text-red-400"}`}>
               {balance >= 0 ? `借方 ${balance.toLocaleString()}` : `貸方 ${Math.abs(balance).toLocaleString()}`}
