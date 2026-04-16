@@ -51,7 +51,7 @@ export default function FiveElementsDiagram() {
                     <span className="text-lg md:text-xl font-bold text-rose-800 dark:text-rose-200">負債</span>
                   </div>
                   <div className="flex-1 bg-blue-200 dark:bg-blue-800 flex items-center justify-center p-3">
-                    <span className="text-lg md:text-xl font-bold text-blue-800 dark:text-blue-200">資本</span>
+                    <span className="text-lg md:text-xl font-bold text-blue-800 dark:text-blue-200">純資産</span>
                   </div>
                 </div>
               </div>
