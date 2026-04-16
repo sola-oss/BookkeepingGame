@@ -38,6 +38,34 @@ function isNormalDebit(cat: AccountCategory): boolean {
   return cat === "asset" || cat === "cost" || cat === "expense";
 }
 
+const transactionDescriptions: Record<string, string> = {
+  "4/1_1": "🏢 会社設立！オーナーが1,000万円を出資し、現金として会社に入金しました。",
+  "4/1_2": "🏠 店舗の家賃500万円を現金で支払いました。",
+  "4/2":   "👥 従業員の給料50万円を現金で支払いました。",
+  "4/5":   "🛒 商品を600万円で販売！現金500万円をその場で受け取り、残り100万円は後日受け取る約束（売掛金）にしました。",
+  "4/10":  "📦 商品を150万円分仕入れ、現金で支払いました。",
+  "4/12":  "🏦 銀行から300万円を借り入れ、現金を受け取りました。",
+  "4/15":  "🖥 備品（設備・機器）を200万円で購入し、現金で支払いました。",
+  "4/18":  "📱 電話・インターネットなどの通信費30万円を現金で支払いました。",
+  "4/20":  "📦 商品を80万円分仕入れ、後払い（買掛金）にしました。",
+  "4/22":  "💰 4/5に計上した売掛金100万円を、現金として回収しました。",
+  "4/23":  "💡 水道・電気・ガスなどの光熱費20万円を現金で支払いました。",
+  "4/25":  "✅ 4/20に生じた買掛金80万円を現金で支払い、完済しました。",
+  "4/27":  "🛒 商品を400万円で販売し、現金をその場で受け取りました。",
+  "4/28":  "🏦 借入金のうち50万円を現金で返済しました。",
+  "4/30":  "💵 銀行預金から10万円の利息を受け取りました。",
+};
+
+function getEntryKey(entries: JournalEntry[], idx: number): string {
+  const entry = entries[idx];
+  const sameDateBefore = entries.slice(0, idx).filter((e) => e.date === entry.date).length;
+  const sameDateTotal = entries.filter((e) => e.date === entry.date).length;
+  if (sameDateTotal > 1) {
+    return `${entry.date}_${sameDateBefore + 1}`;
+  }
+  return entry.date;
+}
+
 const journalEntries: JournalEntry[] = [
   { date: "4/1", debit: [{ account: "現金", amount: 1000 }], credit: [{ account: "資本金", amount: 1000 }] },
   { date: "4/1", debit: [{ account: "家賃", amount: 500 }], credit: [{ account: "現金", amount: 500 }] },
@@ -127,12 +155,13 @@ function AmountCell({ line, date, side, amountHighlight, onClickAmount }: {
   );
 }
 
-function JournalTable({ entries, flashAccount, onClickAccount, amountHighlight, onClickAmount }: {
+function JournalTable({ entries, flashAccount, onClickAccount, amountHighlight, onClickAmount, onClickDate }: {
   entries: JournalEntry[];
   flashAccount: string | null;
   onClickAccount: (name: string) => void;
   amountHighlight: AmountHighlight | null;
   onClickAmount: (account: string, date: string, side: "debit" | "credit", amount: number) => void;
+  onClickDate: (key: string) => void;
 }) {
   return (
     <div className="overflow-x-auto">
@@ -158,10 +187,18 @@ function JournalTable({ entries, flashAccount, onClickAccount, amountHighlight, 
         <tbody>
           {entries.map((entry, idx) => {
             const maxRows = Math.max(entry.debit.length, entry.credit.length);
+            const txKey = getEntryKey(entries, idx);
             return Array.from({ length: maxRows }, (_, row) => (
               <tr key={`${idx}-${row}`} className={idx % 2 === 0 ? "bg-white dark:bg-slate-900" : "bg-slate-50/50 dark:bg-slate-800/30"} data-testid={`journal-row-${idx}-${row}`}>
                 {row === 0 ? (
-                  <td className="border border-slate-300 dark:border-slate-600 px-2 py-1 text-muted-foreground" rowSpan={maxRows}>{entry.date}</td>
+                  <td
+                    className="border border-slate-300 dark:border-slate-600 px-2 py-1 text-primary cursor-pointer underline underline-offset-2 decoration-dotted font-medium select-none"
+                    rowSpan={maxRows}
+                    onClick={() => onClickDate(txKey)}
+                    data-testid={`journal-date-${txKey}`}
+                  >
+                    {entry.date}
+                  </td>
                 ) : null}
                 <AccountCell account={entry.debit[row]?.account} flashAccount={flashAccount} onClickAccount={onClickAccount} />
                 <AmountCell line={entry.debit[row]} date={entry.date} side="debit" amountHighlight={amountHighlight} onClickAmount={onClickAmount} />
@@ -507,6 +544,7 @@ export default function TAccountDiagram() {
   const [activeCategory, setActiveCategory] = useState<AccountCategory | null>(null);
   const [amountHighlight, setAmountHighlight] = useState<AmountHighlight | null>(null);
   const [showAllTAccounts, setShowAllTAccounts] = useState(false);
+  const [selectedTxKey, setSelectedTxKey] = useState<string | null>(null);
   const highlightRowRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -570,7 +608,18 @@ export default function TAccountDiagram() {
         <p className="text-xs font-bold text-foreground" data-testid="text-journal-heading">仕訳帳（4月の取引）</p>
         <p className="text-[10px] text-muted-foreground">勘定科目をタップ→本籍確認 ｜ 金額をタップ→+/-とT字勘定の位置を確認</p>
         <MiniHonsekiDiagram activeCategory={activeCategory} />
-        <JournalTable entries={journalEntries} flashAccount={flashAccount} onClickAccount={handleClickAccount} amountHighlight={amountHighlight} onClickAmount={handleClickAmount} />
+        <div
+          className="flex items-start gap-2 rounded-md bg-primary/10 border border-primary/20 px-3 py-2 text-[11px] text-primary leading-relaxed min-h-[40px] transition-all duration-300"
+          data-testid="tx-hint-banner"
+        >
+          <span className="shrink-0 text-sm">📖</span>
+          <span data-testid="tx-hint-text">
+            {selectedTxKey && transactionDescriptions[selectedTxKey]
+              ? transactionDescriptions[selectedTxKey]
+              : "取引を読もう！ 日付をタップすると、その取引のストーリーがわかります。"}
+          </span>
+        </div>
+        <JournalTable entries={journalEntries} flashAccount={flashAccount} onClickAccount={handleClickAccount} amountHighlight={amountHighlight} onClickAmount={handleClickAmount} onClickDate={setSelectedTxKey} />
       </div>
       <div className="flex items-center justify-center gap-2 py-2">
         <div className="h-[1px] flex-1 bg-slate-200 dark:bg-slate-700" />
