@@ -66,7 +66,7 @@ export default function FiveElementsDiagram() {
           { label: "収益", color: "bg-green-200 dark:bg-green-800 text-green-800 dark:text-green-200" },
           { label: "資産", color: "bg-violet-200 dark:bg-violet-800 text-violet-800 dark:text-violet-200" },
           { label: "負債", color: "bg-rose-200 dark:bg-rose-800 text-rose-800 dark:text-rose-200" },
-          { label: "資本", color: "bg-blue-200 dark:bg-blue-800 text-blue-800 dark:text-blue-200" },
+          { label: "純資産", color: "bg-blue-200 dark:bg-blue-800 text-blue-800 dark:text-blue-200" },
         ].map((item) => (
           <div key={item.label} className={`px-3 py-1 rounded text-xs font-bold ${item.color}`}>
             {item.label}
