@@ -12,22 +12,22 @@ interface DroppableCategoryProps {
 
 const categoryColors: Record<CategoryType, { bg: string; border: string; text: string; hoverBg: string }> = {
   asset: {
+    bg: "bg-violet-50 dark:bg-violet-950/30",
+    border: "border-violet-300 dark:border-violet-700",
+    text: "text-violet-700 dark:text-violet-300",
+    hoverBg: "bg-violet-100 dark:bg-violet-900/50",
+  },
+  liability: {
+    bg: "bg-rose-50 dark:bg-rose-950/30",
+    border: "border-rose-300 dark:border-rose-700",
+    text: "text-rose-700 dark:text-rose-300",
+    hoverBg: "bg-rose-100 dark:bg-rose-900/50",
+  },
+  equity: {
     bg: "bg-blue-50 dark:bg-blue-950/30",
     border: "border-blue-300 dark:border-blue-700",
     text: "text-blue-700 dark:text-blue-300",
     hoverBg: "bg-blue-100 dark:bg-blue-900/50",
-  },
-  liability: {
-    bg: "bg-red-50 dark:bg-red-950/30",
-    border: "border-red-300 dark:border-red-700",
-    text: "text-red-700 dark:text-red-300",
-    hoverBg: "bg-red-100 dark:bg-red-900/50",
-  },
-  equity: {
-    bg: "bg-purple-50 dark:bg-purple-950/30",
-    border: "border-purple-300 dark:border-purple-700",
-    text: "text-purple-700 dark:text-purple-300",
-    hoverBg: "bg-purple-100 dark:bg-purple-900/50",
   },
   revenue: {
     bg: "bg-green-50 dark:bg-green-950/30",
@@ -42,10 +42,10 @@ const categoryColors: Record<CategoryType, { bg: string; border: string; text: s
     hoverBg: "bg-orange-100 dark:bg-orange-900/50",
   },
   operating_expense: {
-    bg: "bg-orange-50 dark:bg-orange-950/30",
-    border: "border-orange-300 dark:border-orange-700",
-    text: "text-orange-700 dark:text-orange-300",
-    hoverBg: "bg-orange-100 dark:bg-orange-900/50",
+    bg: "bg-amber-50 dark:bg-amber-950/30",
+    border: "border-amber-300 dark:border-amber-700",
+    text: "text-amber-700 dark:text-amber-300",
+    hoverBg: "bg-amber-100 dark:bg-amber-900/50",
   },
 };
 
