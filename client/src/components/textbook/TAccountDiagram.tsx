@@ -490,42 +490,42 @@ function MiniHonsekiCell({ label, category, activeCategory, className }: { label
 function MiniHonsekiDiagram({ activeCategory }: { activeCategory: AccountCategory | null }) {
   return (
     <div className="flex gap-2 py-1" data-testid="mini-honseki">
-      <div className="w-[150px]">
+      <div className="w-[180px]">
         <div className="text-center mb-0.5">
-          <span className="text-[9px] font-bold text-muted-foreground">貸借対照表</span>
+          <span className="text-[10px] font-bold text-muted-foreground">損益計算書</span>
         </div>
         <div className="border border-slate-300 dark:border-slate-600 rounded overflow-hidden">
-          <div className="flex text-center text-[8px] font-bold text-muted-foreground border-b border-slate-300 dark:border-slate-600">
+          <div className="flex text-center text-[9px] font-bold text-muted-foreground border-b border-slate-300 dark:border-slate-600">
             <div className="flex-1 py-0.5 border-r border-slate-300 dark:border-slate-600">借方</div>
             <div className="flex-1 py-0.5">貸方</div>
           </div>
-          <div className="flex" style={{ minHeight: "60px" }}>
-            <div className="flex-1 border-r border-slate-300 dark:border-slate-600 flex items-stretch">
-              <MiniHonsekiCell label="資産" category="asset" activeCategory={activeCategory} className="w-full bg-violet-200 dark:bg-violet-800 text-[11px] text-violet-800 dark:text-violet-200" />
+          <div className="flex" style={{ minHeight: "80px" }}>
+            <div className="flex-1 border-r border-slate-300 dark:border-slate-600 flex flex-col">
+              <MiniHonsekiCell label="原価" category="cost" activeCategory={activeCategory} className="flex-1 bg-orange-200 dark:bg-orange-800 text-[11px] text-orange-800 dark:text-orange-200 border-b border-slate-300 dark:border-slate-600" />
+              <MiniHonsekiCell label="経費" category="expense" activeCategory={activeCategory} className="flex-1 bg-amber-200 dark:bg-amber-800 text-[11px] text-amber-800 dark:text-amber-200" />
             </div>
-            <div className="flex-1 flex flex-col">
-              <MiniHonsekiCell label="負債" category="liability" activeCategory={activeCategory} className="flex-1 bg-rose-200 dark:bg-rose-800 text-[10px] text-rose-800 dark:text-rose-200 border-b border-slate-300 dark:border-slate-600" />
-              <MiniHonsekiCell label="資本" category="equity" activeCategory={activeCategory} className="flex-1 bg-blue-200 dark:bg-blue-800 text-[10px] text-blue-800 dark:text-blue-200" />
+            <div className="flex-1 flex items-stretch">
+              <MiniHonsekiCell label="収益" category="revenue" activeCategory={activeCategory} className="w-full bg-green-200 dark:bg-green-800 text-[12px] text-green-800 dark:text-green-200" />
             </div>
           </div>
         </div>
       </div>
-      <div className="w-[150px]">
+      <div className="w-[180px]">
         <div className="text-center mb-0.5">
-          <span className="text-[9px] font-bold text-muted-foreground">損益計算書</span>
+          <span className="text-[10px] font-bold text-muted-foreground">貸借対照表</span>
         </div>
         <div className="border border-slate-300 dark:border-slate-600 rounded overflow-hidden">
-          <div className="flex text-center text-[8px] font-bold text-muted-foreground border-b border-slate-300 dark:border-slate-600">
+          <div className="flex text-center text-[9px] font-bold text-muted-foreground border-b border-slate-300 dark:border-slate-600">
             <div className="flex-1 py-0.5 border-r border-slate-300 dark:border-slate-600">借方</div>
             <div className="flex-1 py-0.5">貸方</div>
           </div>
-          <div className="flex" style={{ minHeight: "60px" }}>
-            <div className="flex-1 border-r border-slate-300 dark:border-slate-600 flex flex-col">
-              <MiniHonsekiCell label="原価" category="cost" activeCategory={activeCategory} className="flex-1 bg-orange-200 dark:bg-orange-800 text-[10px] text-orange-800 dark:text-orange-200 border-b border-slate-300 dark:border-slate-600" />
-              <MiniHonsekiCell label="経費" category="expense" activeCategory={activeCategory} className="flex-1 bg-amber-200 dark:bg-amber-800 text-[10px] text-amber-800 dark:text-amber-200" />
+          <div className="flex" style={{ minHeight: "80px" }}>
+            <div className="flex-1 border-r border-slate-300 dark:border-slate-600 flex items-stretch">
+              <MiniHonsekiCell label="資産" category="asset" activeCategory={activeCategory} className="w-full bg-violet-200 dark:bg-violet-800 text-[12px] text-violet-800 dark:text-violet-200" />
             </div>
-            <div className="flex-1 flex items-stretch">
-              <MiniHonsekiCell label="収益" category="revenue" activeCategory={activeCategory} className="w-full bg-green-200 dark:bg-green-800 text-[11px] text-green-800 dark:text-green-200" />
+            <div className="flex-1 flex flex-col">
+              <MiniHonsekiCell label="負債" category="liability" activeCategory={activeCategory} className="flex-1 bg-rose-200 dark:bg-rose-800 text-[11px] text-rose-800 dark:text-rose-200 border-b border-slate-300 dark:border-slate-600" />
+              <MiniHonsekiCell label="資本" category="equity" activeCategory={activeCategory} className="flex-1 bg-blue-200 dark:bg-blue-800 text-[11px] text-blue-800 dark:text-blue-200" />
             </div>
           </div>
         </div>
