@@ -401,7 +401,7 @@ function MiniBS({ summary }: { summary: FinancialSummary }) {
         </div>
         <div className="flex-1 flex flex-col">
           <div className="px-2 py-1 border-b border-slate-200 dark:border-slate-700">
-            <span className="text-[10px] font-bold text-red-600 dark:text-red-400">貸方（負債・資本）</span>
+            <span className="text-[10px] font-bold text-red-600 dark:text-red-400">貸方（負債・純資産）</span>
           </div>
           <div className="flex-1">
             {summary.liabilities.map((item) => (
@@ -415,7 +415,7 @@ function MiniBS({ summary }: { summary: FinancialSummary }) {
               <span className="text-xs font-mono font-bold">{summary.netIncome.toLocaleString()}</span>
             </div>
           </div>
-          <StatementTotalRow label="負債・資本合計" amount={totalRight} />
+          <StatementTotalRow label="負債・純資産合計" amount={totalRight} />
         </div>
       </div>
     </div>
@@ -525,7 +525,7 @@ function MiniHonsekiDiagram({ activeCategory }: { activeCategory: AccountCategor
             </div>
             <div className="flex-1 flex flex-col">
               <MiniHonsekiCell label="負債" category="liability" activeCategory={activeCategory} className="flex-1 bg-rose-200 dark:bg-rose-800 text-[11px] text-rose-800 dark:text-rose-200 border-b border-slate-300 dark:border-slate-600" />
-              <MiniHonsekiCell label="資本" category="equity" activeCategory={activeCategory} className="flex-1 bg-blue-200 dark:bg-blue-800 text-[11px] text-blue-800 dark:text-blue-200" />
+              <MiniHonsekiCell label="純資産" category="equity" activeCategory={activeCategory} className="flex-1 bg-blue-200 dark:bg-blue-800 text-[11px] text-blue-800 dark:text-blue-200" />
             </div>
           </div>
         </div>
