@@ -188,6 +188,7 @@ export const textbookChapters: TextbookChapter[] = [
       },
       {
         id: "period_accounting",
+          diagramId: "period-matching",
         title: "期間損益計算と費用収益対応",
         diagramId: "period-accounting",
         content: [
