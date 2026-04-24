@@ -121,8 +121,8 @@ export default function FiveElementsDiagram() {
               </div>
 
               {/* PL行：費用 | 売上 */}
-              <div className="flex relative border-b-2 border-slate-200 dark:border-slate-700">
-                <div className="flex-1 border-r border-slate-200 dark:border-slate-700 flex flex-col min-h-[80px]">
+              <div className="flex relative border-b-2 border-slate-200 dark:border-slate-700 min-h-[80px]">
+                <div className="flex-1 border-r border-slate-200 dark:border-slate-700 flex flex-col">
                   <div className="flex-1 bg-red-50 dark:bg-red-950 border-b border-slate-200 dark:border-slate-700 flex items-center justify-center">
                     <span className="text-base font-bold text-red-700 dark:text-red-300">経費</span>
                   </div>
@@ -130,7 +130,7 @@ export default function FiveElementsDiagram() {
                     <span className="text-base font-bold text-red-700 dark:text-red-300">原価</span>
                   </div>
                 </div>
-                <div className="flex-1 bg-red-50 dark:bg-red-950 p-4 flex items-center justify-center min-h-[80px]">
+                <div className="flex-1 bg-red-50 dark:bg-red-950 flex items-center justify-center">
                   <span className="text-lg font-bold text-red-700 dark:text-red-300">売上</span>
                 </div>
                 {/* 利益の計測バッジ */}
