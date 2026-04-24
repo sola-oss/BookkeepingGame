@@ -77,13 +77,11 @@ export default function FiveElementsDiagram() {
             <div className="flex-1 border-2 border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
               {/* PL行：経費 | 売上 */}
               <div className="flex relative border-b-2 border-slate-200 dark:border-slate-700">
-                <div className="flex-1 bg-red-50 dark:bg-red-950 border-r border-slate-200 dark:border-slate-700 p-4 flex flex-col gap-1">
+                <div className="flex-1 bg-red-50 dark:bg-red-950 border-r border-slate-200 dark:border-slate-700 p-4 flex items-center justify-center min-h-[80px]">
                   <span className="text-lg font-bold text-red-700 dark:text-red-300">経費</span>
-                  <span className="text-[10px] text-muted-foreground">事業を運営するために使ったお金</span>
                 </div>
-                <div className="flex-1 bg-red-50 dark:bg-red-950 p-4 flex flex-col gap-1">
+                <div className="flex-1 bg-red-50 dark:bg-red-950 p-4 flex items-center justify-center min-h-[80px]">
                   <span className="text-lg font-bold text-red-700 dark:text-red-300">売上</span>
-                  <span className="text-[10px] text-muted-foreground">商品やサービスで得たお金</span>
                 </div>
                 {/* 利益の計測バッジ */}
                 <div className="absolute left-1/2 bottom-0 translate-x-[-50%] translate-y-1/2 z-10">
@@ -93,14 +91,11 @@ export default function FiveElementsDiagram() {
 
               {/* BS行：資産 | 負債+資本 */}
               <div className="flex">
-                <div className="flex-1 bg-blue-50 dark:bg-blue-950 border-r border-slate-200 dark:border-slate-700 p-4 flex flex-col gap-2">
+                <div className="flex-1 bg-blue-50 dark:bg-blue-950 border-r border-slate-200 dark:border-slate-700 p-4 flex items-center justify-center min-h-[80px]">
                   <span className="text-lg font-bold text-blue-700 dark:text-blue-300">資産</span>
-                  <span className="text-[10px] text-muted-foreground">会社が持っている財産</span>
-                  <span className="self-start bg-white dark:bg-slate-800 border border-blue-300 dark:border-blue-600 text-[9px] font-bold text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full mt-1">将来利益を生むもの</span>
                 </div>
-                <div className="flex-1 bg-blue-50 dark:bg-blue-950 p-4 flex flex-col gap-1">
+                <div className="flex-1 bg-blue-50 dark:bg-blue-950 p-4 flex items-center justify-center min-h-[80px]">
                   <span className="text-lg font-bold text-blue-700 dark:text-blue-300">負債＋資本</span>
-                  <span className="text-[10px] text-muted-foreground">お金の調達元（借入と出資）</span>
                 </div>
               </div>
             </div>
