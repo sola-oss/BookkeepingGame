@@ -66,10 +66,10 @@ export default function FiveElementsDiagram() {
             {/* 左ラベル列 */}
             <div className="flex flex-col w-8 flex-shrink-0">
               <div className="flex-1 flex items-center justify-center">
-                <span className="text-[11px] font-bold text-red-500 dark:text-red-400" style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}>消える</span>
+                <span className="text-[11px] font-bold text-red-500 dark:text-red-400" style={{ writingMode: "vertical-rl" }}>消える</span>
               </div>
               <div className="flex-1 flex items-center justify-center">
-                <span className="text-[11px] font-bold text-blue-500 dark:text-blue-400" style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}>残る</span>
+                <span className="text-[11px] font-bold text-blue-500 dark:text-blue-400" style={{ writingMode: "vertical-rl" }}>残る</span>
               </div>
             </div>
 
