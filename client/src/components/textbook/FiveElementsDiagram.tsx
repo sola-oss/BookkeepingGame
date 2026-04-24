@@ -122,16 +122,16 @@ export default function FiveElementsDiagram() {
 
               {/* PL行：原価+経費 | 売上 */}
               <div className="flex relative border-b-2 border-slate-200 dark:border-slate-700">
-                <div className="flex-1 border-r border-slate-200 dark:border-slate-700 flex flex-col min-h-[80px]">
-                  <div className="flex-1 bg-orange-50 dark:bg-orange-950 border-b border-slate-200 dark:border-slate-700 flex items-center justify-center">
+                <div className="flex-1 border-r border-slate-200 dark:border-slate-700 flex flex-col">
+                  <div className="bg-orange-50 dark:bg-orange-950 border-b border-slate-200 dark:border-slate-700 flex items-center justify-center py-4">
                     <span className="text-base font-bold text-orange-700 dark:text-orange-300">原価</span>
                   </div>
-                  <div className="flex-1 bg-amber-50 dark:bg-amber-950 flex items-center justify-center">
+                  <div className="bg-amber-50 dark:bg-amber-950 flex items-center justify-center py-4">
                     <span className="text-base font-bold text-amber-700 dark:text-amber-300">経費</span>
                   </div>
                 </div>
-                <div className="flex-1 bg-green-50 dark:bg-green-950 p-4 flex items-center justify-center min-h-[80px]">
-                  <span className="text-lg font-bold text-green-700 dark:text-green-300">売上</span>
+                <div className="flex-1 bg-red-50 dark:bg-red-950 p-4 flex items-center justify-center">
+                  <span className="text-lg font-bold text-red-700 dark:text-red-300">売上</span>
                 </div>
                 {/* 利益の計測バッジ */}
                 <div className="absolute left-1/2 bottom-0 translate-x-[-50%] translate-y-1/2 z-10">
