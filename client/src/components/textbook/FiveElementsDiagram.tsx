@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const STEPS = 6; // 0-4: accumulate arrows, 5: reset (all hidden briefly)
@@ -25,24 +25,10 @@ function ArrowBadge({ visible, label, size = "w-6 h-6" }: { visible: boolean; la
 
 export default function FiveElementsDiagram() {
   const [step, setStep] = useState(0);
-  const doneRef = useRef(false);
-  const cyclesRef = useRef(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      if (doneRef.current) return;
-      setStep(prev => {
-        const next = prev + 1;
-        if (next >= STEPS) {
-          cyclesRef.current += 1;
-          if (cyclesRef.current >= 3) {
-            doneRef.current = true;
-            return 4;
-          }
-          return 0;
-        }
-        return next;
-      });
+      setStep((s) => (s + 1) % STEPS);
     }, STEP_DURATION);
     return () => clearInterval(timer);
   }, []);
