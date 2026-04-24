@@ -90,15 +90,15 @@ export default function FiveElementsDiagram() {
               </div>
 
               {/* BS行：資産 | 負債+資本 */}
-              <div className="flex">
-                <div className="flex-1 bg-blue-50 dark:bg-blue-950 border-r border-slate-200 dark:border-slate-700 p-4 flex items-center justify-center min-h-[80px]">
+              <div className="flex min-h-[80px]">
+                <div className="flex-1 bg-blue-50 dark:bg-blue-950 border-r border-slate-200 dark:border-slate-700 flex items-center justify-center">
                   <span className="text-lg font-bold text-blue-700 dark:text-blue-300">資産</span>
                 </div>
                 <div className="flex-1 flex flex-col">
-                  <div className="flex-1 bg-blue-50 dark:bg-blue-950 border-b border-slate-200 dark:border-slate-700 p-4 flex items-center justify-center">
+                  <div className="flex-1 bg-blue-50 dark:bg-blue-950 border-b border-slate-200 dark:border-slate-700 flex items-center justify-center">
                     <span className="text-lg font-bold text-blue-700 dark:text-blue-300">負債</span>
                   </div>
-                  <div className="flex-1 bg-blue-50 dark:bg-blue-950 p-4 flex items-center justify-center">
+                  <div className="flex-1 bg-blue-50 dark:bg-blue-950 flex items-center justify-center">
                     <span className="text-lg font-bold text-blue-700 dark:text-blue-300">資本</span>
                   </div>
                 </div>
