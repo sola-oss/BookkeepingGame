@@ -74,8 +74,13 @@ export default function FiveElementsDiagram() {
             </div>
 
             {/* メイングリッド */}
-            <div className="flex-1 border-2 border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-              {/* PL行：経費 | 売上 */}
+            <div className="flex-1 border-2 border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden relative">
+              {/* Arrow ② 資産→費用（PL/BS境界・左側） */}
+              <div className="absolute left-[25%] top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                <span className="bg-orange-500 text-white text-[11px] font-bold w-6 h-6 rounded-full flex items-center justify-center shadow">↑</span>
+              </div>
+
+              {/* PL行：費用 | 売上 */}
               <div className="flex relative border-b-2 border-slate-200 dark:border-slate-700">
                 <div className="flex-1 bg-red-50 dark:bg-red-950 border-r border-slate-200 dark:border-slate-700 p-4 flex items-center justify-center min-h-[80px]">
                   <span className="text-lg font-bold text-red-700 dark:text-red-300">費用</span>
@@ -87,10 +92,14 @@ export default function FiveElementsDiagram() {
                 <div className="absolute left-1/2 bottom-0 translate-x-[-50%] translate-y-1/2 z-10">
                   <span className="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-[10px] font-bold text-foreground px-2 py-0.5 rounded-full shadow-sm whitespace-nowrap">利益の計測</span>
                 </div>
+                {/* Arrow ③ 費用→売上（PL行・縦境界） */}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                  <span className="bg-orange-500 text-white text-[11px] font-bold w-6 h-6 rounded-full flex items-center justify-center shadow">→</span>
+                </div>
               </div>
 
               {/* BS行：資産 | 負債+資本 */}
-              <div className="flex min-h-[80px]">
+              <div className="flex min-h-[80px] relative">
                 <div className="flex-1 bg-blue-50 dark:bg-blue-950 border-r border-slate-200 dark:border-slate-700 flex items-center justify-center">
                   <span className="text-lg font-bold text-blue-700 dark:text-blue-300">資産</span>
                 </div>
@@ -101,6 +110,10 @@ export default function FiveElementsDiagram() {
                   <div className="flex-1 bg-blue-50 dark:bg-blue-950 flex items-center justify-center">
                     <span className="text-lg font-bold text-blue-700 dark:text-blue-300">資本</span>
                   </div>
+                </div>
+                {/* Arrow ① 負債/資本→資産（BS行・縦境界） */}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                  <span className="bg-orange-500 text-white text-[11px] font-bold w-6 h-6 rounded-full flex items-center justify-center shadow">←</span>
                 </div>
               </div>
             </div>
