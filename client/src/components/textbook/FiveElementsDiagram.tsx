@@ -108,8 +108,9 @@ export default function FiveElementsDiagram() {
                   <span className="text-lg font-bold text-blue-700 dark:text-blue-300">資産</span>
                 </div>
                 <div className="flex-1 flex flex-col">
-                  <div className="flex-1 bg-blue-50 dark:bg-blue-950 border-b border-slate-200 dark:border-slate-700 flex items-center justify-center">
+                  <div className="flex-1 bg-blue-50 dark:bg-blue-950 border-b border-slate-200 dark:border-slate-700 flex items-center justify-center gap-2 pr-2">
                     <span className="text-lg font-bold text-blue-700 dark:text-blue-300">負債</span>
+                    <span className="bg-orange-500 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow flex-shrink-0">→</span>
                   </div>
                   <div className="flex-1 bg-blue-50 dark:bg-blue-950 flex items-center justify-center">
                     <span className="text-lg font-bold text-blue-700 dark:text-blue-300">資本</span>
@@ -123,17 +124,12 @@ export default function FiveElementsDiagram() {
             </div>
 
             {/* 右ラベル列 */}
-            <div className="flex flex-col flex-shrink-0">
-              <div className="flex-1 flex items-center justify-center w-8">
+            <div className="flex flex-col w-8 flex-shrink-0">
+              <div className="flex-1 flex items-center justify-center">
                 <span className="text-[11px] font-bold text-red-500 dark:text-red-400" style={{ writingMode: "vertical-rl" }}>PL</span>
               </div>
-              {/* BS行：負債レベル（外向き矢印）+ 資本レベル */}
-              <div className="flex-1 flex flex-col">
-                <div className="flex-1 flex items-center justify-center gap-0.5">
-                  <span className="text-[11px] font-bold text-blue-500 dark:text-blue-400" style={{ writingMode: "vertical-rl" }}>BS</span>
-                  <span className="bg-orange-500 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow flex-shrink-0">→</span>
-                </div>
-                <div className="flex-1 flex items-center justify-center w-8" />
+              <div className="flex-1 flex items-center justify-center">
+                <span className="text-[11px] font-bold text-blue-500 dark:text-blue-400" style={{ writingMode: "vertical-rl" }}>BS</span>
               </div>
             </div>
           </div>
