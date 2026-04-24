@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const STEPS = 5;
-const STEP_DURATION = 900;
+const STEPS = 6; // 0-4: accumulate arrows, 5: reset (all hidden briefly)
+const STEP_DURATION = 1500;
 
 function ArrowBadge({ visible, label, size = "w-6 h-6" }: { visible: boolean; label: string; size?: string }) {
   return (
@@ -111,13 +111,13 @@ export default function FiveElementsDiagram() {
             {/* メイングリッド */}
             <div className="flex-1 border-2 border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden relative">
 
-              {/* Arrow ② 資産→費用（PL/BS境界・左側） step=1 */}
+              {/* Arrow ② 資産→費用（PL/BS境界・左側） step>=1 */}
               <div className="absolute left-[25%] top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                <ArrowBadge visible={step === 1} label="↑" />
+                <ArrowBadge visible={step >= 1 && step < 5} label="↑" />
               </div>
-              {/* Arrow ④ 売上→負債/資本（PL/BS境界・右側） step=3 */}
+              {/* Arrow ④ 売上→負債/資本（PL/BS境界・右側） step>=3 */}
               <div className="absolute left-[75%] top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                <ArrowBadge visible={step === 3} label="↓" />
+                <ArrowBadge visible={step >= 3 && step < 5} label="↓" />
               </div>
 
               {/* PL行：費用 | 売上 */}
@@ -132,9 +132,9 @@ export default function FiveElementsDiagram() {
                 <div className="absolute left-1/2 bottom-0 translate-x-[-50%] translate-y-1/2 z-10">
                   <span className="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-[10px] font-bold text-foreground px-2 py-0.5 rounded-full shadow-sm whitespace-nowrap">利益の計測</span>
                 </div>
-                {/* Arrow ③ 費用→売上（PL行・縦境界） step=2 */}
+                {/* Arrow ③ 費用→売上（PL行・縦境界） step>=2 */}
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                  <ArrowBadge visible={step === 2} label="→" />
+                  <ArrowBadge visible={step >= 2 && step < 5} label="→" />
                 </div>
               </div>
 
@@ -148,16 +148,16 @@ export default function FiveElementsDiagram() {
                   <div className="flex-1 bg-blue-50 dark:bg-blue-950 border-b border-slate-200 dark:border-slate-700 relative flex items-center justify-center">
                     <span className="text-lg font-bold text-blue-700 dark:text-blue-300">負債</span>
                     <div className="absolute right-2 top-1/2 -translate-y-1/2">
-                      <ArrowBadge visible={step === 4} label="→" size="w-5 h-5" />
+                      <ArrowBadge visible={step >= 4 && step < 5} label="→" size="w-5 h-5" />
                     </div>
                   </div>
                   <div className="flex-1 bg-blue-50 dark:bg-blue-950 flex items-center justify-center">
                     <span className="text-lg font-bold text-blue-700 dark:text-blue-300">資本</span>
                   </div>
                 </div>
-                {/* Arrow ① 負債/資本→資産（BS行・縦境界） step=0 */}
+                {/* Arrow ① 負債/資本→資産（BS行・縦境界） step>=0 */}
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                  <ArrowBadge visible={step === 0} label="←" />
+                  <ArrowBadge visible={step >= 0 && step < 5} label="←" />
                 </div>
               </div>
             </div>
