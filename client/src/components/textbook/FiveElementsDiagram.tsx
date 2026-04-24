@@ -79,6 +79,10 @@ export default function FiveElementsDiagram() {
               <div className="absolute left-[25%] top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
                 <span className="bg-orange-500 text-white text-[11px] font-bold w-6 h-6 rounded-full flex items-center justify-center shadow">↑</span>
               </div>
+              {/* Arrow ④ 売上→負債/資本（PL/BS境界・右側） */}
+              <div className="absolute left-[75%] top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                <span className="bg-orange-500 text-white text-[11px] font-bold w-6 h-6 rounded-full flex items-center justify-center shadow">↓</span>
+              </div>
 
               {/* PL行：費用 | 売上 */}
               <div className="flex relative border-b-2 border-slate-200 dark:border-slate-700">
@@ -119,12 +123,17 @@ export default function FiveElementsDiagram() {
             </div>
 
             {/* 右ラベル列 */}
-            <div className="flex flex-col w-8 flex-shrink-0">
-              <div className="flex-1 flex items-center justify-center">
+            <div className="flex flex-col flex-shrink-0">
+              <div className="flex-1 flex items-center justify-center w-8">
                 <span className="text-[11px] font-bold text-red-500 dark:text-red-400" style={{ writingMode: "vertical-rl" }}>PL</span>
               </div>
-              <div className="flex-1 flex items-center justify-center">
-                <span className="text-[11px] font-bold text-blue-500 dark:text-blue-400" style={{ writingMode: "vertical-rl" }}>BS</span>
+              {/* BS行：負債レベル（外向き矢印）+ 資本レベル */}
+              <div className="flex-1 flex flex-col">
+                <div className="flex-1 flex items-center justify-center gap-0.5">
+                  <span className="text-[11px] font-bold text-blue-500 dark:text-blue-400" style={{ writingMode: "vertical-rl" }}>BS</span>
+                  <span className="bg-orange-500 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow flex-shrink-0">→</span>
+                </div>
+                <div className="flex-1 flex items-center justify-center w-8" />
               </div>
             </div>
           </div>
