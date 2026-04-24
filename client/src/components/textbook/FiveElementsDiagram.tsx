@@ -78,7 +78,7 @@ export default function FiveElementsDiagram() {
               {/* PL行：経費 | 売上 */}
               <div className="flex relative border-b-2 border-slate-200 dark:border-slate-700">
                 <div className="flex-1 bg-red-50 dark:bg-red-950 border-r border-slate-200 dark:border-slate-700 p-4 flex items-center justify-center min-h-[80px]">
-                  <span className="text-lg font-bold text-red-700 dark:text-red-300">経費</span>
+                  <span className="text-lg font-bold text-red-700 dark:text-red-300">費用</span>
                 </div>
                 <div className="flex-1 bg-red-50 dark:bg-red-950 p-4 flex items-center justify-center min-h-[80px]">
                   <span className="text-lg font-bold text-red-700 dark:text-red-300">売上</span>
