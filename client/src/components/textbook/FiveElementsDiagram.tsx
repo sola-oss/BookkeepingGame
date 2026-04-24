@@ -120,17 +120,12 @@ export default function FiveElementsDiagram() {
                 <ArrowBadge visible={step >= 3 && step < 5} label="↓" />
               </div>
 
-              {/* PL行：原価+経費 | 売上 */}
+              {/* PL行：費用 | 売上 */}
               <div className="flex relative border-b-2 border-slate-200 dark:border-slate-700">
-                <div className="flex-1 border-r border-slate-200 dark:border-slate-700 flex flex-col">
-                  <div className="bg-orange-50 dark:bg-orange-950 border-b border-slate-200 dark:border-slate-700 flex items-center justify-center py-4">
-                    <span className="text-base font-bold text-orange-700 dark:text-orange-300">原価</span>
-                  </div>
-                  <div className="bg-amber-50 dark:bg-amber-950 flex items-center justify-center py-4">
-                    <span className="text-base font-bold text-amber-700 dark:text-amber-300">経費</span>
-                  </div>
+                <div className="flex-1 bg-red-50 dark:bg-red-950 border-r border-slate-200 dark:border-slate-700 p-4 flex items-center justify-center min-h-[80px]">
+                  <span className="text-lg font-bold text-red-700 dark:text-red-300">費用</span>
                 </div>
-                <div className="flex-1 bg-red-50 dark:bg-red-950 p-4 flex items-center justify-center">
+                <div className="flex-1 bg-red-50 dark:bg-red-950 p-4 flex items-center justify-center min-h-[80px]">
                   <span className="text-lg font-bold text-red-700 dark:text-red-300">売上</span>
                 </div>
                 {/* 利益の計測バッジ */}
