@@ -140,6 +140,21 @@ localStorageを使用してブラウザに保存:
 
 ## 最近の変更
 
+- 2026-05: 模試モード大幅リニューアル（日商簿記3級本番形式）
+  - **配点**: 第1問45点（仕訳15問×3点）・第2問20点（勘定記入）・第3問35点（精算表）・合計100点・70点合格
+  - **3固定セット**: 第1回〜第3回を選択可能（各セットで仕訳順・勘定記入科目・精算表内容が異なる）
+  - **精算表（第3問）**: 旧試算表から精算表（ワークシート）形式に変更。試算表欄は与えられ、損益計算書欄・貸借対照表欄の空欄を埋める
+    - SPB001（第1回）: 商品売買+建物減価償却 / SPB002（第2回）: 前払費用+備品減価償却 / SPB003（第3回）: 未払費用+棚卸+建物減価償却
+    - 5〜6空欄を均等配点で採点
+  - **合格判定**: totalScore≥70点かつmaxScore≥100点で合格バッジ表示
+  - **schema.ts**: SeisanpyoRow・GeneratedSeisanpyoQuestion型追加、GeneratedQuestion union更新
+  - **questionBlueprints.ts**: 全面書き直し（EXAM_SETS定義・3精算表ビルダー関数）
+  - **questionGenerator.ts**: generateMockExam(setNumber)・generateSeisanpyoQuestion()
+  - **MockExamContext.tsx**: SeisanpyoAnswer型・精算表採点ロジック・passed判定追加
+  - **MockExamStart.tsx**: 第1〜3回カード選択UI + ランダム + クイック
+  - **MockExam.tsx**: renderSeisanpyoInput()横スクロールテーブル（黄色=P/L欄、青色=B/S欄）
+  - **MockExamResult.tsx**: 合格/不合格バッジ・セクション別点数表示
+
 - 2026-02: 教科書モード全面リニューアル
   - 旧10トピック構成 → 新4章構成（I簿記・II会計・III仕訳実務・特別章管理会計）に完全置換
   - TextbookChapter/TextbookSection型定義を新規追加（shared/schema.ts）

@@ -338,7 +338,37 @@ export const generatedFinancialStatementQuestionSchema = z.object({
 
 export type GeneratedFinancialStatementQuestion = z.infer<typeof generatedFinancialStatementQuestionSchema>;
 
-export type GeneratedQuestion = GeneratedJournalQuestion | GeneratedLedgerQuestion | GeneratedFinancialStatementQuestion;
+// 精算表（ワークシート）行
+export const seisanpyoRowSchema = z.object({
+  accountId: z.string(),
+  accountName: z.string(),
+  tbDebit: z.number(),
+  tbCredit: z.number(),
+  plDebit: z.number(),
+  plCredit: z.number(),
+  bsDebit: z.number(),
+  bsCredit: z.number(),
+  blankedCells: z.array(z.enum(["plDebit", "plCredit", "bsDebit", "bsCredit"])),
+});
+export type SeisanpyoRow = z.infer<typeof seisanpyoRowSchema>;
+
+// 生成された精算表問題
+export const generatedSeisanpyoQuestionSchema = z.object({
+  id: z.string(),
+  blueprintId: z.string(),
+  sectionType: z.literal("kessan"),
+  sectionIndex: z.number(),
+  statementType: z.literal("seisanpyo"),
+  instructionJa: z.string(),
+  adjustmentDescriptions: z.array(z.string()),
+  rows: z.array(seisanpyoRowSchema),
+  explainJa: z.string(),
+  topicTag: z.string().optional(),
+  points: z.number(),
+});
+export type GeneratedSeisanpyoQuestion = z.infer<typeof generatedSeisanpyoQuestionSchema>;
+
+export type GeneratedQuestion = GeneratedJournalQuestion | GeneratedLedgerQuestion | GeneratedFinancialStatementQuestion | GeneratedSeisanpyoQuestion;
 
 // 模試セクション
 export const examSectionSchema = z.object({
@@ -349,6 +379,7 @@ export const examSectionSchema = z.object({
     generatedJournalQuestionSchema,
     generatedLedgerQuestionSchema,
     generatedFinancialStatementQuestionSchema,
+    generatedSeisanpyoQuestionSchema,
   ])),
   totalPoints: z.number(),
 });
