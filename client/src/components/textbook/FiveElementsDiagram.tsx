@@ -87,8 +87,9 @@ export default function FiveElementsDiagram() {
 
               {/* BS行：資産 | 負債+資本 */}
               <div className="flex min-h-[80px] relative">
-                <div className="flex-1 bg-blue-50 dark:bg-blue-950 border-r border-slate-200 dark:border-slate-700 flex items-center justify-center">
+                <div className="flex-1 bg-blue-50 dark:bg-blue-950 border-r border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center gap-0.5 px-2">
                   <span className="text-lg font-bold text-blue-700 dark:text-blue-300">資産</span>
+                  <span className="text-[10px] text-blue-500 dark:text-blue-400 text-center leading-tight">将来利益を生むもの</span>
                 </div>
                 <div className="flex-1 flex flex-col">
                   {/* 負債セル：Arrow ⑤ 負債→外 step=4 */}
