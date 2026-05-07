@@ -188,9 +188,8 @@ export const textbookChapters: TextbookChapter[] = [
       },
       {
         id: "period_accounting",
-          diagramId: "period-matching",
+        diagramId: "period-matching",
         title: "期間損益計算と費用収益対応",
-        diagramId: "period-accounting",
         content: [
           "会計期間（通常1年間）で区切り、「当期の収益」と「当期の費用」だけを対応させて当期純利益を計算します。",
           "その期の収益に対応する費用のみを計上する——これが「費用収益対応の原則」です。",
