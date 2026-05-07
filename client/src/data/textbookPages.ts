@@ -199,18 +199,6 @@ export const textbookChapters: TextbookChapter[] = [
         ],
       },
       {
-        id: "accrual_accounts",
-        title: "経過勘定",
-        diagramId: "accrual-accounts",
-        content: [
-          "期間損益を正しく計算するために、4つの経過勘定を使います：",
-          "前払費用：先に払ったが、まだサービスを受けていない（資産）",
-          "未払費用：サービスを受けたが、まだ払っていない（負債）",
-          "前受収益：先にもらったが、まだサービスを提供していない（負債）",
-          "未収収益：サービスを提供したが、まだもらっていない（資産）",
-        ],
-      },
-      {
         id: "closing_entries",
         title: "決算整理仕訳",
         diagramId: "closing-entries",
