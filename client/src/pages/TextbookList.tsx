@@ -29,6 +29,7 @@ const CostClassificationDiagram = lazy(() => import("@/components/textbook/CostC
 const AccountingTermsDiagram = lazy(() => import("@/components/textbook/AccountingTermsDiagram"));
 const JitsumuRoadmapDiagram = lazy(() => import("@/components/textbook/JitsumuRoadmapDiagram"));
 const AccrualAccountsDiagram = lazy(() => import("@/components/textbook/AccrualAccountsDiagram"));
+const ClosingEntriesDiagram = lazy(() => import("@/components/textbook/ClosingEntriesDiagram"));
 
 const diagramComponents: Record<string, React.LazyExoticComponent<() => JSX.Element>> = {
   "bookkeeping-flow": BookkeepingFlowDiagram,
@@ -46,6 +47,7 @@ const diagramComponents: Record<string, React.LazyExoticComponent<() => JSX.Elem
   "accounting-terms": AccountingTermsDiagram,
   "jitsumu-roadmap": JitsumuRoadmapDiagram,
       "accrual-accounts": AccrualAccountsDiagram,
+  "closing-entries": ClosingEntriesDiagram,
   };
 
 const chapterColors: Record<string, { bg: string; border: string; text: string; accent: string }> = {
