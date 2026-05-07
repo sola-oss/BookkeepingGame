@@ -156,7 +156,7 @@ export default function Home() {
           <div className="grid grid-cols-3 gap-2">
             <Card
               className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
-              onClick={() => navigate("/mock-exam-start")}
+              onClick={() => window.open("https://nsboki-cbt.net-school.co.jp/exam/level3/select-set", "_blank", "noopener,noreferrer")}
               data-testid="button-start-exam"
             >
               <CardContent className="pt-4 pb-3 text-center space-y-2">
@@ -165,7 +165,7 @@ export default function Home() {
                 </div>
                 <h3 className="font-bold text-foreground text-sm">模試</h3>
                 <p className="text-xs text-muted-foreground">
-                  日商簿記3級形式
+                  ネットスクール公式
                 </p>
               </CardContent>
             </Card>
