@@ -279,11 +279,23 @@ function TAccount({ account, amountHighlight, onHighlightRef }: { account: TAcco
               <span className="font-mono text-foreground">{creditTotal.toLocaleString()}</span>
             </div>
           </div>
-          <div className="flex justify-between border-t border-slate-300 dark:border-slate-600 px-2 py-0.5">
-            <span className="text-muted-foreground">残高</span>
-            <span className={`font-bold font-mono ${balance >= 0 ? "text-blue-600 dark:text-blue-400" : "text-red-600 dark:text-red-400"}`}>
-              {balance >= 0 ? `借方 ${balance.toLocaleString()}` : `貸方 ${Math.abs(balance).toLocaleString()}`}
-            </span>
+          <div className="flex border-t border-slate-300 dark:border-slate-600">
+            <div className="flex-1 flex justify-between px-2 py-0.5 border-r border-slate-300 dark:border-slate-600">
+              {balance > 0 && (
+                <>
+                  <span className="text-muted-foreground">残高</span>
+                  <span className="font-bold font-mono text-blue-600 dark:text-blue-400">{balance.toLocaleString()}</span>
+                </>
+              )}
+            </div>
+            <div className="flex-1 flex justify-between px-2 py-0.5">
+              {balance < 0 && (
+                <>
+                  <span className="text-muted-foreground">残高</span>
+                  <span className="font-bold font-mono text-red-600 dark:text-red-400">{Math.abs(balance).toLocaleString()}</span>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
