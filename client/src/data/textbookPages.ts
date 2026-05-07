@@ -163,7 +163,6 @@ export const textbookChapters: TextbookChapter[] = [
       {
         id: "jitsumu_roadmap",
         title: "仕訳の実務：学習ロードマップ",
-        diagramId: "jitsumu-roadmap",
         content: [
           "Chapter IIIでは「仕訳の実務」を4つのステップで体系的に学びます。",
           "STEP 1 発生主義を理解する：現金主義との違いと、なぜ発生主義が必要かを学ぶ",
