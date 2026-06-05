@@ -626,6 +626,10 @@ export default function TAccountDiagram() {
       </div>
       <div className="space-y-1">
         <p className="text-xs font-bold text-foreground" data-testid="text-ledger-heading">補助元帳（T字勘定）</p>
+        <p className="text-[11px] text-muted-foreground leading-snug">
+          T字勘定の各行に書かれている科目名は<span className="font-semibold text-foreground">相手勘定科目</span>（取引の反対側の科目）です。<br />
+          例：現金勘定の借方に「資本金」→ <span className="font-mono text-[10px]">（借）現金 ／ （貸）資本金</span> の仕訳を意味します。
+        </p>
 
         {largeAccounts.length > 0 && (
           <div className="grid grid-cols-1 gap-3 mb-3">
