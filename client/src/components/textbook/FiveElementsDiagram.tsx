@@ -73,7 +73,7 @@ export default function FiveElementsDiagram() {
                   </div>
                 </div>
                 <div className="flex-1 bg-red-50 dark:bg-red-950 flex items-center justify-center">
-                  <span className="text-lg font-bold text-red-700 dark:text-red-300">売上</span>
+                  <span className="text-lg font-bold text-red-700 dark:text-red-300">収益</span>
                 </div>
                 {/* 利益の計測バッジ */}
                 <div className="absolute left-1/2 bottom-0 translate-x-[-50%] translate-y-1/2 z-10">
