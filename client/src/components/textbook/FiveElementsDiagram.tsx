@@ -100,7 +100,7 @@ export default function FiveElementsDiagram() {
                     </div>
                   </div>
                   <div className="flex-1 bg-blue-50 dark:bg-blue-950 flex items-center justify-center">
-                    <span className="text-lg font-bold text-blue-700 dark:text-blue-300">資本</span>
+                    <span className="text-lg font-bold text-blue-700 dark:text-blue-300">純資産</span>
                   </div>
                 </div>
                 {/* Arrow ① 負債/資本→資産（BS行・縦境界） step>=0 */}
