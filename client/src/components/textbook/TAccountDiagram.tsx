@@ -617,7 +617,7 @@ export default function TAccountDiagram() {
   return (
     <div className="w-full p-4 md:p-6 space-y-4" data-testid="t-account-diagram">
       <h3 className="text-lg font-bold text-foreground text-center" data-testid="text-t-account-title">仕訳と元帳への転記</h3>
-      <p className="text-xs text-muted-foreground text-center">仕訳には4つの要素がある：日付・勘定科目・金額・適用</p>
+      <p className="text-xs text-muted-foreground text-center">仕訳には4つの要素がある：日付・勘定科目・金額・摘要</p>
       <div className="space-y-1">
         <p className="text-xs font-bold text-foreground" data-testid="text-journal-heading">仕訳帳（4月の取引）</p>
         <p className="text-[10px] text-muted-foreground">勘定科目をタップ→本籍確認 ｜ 金額をタップ→+/-とT字勘定の位置を確認</p>
