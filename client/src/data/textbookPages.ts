@@ -52,7 +52,7 @@ export const textbookChapters: TextbookChapter[] = [
       },
       {
         id: "transaction_examples",
-        title: "取引事例と元帳への転記",
+        title: "仕訳と元帳への転記",
         diagramId: "t-account",
         content: [
           "具体的な取引を仕訳し、勘定科目ごとにT字勘定（元帳）へ転記する流れを見てみましょう。",
