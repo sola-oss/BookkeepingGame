@@ -39,21 +39,13 @@ function isNormalDebit(cat: AccountCategory): boolean {
 }
 
 const transactionDescriptions: Record<string, string> = {
-  "4/1_1": "🏢 会社設立！オーナーが1,000万円を出資し、現金として会社に入金しました。",
-  "4/1_2": "🏠 店舗の家賃500万円を現金で支払いました。",
-  "4/2":   "👥 従業員の給料50万円を現金で支払いました。",
-  "4/5":   "🛒 商品を600万円で販売！現金500万円をその場で受け取り、残り100万円は後日受け取る約束（売掛金）にしました。",
-  "4/10":  "📦 商品を150万円分仕入れ、現金で支払いました。",
-  "4/12":  "🏦 銀行から300万円を借り入れ、現金を受け取りました。",
-  "4/15":  "🖥 備品（設備・機器）を200万円で購入し、現金で支払いました。",
-  "4/18":  "📱 電話・インターネットなどの通信費30万円を現金で支払いました。",
-  "4/20":  "📦 商品を80万円分仕入れ、後払い（買掛金）にしました。",
-  "4/22":  "💰 4/5に計上した売掛金100万円を、現金として回収しました。",
-  "4/23":  "💡 水道・電気・ガスなどの光熱費20万円を現金で支払いました。",
-  "4/25":  "✅ 4/20に生じた買掛金80万円を現金で支払い、完済しました。",
-  "4/27":  "🛒 商品を400万円で販売し、現金をその場で受け取りました。",
-  "4/28":  "🏦 借入金のうち50万円を現金で返済しました。",
-  "4/30":  "💵 銀行預金から10万円の利息を受け取りました。",
+  "4/1": "🏢 ①資本金10,000円で開業。オーナーが出資し、現金として会社に入金しました。",
+  "4/2": "🏦 ②銀行から20,000円を借り入れ、現金を受け取りました。",
+  "4/3": "🖥 ③備品6,000円を購入し、現金で支払いました。",
+  "4/4": "📦 ④商品18,000円分を仕入れ、現金で支払いました。",
+  "4/5": "🛒 ⑤商品24,000円を現金で売り上げました。",
+  "4/6": "✅ ⑥借入金7,000円を現金で返済しました。",
+  "4/7": "👥 ⑦給料3,000円を現金で支払いました。",
 };
 
 function getEntryKey(entries: JournalEntry[], idx: number): string {
@@ -67,21 +59,13 @@ function getEntryKey(entries: JournalEntry[], idx: number): string {
 }
 
 const journalEntries: JournalEntry[] = [
-  { date: "4/1", debit: [{ account: "現金", amount: 1000 }], credit: [{ account: "資本金", amount: 1000 }] },
-  { date: "4/1", debit: [{ account: "家賃", amount: 500 }], credit: [{ account: "現金", amount: 500 }] },
-  { date: "4/2", debit: [{ account: "給料", amount: 50 }], credit: [{ account: "現金", amount: 50 }] },
-  { date: "4/5", debit: [{ account: "現金", amount: 500 }, { account: "売掛金", amount: 100 }], credit: [{ account: "売上", amount: 600 }] },
-  { date: "4/10", debit: [{ account: "仕入", amount: 150 }], credit: [{ account: "現金", amount: 150 }] },
-  { date: "4/12", debit: [{ account: "現金", amount: 300 }], credit: [{ account: "借入金", amount: 300 }] },
-  { date: "4/15", debit: [{ account: "備品", amount: 200 }], credit: [{ account: "現金", amount: 200 }] },
-  { date: "4/18", debit: [{ account: "通信費", amount: 30 }], credit: [{ account: "現金", amount: 30 }] },
-  { date: "4/20", debit: [{ account: "仕入", amount: 80 }], credit: [{ account: "買掛金", amount: 80 }] },
-  { date: "4/22", debit: [{ account: "現金", amount: 100 }], credit: [{ account: "売掛金", amount: 100 }] },
-  { date: "4/23", debit: [{ account: "水道光熱費", amount: 20 }], credit: [{ account: "現金", amount: 20 }] },
-  { date: "4/25", debit: [{ account: "買掛金", amount: 80 }], credit: [{ account: "現金", amount: 80 }] },
-  { date: "4/27", debit: [{ account: "現金", amount: 400 }], credit: [{ account: "売上", amount: 400 }] },
-  { date: "4/28", debit: [{ account: "借入金", amount: 50 }], credit: [{ account: "現金", amount: 50 }] },
-  { date: "4/30", debit: [{ account: "現金", amount: 10 }], credit: [{ account: "受取利息", amount: 10 }] },
+  { date: "4/1", debit: [{ account: "現金",   amount: 10000 }], credit: [{ account: "資本金", amount: 10000 }] },
+  { date: "4/2", debit: [{ account: "現金",   amount: 20000 }], credit: [{ account: "借入金", amount: 20000 }] },
+  { date: "4/3", debit: [{ account: "備品",   amount: 6000  }], credit: [{ account: "現金",   amount: 6000  }] },
+  { date: "4/4", debit: [{ account: "仕入",   amount: 18000 }], credit: [{ account: "現金",   amount: 18000 }] },
+  { date: "4/5", debit: [{ account: "現金",   amount: 24000 }], credit: [{ account: "売上",   amount: 24000 }] },
+  { date: "4/6", debit: [{ account: "借入金", amount: 7000  }], credit: [{ account: "現金",   amount: 7000  }] },
+  { date: "4/7", debit: [{ account: "給料",   amount: 3000  }], credit: [{ account: "現金",   amount: 3000  }] },
 ];
 
 function buildTAccounts(entries: JournalEntry[]): TAccountData[] {
@@ -100,7 +84,7 @@ function buildTAccounts(entries: JournalEntry[]): TAccountData[] {
     }
   }
 
-  const order = ["現金", "売掛金", "備品", "買掛金", "借入金", "資本金", "売上", "受取利息", "仕入", "家賃", "給料", "通信費", "水道光熱費"];
+  const order = ["現金", "備品", "借入金", "資本金", "売上", "仕入", "給料"];
   const largeAccounts = new Set(["現金"]);
 
   return order
