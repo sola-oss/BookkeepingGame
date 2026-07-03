@@ -8,6 +8,7 @@ import { GameProvider } from "@/context/GameContext";
 import { JournalProvider } from "@/context/JournalContext";
 import { ExamProvider } from "@/context/ExamContext";
 import { MockExamProvider } from "@/context/MockExamContext";
+import { PostingProvider } from "@/context/PostingContext";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/not-found";
 
@@ -30,6 +31,8 @@ const AccountList = lazy(() => import("@/pages/AccountList"));
 const AccountDetail = lazy(() => import("@/pages/AccountDetail"));
 const TextbookList = lazy(() => import("@/pages/TextbookList"));
 const AccountingFlowMode = lazy(() => import("@/pages/AccountingFlowMode"));
+const PostingMode = lazy(() => import("@/pages/PostingMode"));
+const PostingResult = lazy(() => import("@/pages/PostingResult"));
 
 function Router() {
   return (
@@ -54,6 +57,8 @@ function Router() {
       <Route path="/account/:id" component={AccountDetail} />
       <Route path="/textbook" component={TextbookList} />
       <Route path="/accounting-flow" component={AccountingFlowMode} />
+      <Route path="/posting" component={PostingMode} />
+      <Route path="/posting-result" component={PostingResult} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -67,10 +72,12 @@ function App() {
           <JournalProvider>
             <ExamProvider>
               <MockExamProvider>
+                <PostingProvider>
                 <Toaster />
                 <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="text-muted-foreground">読み込み中...</div></div>}>
                   <Router />
                 </Suspense>
+                </PostingProvider>
               </MockExamProvider>
             </ExamProvider>
           </JournalProvider>

@@ -1,10 +1,11 @@
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { BookOpen, Settings, Trophy, Flame, Target, FileText, ArrowRightLeft, Layers, Library, ExternalLink, GraduationCap } from "lucide-react";
+import { BookOpen, Settings, Trophy, Flame, Target, FileText, ArrowRightLeft, Layers, Library, ExternalLink, Table2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGame } from "@/context/GameContext";
 import { useJournal } from "@/context/JournalContext";
+import { usePosting } from "@/context/PostingContext";
 import { getLastAccuracy, getLastScore } from "@/lib/storage";
 
 const OFFICIAL_SAMPLE_URL = "https://www.kentei.ne.jp/bookkeeping/class3";
@@ -13,6 +14,7 @@ export default function Home() {
   const [, navigate] = useLocation();
   const { state, dispatch } = useGame();
   const { dispatch: journalDispatch } = useJournal();
+  const { dispatch: postingDispatch } = usePosting();
   const { userData } = state;
 
   const lastAccuracy = getLastAccuracy(userData);
@@ -26,6 +28,11 @@ export default function Home() {
   const handleStartJournal = () => {
     journalDispatch({ type: "START_JOURNAL_GAME" });
     navigate("/journal");
+  };
+
+  const handleStartPosting = () => {
+    postingDispatch({ type: "START_POSTING_GAME" });
+    navigate("/posting");
   };
 
   return (
@@ -118,7 +125,7 @@ export default function Home() {
 
           <div>
             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 px-1">練習ゲーム</p>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-3 gap-3">
               <Card
                 className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
                 onClick={handleStartClassification}
@@ -150,25 +157,26 @@ export default function Home() {
                   </p>
                 </CardContent>
               </Card>
+
+              <Card
+                className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
+                onClick={handleStartPosting}
+                data-testid="button-start-posting"
+              >
+                <CardContent className="pt-4 pb-3 text-center space-y-2">
+                  <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                    <Table2 className="w-5 h-5 text-primary" />
+                  </div>
+                  <h3 className="font-bold text-foreground text-sm">転記</h3>
+                  <p className="text-xs text-muted-foreground">
+                    T字勘定へ
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-2">
-            <Card
-              className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
-              onClick={() => window.open("https://nsboki-cbt.net-school.co.jp/exam/level3/select-set", "_blank", "noopener,noreferrer")}
-              data-testid="button-start-exam"
-            >
-              <CardContent className="pt-4 pb-3 text-center space-y-2">
-                <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <GraduationCap className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="font-bold text-foreground text-sm">模試</h3>
-                <p className="text-xs text-muted-foreground">
-                  ネットスクール公式
-                </p>
-              </CardContent>
-            </Card>
+          <div className="grid grid-cols-2 gap-2">
             <Card
               className="cursor-pointer hover-elevate active-elevate-2 overflow-visible"
               onClick={() => navigate("/accounts")}
@@ -210,7 +218,7 @@ export default function Home() {
           <Card className="bg-muted/50 border-border">
             <CardContent className="py-4">
               <p className="text-sm text-muted-foreground text-center">
-                分類で科目を覚え、仕訳で取引を練習、模試で力試し！
+                分類で科目を覚え、仕訳で取引を練習、転記でT字勘定をマスター！
               </p>
             </CardContent>
           </Card>
